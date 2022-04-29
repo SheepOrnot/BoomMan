@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/floor">
+        <file>res/floor/Floors_TILESET_A2_.png</file>
+        <file>res/floor/Floors_original_shading_TILESET_A5_.png</file>
+        <file>res/floor/Floors_original_shading_TILESET_A5_.jpg</file>
+        <file>res/floor/Floors_TILESET_A2_.jpg</file>
+        <file>res/floor/normalFloor.jpg</file>
+        <file>res/floor/normalFloor2.png</file>
+        <file>res/floor/item1.png</file>
+    </qresource>
+    <qresource prefix="/character">
+        <file>res/character/Alex/Alex.png</file>
+        <file>res/character/Alex/Alex_run.png</file>
+        <file>res/character/Alex/Alex_Died.png</file>
+    </qresource>
+    <qresource prefix="/boom">
+        <file>res/boom/boomA_1.png</file>
+        <file>res/boom/boomA_Flame.png</file>
+    </qresource>
+</RCC>
