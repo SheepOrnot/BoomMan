@@ -173,7 +173,7 @@ void people::Reduceblood()
     QString str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
     pixCha = QPixmap(str);
     this->setPixmap(pixCha.copy(48*(orientation-1),28,48,68));
-    Time2->start(700);
+    Time2->start(2000);
 //    QMessageBox WR;
 //    WR.setText(name+QString(" Lose"));
 //    WR.exec();
