@@ -35,6 +35,7 @@ public:
     int I;//动画第几帧
     int isAnimation;//动画状态
     int orientation;//人物朝向
+    int deviation;//人物偏向
     int isWalk;//走路状态
     int blood;//血量
 

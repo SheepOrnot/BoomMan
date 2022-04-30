@@ -1,8 +1,7 @@
 #include "people.h"
 
 int people::BaseX = 100 -48;
-int people::BaseY = 50 -20 -48;
-
+int people::BaseY = 50 -20 -48 -14;
 people *P1 = NULL;
 people *P2 = NULL;
 people *P3 = NULL;
@@ -26,6 +25,7 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
     isAnimation =0;
     Cname = "Alex";
     isWalk = 0;
+    deviation = 0;
     blood = 1;
 
     /**///图像初始化
@@ -53,25 +53,49 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
     Time1  = new QTimer(this);
     Time2  = new QTimer(this);
     connect(Time1,&QTimer::timeout,[=](){
-        this->setPixmap(pixRun.copy((isAnimation-1)*6*48+I*48,28,48,68));
-        int datX = 0,datY = 0;
-        if(isAnimation == 1) datX =  48/6*I;
-        if(isAnimation == 2) datY = -48/6*I;
-        if(isAnimation == 3) datX = -48/6*I;
-        if(isAnimation == 4) datY =  48/6*I;
-        this->move(BaseX+X*48+datX,BaseY+Y*48+datY);
+        if(I==0) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+0*48,28,48,68));
+        if(I==1) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+1*48,28,48,68));
+        if(I==2) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+3*48,28,48,68));
+        if(I==3) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+4*48,28,48,68));
+        int DatX = 0,DatY = 0;
+        if(isAnimation == 1) DatX =  48/3/4*I;
+        if(isAnimation == 2) DatY = -48/3/4*I;
+        if(isAnimation == 3) DatX = -48/3/4*I;
+        if(isAnimation == 4) DatY =  48/3/4*I;
+        if(deviation == 1) DatX +=  48/3;
+        if(deviation == 2) DatY += -48/3;
+        if(deviation == 3) DatX += -48/3;
+        if(deviation == 4) DatY +=  48/3;
+        this->move(BaseX+X*48+DatX,BaseY+Y*48+DatY);
         orientation = isAnimation;
         I = I+1;
-        if(I>5)
+        if(I>3)
         {
             I = 0;
             Time1->stop();
-            if(isAnimation == 1) ++X;
-            if(isAnimation == 2) --Y;
-            if(isAnimation == 3) --X;
-            if(isAnimation == 4) ++Y;
             this->setPixmap(pixCha.copy(48*(isAnimation-1),28,48,68));
-            this->move(BaseX+X*48,BaseY+Y*48);
+            if(isAnimation == deviation)
+            {
+                if(isAnimation == 1) ++X;
+                if(isAnimation == 2) --Y;
+                if(isAnimation == 3) --X;
+                if(isAnimation == 4) ++Y;
+                deviation = (deviation&1 ? 4-deviation : 6-deviation);
+            }
+            else if(deviation==0)
+            {
+                deviation = isAnimation;
+            }
+            else
+            {
+                deviation = 0;
+            }
+            DatX = DatY = 0;
+            if(deviation == 1) DatX =  48/3;
+            if(deviation == 2) DatY = -48/3;
+            if(deviation == 3) DatX = -48/3;
+            if(deviation == 4) DatY =  48/3;
+            this->move(BaseX+X*48+DatX,BaseY+Y*48+DatY);
             isAnimation = 0;
             if(isWalk) Walk(isWalk);
         }
@@ -99,12 +123,27 @@ void people::Walk(int TYPE)
     if(TYPE>4||TYPE<1) return;
     SetPos(TYPE);
     if((TYPE==1&& X>=15)||(TYPE==2&& Y<=1)||(TYPE==3&& X<=1)||(TYPE==4&& Y>=15)) return;//判边界
-    if(TYPE==1&&Map[0][Y][X+1]>0) return;
-    if(TYPE==2&&Map[0][Y-1][X]>0) return;
-    if(TYPE==3&&Map[0][Y][X-1]>0) return;
-    if(TYPE==4&&Map[0][Y+1][X]>0) return;
+    if(deviation==0||abs(TYPE-deviation)!=2)
+    {
+        if(TYPE==1&&Map[0][Y][X+1]>0) return;
+        if(TYPE==2&&Map[0][Y-1][X]>0) return;
+        if(TYPE==3&&Map[0][Y][X-1]>0) return;
+        if(TYPE==4&&Map[0][Y+1][X]>0) return;
+    }
+    if(deviation==0||TYPE==deviation||abs(TYPE-deviation)==2)
+    {
+        isAnimation = TYPE;
+    }
+    else
+    {
+//        isAnimation = (deviation&1 ? 4-deviation : 6-deviation);
+        this->move(BaseX+X*48,BaseY+Y*48);
+        this->setPixmap(pixCha.copy(48*(TYPE-1),28,48,68));
+        deviation = 0;
+        isAnimation = TYPE;
+    }
     isWalk = TYPE;
-    isAnimation = TYPE; I = 0;
+    I = 0;
     Time1->start(this->speed);
 }
 
@@ -133,7 +172,7 @@ void people::Reduceblood()
 
     QString str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
     pixCha = QPixmap(str);
-    SetPos(orientation);
+    this->setPixmap(pixCha.copy(48*(orientation-1),28,48,68));
     Time2->start(700);
 //    QMessageBox WR;
 //    WR.setText(name+QString(" Lose"));

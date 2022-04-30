@@ -58,7 +58,7 @@ GameWidget::GameWidget(QWidget *parent) :
 
     AIComputing = 0;
     //是否开启AI
-    if(1)
+    if(1<0)
     {
         AI = new people(0,12,12,"AI",this);
 
