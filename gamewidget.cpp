@@ -112,7 +112,7 @@ void GameWidget::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Space:
        qDebug()<<"Space";
        if(P1->CanBoom())
-       BoomV.push_back(new BoomA(0,P1->X,P1->Y,this));
+       BoomV.push_back(new BoomA(P1->BoomLv,P1->X,P1->Y,this));
        P1->raise();
        break;
     case Qt::Key_Right:
@@ -134,7 +134,7 @@ void GameWidget::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Enter:
        qDebug()<<"Enter";
        if(P2->CanBoom())
-       BoomV.push_back(new BoomA(0,P2->X,P2->Y,this));
+       BoomV.push_back(new BoomA(P2->BoomLv,P2->X,P2->Y,this));
        P2->raise();
        break;
     }

@@ -4,7 +4,8 @@
 #include"setting.h"
 #include<QTimer>
 #include<QObject>
-#include<people.h>
+#include"people.h"
+#include"tool.h"
 class Boom :public QLabel
 {
 public:

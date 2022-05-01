@@ -5,7 +5,7 @@
 #include<QVector>
 #include<QMessageBox>
 
-extern int Map[1][16][16];
+extern int Map[2][16][16];
 extern QLabel *Build[16][16];
 
 

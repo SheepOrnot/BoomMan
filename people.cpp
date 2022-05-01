@@ -52,6 +52,7 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
     this->setParent(parent);
     Time1  = new QTimer(this);
     Time2  = new QTimer(this);
+    Time3  = new QTimer(this);
     connect(Time1,&QTimer::timeout,[=](){
         if(I==0) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+0*48,28,48,68));
         if(I==1) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+1*48,28,48,68));
@@ -81,6 +82,22 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
                 if(isAnimation == 3) --X;
                 if(isAnimation == 4) ++Y;
                 deviation = (deviation&1 ? 4-deviation : 6-deviation);
+
+                if(Map[1][Y][X]>0)
+                {
+                    if(Map[1][Y][X]==1) ++blood;
+                    if(Map[1][Y][X]==2) ++BoomLv;
+                    for(QVector<Tool*>::iterator it = ToolV.begin(); it != ToolV.end(); ++it)
+                    if((*it)->X == X&& (*it)->Y == Y)
+                    {
+                        (*it)->hide();
+                        delete (*it);
+                        std::iter_swap(it,ToolV.end()-1);
+                        ToolV.pop_back();
+                        break;
+                    }
+                    Map[1][Y][X] = 0;
+                }
             }
             else if(deviation==0)
             {
@@ -104,6 +121,14 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
         Time2->stop();
         this->hide();
     });
+    connect(Time3,&QTimer::timeout,[=](){
+        Time3->stop();
+        QString str = QString(":/character/res\\character\\%1\\%2.png").arg(this->Cname).arg(this->Cname);
+        pixCha = QPixmap(str);
+        str = QString(":/character/res\\character\\%1\\%2_run.png").arg(this->Cname).arg(this->Cname);
+        pixRun = QPixmap(str);
+        SetPos(orientation);
+    });
 }
 //右上左下 1 2 3 4
 bool people::Check(int TYPE)
@@ -122,9 +147,9 @@ void people::Walk(int TYPE)
     if(isAnimation) return;
     if(TYPE>4||TYPE<1) return;
     SetPos(TYPE);
-    if((TYPE==1&& X>=15)||(TYPE==2&& Y<=1)||(TYPE==3&& X<=1)||(TYPE==4&& Y>=15)) return;//判边界
     if(deviation==0||abs(TYPE-deviation)!=2)
     {
+        if((TYPE==1&& X>=15)||(TYPE==2&& Y<=1)||(TYPE==3&& X<=1)||(TYPE==4&& Y>=15)) return;//判边界
         if(TYPE==1&&Map[0][Y][X+1]>0) return;
         if(TYPE==2&&Map[0][Y-1][X]>0) return;
         if(TYPE==3&&Map[0][Y][X-1]>0) return;
@@ -167,13 +192,19 @@ void people::Reduceblood()
 {
     this->raise();
     --blood;
-    if(blood > 0) return;
-    Time1->stop();
-
     QString str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
     pixCha = QPixmap(str);
+    str = QString(":/character/res\\character\\%1\\%2_run_Died.png").arg(this->Cname).arg(this->Cname);
+    pixRun = QPixmap(str);
+    if(blood > 0)
+    {
+        Time3->start(500);
+        SetPos(orientation);
+        return;
+    }
+    Time1->stop();
     this->setPixmap(pixCha.copy(48*(orientation-1),28,48,68));
-    Time2->start(2000);
+    Time2->start(1300);
 //    QMessageBox WR;
 //    WR.setText(name+QString(" Lose"));
 //    WR.exec();
@@ -183,7 +214,7 @@ bool people::CanBoom()
 {
     if(blood<=0) return 0;
     if(Map[0][Y][X]>0) return 0;
-    if(BoomTime.front().secsTo(QTime::currentTime())<3) return 0;
+    if(BoomTime.front().secsTo(QTime::currentTime())<8) return 0;
     BoomTime.pop_front();
     BoomTime.push_back(QTime::currentTime());
     return 1;

@@ -12,9 +12,14 @@
         <file>res/character/Alex/Alex.png</file>
         <file>res/character/Alex/Alex_run.png</file>
         <file>res/character/Alex/Alex_Died.png</file>
+        <file>res/character/Alex/Alex_run_Died.png</file>
     </qresource>
     <qresource prefix="/boom">
         <file>res/boom/boomA_1.png</file>
         <file>res/boom/boomA_Flame.png</file>
+    </qresource>
+    <qresource prefix="/tool">
+        <file>res/tool/heart.png</file>
+        <file>res/tool/lighting.png</file>
     </qresource>
 </RCC>

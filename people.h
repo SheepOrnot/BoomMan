@@ -1,14 +1,12 @@
 #ifndef PEOPLE_H
 #define PEOPLE_H
 #include<QWidget>
-#include<QLabel>
-#include<QVector>
 #include<QTime>
 #include<QString>
-#include<QMessageBox>
 #include<QObject>
 #include<QTimer>
 #include"setting.h"
+#include"tool.h"
 class people :public QLabel
 {
 public:
@@ -43,6 +41,7 @@ public:
     QPixmap pixRun;//人物跑步
     QTimer *Time1;
     QTimer *Time2;
+    QTimer *Time3;
 
     static int BaseX;
     static int BaseY;

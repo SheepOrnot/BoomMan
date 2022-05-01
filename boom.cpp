@@ -14,6 +14,27 @@ int Boom::Check(int XX,int YY,QWidget *parent)
     LA->setPixmap(QPixmap(str));
     LA->show();
     v.push_back(LA);
+
+    if(Map[1][YY][XX]>0&&Map[0][YY][XX]==1)
+    {
+        ToolV.push_back(new Tool(Map[1][YY][XX],XX,YY,parent));
+        P1->raise();
+        P2->raise();
+    }
+    else if(Map[1][YY][XX]>0)
+    {
+        Map[1][YY][XX]=0;
+        for(QVector<Tool*>::iterator it = ToolV.begin(); it != ToolV.end(); ++it)
+        if((*it)->X == XX&& (*it)->Y == YY)
+        {
+            (*it)->hide();
+            delete (*it);
+            std::iter_swap(it,ToolV.end()-1);
+            ToolV.pop_back();
+            break;
+        }
+    }
+
     if(P1->X==XX&&P1->Y==YY) P1->Reduceblood();
     if(P2->X==XX&&P2->Y==YY) P2->Reduceblood();
 //    if(P3->X==XX&&P3->Y==YY) P3->Reduceblood();
@@ -25,7 +46,7 @@ Boom::Boom(int XX,int YY,QWidget *parent)
 {
     X = XX, Y = YY;
     CountDown1 = 4000;
-    CountDown2 = 70;
+    CountDown2 = 300;
     Time2 = new QTimer(this);
     Time3 = new QTimer(this);
     this->setGeometry(0,0,48,48);

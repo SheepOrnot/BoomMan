@@ -22,7 +22,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     people.cpp \
-    setting.cpp
+    setting.cpp \
+    tool.cpp
 
 HEADERS += \
     AI.h \
@@ -31,7 +32,8 @@ HEADERS += \
     mainwindow.h \
     mcts2.h \
     people.h \
-    setting.h
+    setting.h \
+    tool.h
 
 FORMS += \
     gamewidget.ui \
