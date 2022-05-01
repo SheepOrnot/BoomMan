@@ -6,7 +6,6 @@ people *P1 = NULL;
 people *P2 = NULL;
 people *P3 = NULL;
 people *P4 = NULL;
-people *AI = NULL;
 
 people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent = NULL)
 {

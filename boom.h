@@ -15,6 +15,7 @@ public:
     static int BaseX;
     static int BaseY;
     int X,Y;
+    int R;
 
 protected:
     QPixmap Icon;//炸弹图标
@@ -32,7 +33,7 @@ class BoomA : public Boom
 public:
     BoomA(int Lv,int XX,int YY,QWidget *parent);
     ~BoomA(){;}
-    int R;
+
 };
 
 extern QVector<Boom*> BoomV;

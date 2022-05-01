@@ -1,230 +1,245 @@
-#include "AI.h"
+#include"AI.h"
 
-double AIState::C1 = 3.0, AIState::C2 = 1.0, AIState::C3 = 1.0, AIState::C4 = 1.0;
-int AIBoom::tmin = 0, AIBoom::tmax = 8;
+AIPlayer* AI = NULL;
 
-AIState::AIState() : AI(NULL), P1(NULL)
+ActionA_Type AIPlayer::actionA[6] = { GetItem, DWall, GetItem, DWall, GetItem, DWall };
+
+bool CheckTarget(const int x, const int y, const AITarget& target, const AIPlayer& player)
 {
-    player_markers[0] = NULL;
-    player_markers[1] = NULL;
-    BoomV.clear();
+    if (target.type == Point) return x == target.x && y == target.y;
+    else if (target.type == Wall_D) return Map[0][y][x] == 1;
+    else if (target.type == Boom) return Map[0][y][x] == 2;
+    else if (target.type == SafeArea) return Map[0][y][x] == 0 && player.danger[y][x] == 0;
+    else if (target.type == Item) return Map[1][y][x];
+
+    return 0;
 }
 
-AIState::AIState(people* _AI, people* _P1, QVector<Boom*> _BoomV) : AI(_AI), P1(_P1)
+bool CheckAccess(const int x, const int y)
 {
-    player_markers[0] = NULL;
-    player_markers[1] = NULL;
-    BoomV.clear();
-    //if(!AI || !P1) {empty = 1; return;}
-    //else empty = 0;
+    if(x <= 0 || x >= 16 || y <= 0 || y >= 16) return 0;
+    return Map[0][y][x] == 0;
+}
 
-    player_to_move = 0;
-    Target = 1;
-    pepCnt = 2;
+AIWalk_Type reserveWalk(AIWalk_Type type)
+{
+    if (type == Up) return Down;
+    if (type == Right) return Left;
+    if (type == Left) return Right;
+    if (type == Down) return Up;
+    return Stay;
+}
 
-    //player_markers[0] = std::unique_ptr<AIPlayer>(new AIPlayer(AI));
-    //player_markers[1] = std::unique_ptr<AIPlayer>(new AIPlayer(P1));
+inline bool operator < (const Node& a, const Node& b) {
+    return a.type < b.type;
+}
 
-    player_markers[0] = &AI;
-    player_markers[1] = &P1;
+QVector<AIAction> AIPlayer::Search(const QPoint& src, const AITarget& dst)
+{
+    QQueue<Node> q;
+    //QMap<Node, int> vis;
+    QVector<AIAction> moves;
 
+    int vis[17][17];
+    memset(vis, 0, sizeof(vis));
 
-    for (int i = 0; i < 16; i++)
+    q.append({ 1, src.x(), src.y(), AIWalk_Type::Stay, NULL});
+    vis[src.y()][src.x()] = 1;
+
+    while (q.size())
     {
-        std::vector<int> v;
-        for (int j = 0; j < 16; j++)
+        Node p = q.front();
+        q.pop_front();
+
+        //std::cerr << "Node:(" << p.x <<"," << p.y <<")  " << p.type << "  Extending  Map:" << Map[0][p.x][p.y] << std::endl;
+
+        for (int i = 1; i <= 4; i++)
         {
-            v.push_back(Map[0][i][j]);
+            int nx = p.x + dx[i];
+            int ny = p.y + dy[i];
+
+            if(nx <= 0 || nx >= 16 || ny <= 0 || ny >= 16) continue;
+
+            Node n = { p.t + 1, nx, ny, AIWalk_Type(i), &p };
+
+            //std::cerr << "----Node:(" << n.x <<"," << n.y <<")  " << n.type << "  Waitting  Map:" << Map[0][n.x][n.y] << std::endl;
+
+            if (CheckTarget(nx, ny, dst, *this))
+            {
+
+                std::cerr << "Node:(" << n.x <<"," << n.y <<")  " << n.type << "  TargetType:"<< dst.type << "  Founded   Map:" << Map[0][n.y][n.x] << std::endl;
+
+                if (dst.type == Wall_D)
+                {
+                    if(this->CanBoom()) moves.push_back(AIAction(p.x, p.y, SetBoom));
+                    else moves.push_back(AIAction(p.x, p.y, DoNothing));
+                }
+                else if(dst.type == SafeArea)
+                {
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                }
+                else if(dst.type == Item)
+                {
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                    moves.push_back(AIAction(nx, ny, Action_Type(i)));
+                }
+
+
+                while (p.t != 1)
+                {
+
+                    moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                    moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                    moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                    moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                    moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                    std::cerr << "----Node:(" << p.x <<"," << p.y <<")  Walk_Type:" << p.type << "  MoveLoad  Map:" << Map[0][p.y][p.x] << std::endl << std::endl;
+
+                    //p = { p.t - 1, p.x - dx[p.type], p.y - dy[p.type], p.type };
+
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        int nx = p.x + dx[i];
+                        int ny = p.y + dy[i];
+
+                        //std::cerr <<"----Test:(" << nx << "," << ny << ")  Vis:" << vis[ny][nx] << "  p.t:" << p.t << "  Map:" << Map[0][ny][nx] << std::endl;
+
+                        if (vis[ny][nx] == p.t - 1)
+                        {
+                            p = { p.t - 1, p.x + dx[i], p.y + dy[i], p.type, NULL };
+                            p.type = reserveWalk(AIWalk_Type(i));
+                            std::cerr <<"----Node:(" << p.x << "," << p.y << ")  Vis:" << vis[p.y][p.x] << "  p.t:" << p.t << "   Confirmed  Map:" << Map[0][p.y][p.x] << std::endl;
+                            break;
+                        }
+
+                    }
+                }
+
+                if(p.type != Stay) moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                if(p.type != Stay) moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                if(p.type != Stay) moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                if(p.type != Stay) moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                if(p.type != Stay) moves.push_back(AIAction(p.x, p.y, Action_Type(p.type)));
+                if(moves.empty())
+                {
+                    moves.push_back(AIAction(p.x, p.y, DoNothing));
+                    moves.push_back(AIAction(p.x, p.y, DoNothing));
+                    moves.push_back(AIAction(p.x, p.y, DoNothing));
+                    moves.push_back(AIAction(p.x, p.y, DoNothing));
+                    moves.push_back(AIAction(p.x, p.y, DoNothing));
+                }
+
+
+                std::cerr << "*****Action*****" << std::endl;
+                for(auto i : moves)
+                {
+                    std::cerr << i.type << " ";
+                }
+                std::cerr << std::endl << "****************" << std::endl;
+
+
+                return moves;
+            }
+
+            if (!CheckAccess(nx, ny) || vis[ny][nx]) continue;
+            if (dst.type == Wall_D && danger[ny][nx]) continue;
+
+            //std::cerr << "----Node:(" << n.x <<"," << n.y <<")  " << n.type << "  Loading   Map:" << Map[0][n.x][n.y] << std::endl;
+
+            q.append(n);
+            vis[ny][nx] = vis[p.y][p.x] + 1;
+
         }
-        mapdata_ai.push_back(v);
+
     }
 
-    for(int i = 0; i < _BoomV.size(); i ++ )
+    /*
+    std::cerr << "*****Action*****" << std::endl;
+    for(auto i : moves)
     {
-        BoomV.push_back(AIBoom(*_BoomV[i]));
+        std::cerr << i.type << " ";
     }
-}
+    std::cerr << "****************" << std::endl;
+    */
 
-AIState::AIState(const AIState& rhs) :
-    player_to_move(rhs.player_to_move),
-    Target(rhs.Target),
-    empty(rhs.empty),
-    pepCnt(rhs.pepCnt),
-    AI(rhs.AI),
-    P1(rhs.P1),
-    mapdata_ai(rhs.mapdata_ai),
-    BoomV(rhs.BoomV)
-{
-    player_markers[0] = &AI;
-    player_markers[1] = &P1;
-}
-
-AIState& AIState::operator = (const AIState& rhs)
-{
-    player_to_move = rhs.player_to_move;
-    Target = rhs.Target;
-    empty = rhs.empty;
-    pepCnt = rhs.pepCnt;
-    AI = rhs.AI;
-    P1 = rhs.P1;
-    mapdata_ai = rhs.mapdata_ai;
-    BoomV = rhs.BoomV;
-    player_markers[0] = &AI;
-    player_markers[1] = &P1;
-    return *this;
-}
-
-AIState::~AIState()
-{
-
-}
-
-bool AIState::Check(int TYPE) const
-{
-    int X = player_markers[player_to_move]->X;
-    int Y = player_markers[player_to_move]->Y;
-    if((TYPE==1&& X>=15)||(TYPE==2&& Y<=1)||(TYPE==3&& X<=1)||(TYPE==4&& Y>=15)) return 0;//判边界
-    if(TYPE==1&&mapdata_ai[Y][X+1]>0) return 0;
-    if(TYPE==2&&mapdata_ai[Y-1][X]>0) return 0;
-    if(TYPE==3&&mapdata_ai[Y][X-1]>0) return 0;
-    if(TYPE==4&&mapdata_ai[Y+1][X]>0) return 0;
-    return 1;
-}
-
-void AIState::do_move(Move move)
-{
-    if(move >= 1 && move <= 4) this->player_markers[player_to_move]->Walk(*this, move);
-
-    player_to_move = (player_to_move + 1) % pepCnt;
-}
-
-template<typename RandomEngine>
-void AIState::do_random_move(RandomEngine* engine)
-{
-    std::uniform_int_distribution<Move> moves(1, 4);
-
-	auto move = moves(*engine);
-	//合法？合法就执行此move
-    while(!this->Check(move)) move = moves(*engine);
-    do_move(move);
-
-}
-
-bool AIState::has_moves() const
-{
-	//死了？  return false;
-	//还活着，敌人也没死  return true;
-
-
-    if(AI.blood > 0) return true;
-
-    //实在没法运行
-    return false;
-}
-
-std::vector<AIState::Move> AIState::get_moves() const
-{
-    //走路合法判断
-    std::vector<AIState::Move> moves;
-    for(int i = 1; i <= 4; i ++ )
-        if(this->Check(i))
-            moves.push_back(i);
-	//炸弹放置判断
-	//合法放进   moves.push_back(op);
-	//return moves;
-
+    if (moves.empty()) moves.push_back(0);
     return moves;
 }
 
-double AIState::ManhattanDistance(QPoint a, QPoint b)
+AIPlayer::AIPlayer(int TYPE, int XX, int YY, QString NAME, QWidget* parent) : people(TYPE, XX, YY, NAME, parent)
 {
-    return abs(a.x() - b.x()) + abs(a.y() - b.y());
+    isNeedUpdate = 1;
+    actionIndex = 0;
+    actionAIndex = 0;
+    moves.clear();
 }
 
-double AIState::get_result(int current_player_to_move)
+void AIPlayer::update(const AITarget& dst)
 {
-    //寄了返回-100
-    //对于这个人物，执行评估函数h(x);  return h(x);
+    this->moves = Search({ this->X, this->Y }, dst);
+    this->isNeedUpdate = 0;
+    this->actionIndex = this->moves.size() - 1;
+}
 
-    QPoint ai = { player_markers[0]->X, player_markers[0]->Y };
-    QPoint p = { player_markers[1]->X, player_markers[1]->Y };
+bool AIPlayer::TestSafe()
+{
+    memset(danger, 0, sizeof(danger));
+    for (auto boom : BoomV)
+    {
+        int x = boom->X;
+        int y = boom->Y;
+        int r = boom->R;
 
-    //N = DestoryAtOnce();
-    DTarget = ManhattanDistance(ai, p);
-    D0 = 0;
-    if(BoomV.size() != 0)
-        for(int i = 0; i < BoomV.size(); i ++ )
+        danger[y][x] = 1;
+
+        for (int i = 1; i <= 4; i++)
         {
-            int dist = ManhattanDistance(ai, {BoomV[i].x, BoomV[i].y});
-            D0 += -10 * -dist;
+            int nx = x;
+            int ny = y;
+            for (int j = 1; j <= r; j++)
+            {
+                nx = nx + dx[i];
+                ny = ny + dy[i];
+                danger[ny][nx] = 1;
+            }
         }
-
-    N = 0;
-
-    //double hx = 1;
-    //double hx = C1 * (10.0 * exp(-D0) + 15.0 * exp(-DTarget) * C3) + C2 * (15.0 * exp(-D0) * C3 + 20.0 * exp(-D0) * N);
-
-    double hx = 20 / (1 + DTarget) + D0;
-    //std::cerr << hx << std::endl;
-    //MIN/MAX策略
-    //if(current_player_to_move != 0) hx = -hx;
-    return hx;
+    }
+    return !danger[this->Y][this->X];
 }
 
-AIPlayer::AIPlayer(people* P)
+int ComputeMove(AIPlayer& ai)
 {
-    if(!P) return;
-    blood = P->blood;
-    X = P->X;
-    Y = P->Y;
+    if (!ai.TestSafe())
+    {
+        ai.isNeedUpdate = 1;
+        ai.moves.clear();
+        ai.actionIndex = 0;
+        ai.update(AITarget(0, 0, SafeArea));
+    }
+    else if (ai.isNeedUpdate)
+    {
+        if(ai.actionA[ai.actionAIndex] == DWall) ai.update(AITarget(0, 0, Wall_D));
+        else if(ai.actionA[ai.actionAIndex] == GetItem) ai.update(AITarget(0, 0, Item));
+        ai.actionAIndex = (ai.actionAIndex + 1) % 6;
+    }
+
+    if (ai.actionIndex == -1)
+    {
+        ai.isNeedUpdate = 1;
+        ai.moves.clear();
+        ai.actionIndex = 0;
+        return int(DoNothing);
+    }
+
+    //int move = ai.moves[ai.actionIndex].type;
+    return ai.moves[ai.actionIndex --].type;
+
+    //return int(Stay);
 }
-
-AIPlayer::AIPlayer(const AIPlayer& rhs)
-{
-    X = rhs.X;
-    Y = rhs.Y;
-    blood = rhs.blood;
-}
-
-AIPlayer& AIPlayer::operator = (const AIPlayer& rhs)
-{
-    X = rhs.X;
-    Y = rhs.Y;
-    blood = rhs.blood;
-    return *this;
-}
-
-void AIPlayer::Walk(AIState& state, int type)
-{
-    if(!state.Check(type)) return;
-
-    if (type == Right) ++state.player_markers[state.player_to_move]->X;
-    if (type == Up)    --state.player_markers[state.player_to_move]->Y;
-    if (type == Left)  --state.player_markers[state.player_to_move]->X;
-    if (type == Down)  ++state.player_markers[state.player_to_move]->Y;
-
-    return;
-}
-
-AIBoom::AIBoom(Boom& boom)
-{
-    x = boom.X;
-    y = boom.Y;
-    tnow = tmax;
-}
-
-AIState::Move ComputeMove(QVector<Boom*>& BoomV, people* AI, people* P1)
-{
-    std::cerr << "AI:(" << AI->X << "," << AI->Y << ")" << std::endl;
-    std::cerr << "P1:(" << P1->X << "," << P1->Y << ")" << std::endl;
-    AIState state(AI, P1, BoomV);
-    MCTS::ComputeOptions player1_options;
-    player1_options.max_iterations = 1000;
-    player1_options.number_of_threads = 32;
-    player1_options.verbose = true;
-
-    auto move = MCTS::compute_move(state, player1_options);
-
-    return move;
-}
-

@@ -1,127 +1,67 @@
-#pragma once
-
-#include"setting.h"
+#include<QVector>
+#include<QQueue>
+#include<QMap>
+#include<QString>
+#include<iostream>
+#include<qalgorithms.h>
 #include"people.h"
-#include"mcts2.h"
-#include<vector>
-#include"gamewidget.h"
-#include <cstdarg>
-#include <cmath>
-#include <QVector>
-#include <sstream>
+#include"boom.h"
+#include"setting.h"
 
-class AIState;
+enum Action_Type { DoNothing = 0, Walk_R, Walk_U, Walk_L, Walk_D, SetBoom };
+enum Target_Type { Point = 1, Item, Wall_D, Wall_ND, Boom, SafeArea };
+enum AIWalk_Type { Stay = 0, Right, Up, Left, Down };
+enum ActionA_Type{ DWall = 1, Attack, GetItem };
 
-class AIBoom
+static int dx[5] = { 0, 1,  0, -1, 0 };
+static int dy[5] = { 0, 0, -1,  0, 1 };
+
+typedef struct Node
+{
+    int t, x, y;
+    AIWalk_Type type;
+    Node* parent;
+}Node;
+
+class AITarget
 {
 public:
-    AIBoom() { x = 0, y = 0, tnow = 0; }
-    AIBoom(Boom& boom);
+    AITarget(int x = 0, int y = 0, Target_Type type = Point) : x(x), y(y), type(type) {}
+
+    Target_Type type;
     int x, y;
-    static int tmin, tmax;
-    int tnow;
 };
 
-class AIPlayer
+class AIAction
 {
 public:
-    AIPlayer(people* P);
-    AIPlayer(const AIPlayer& rhs);
-    AIPlayer& operator = (const AIPlayer& rhs);
-    void Walk(AIState &state, int type);
+    AIAction(int x = 0, int y = 0, Action_Type type = DoNothing) : x(x), y(y), type(type) {}
 
-    int X, Y;
-    int blood;
-    enum Walk_Type{ Right = 1, Up, Left, Down };
-
+    Action_Type type;
+    int x, y;
 };
 
-class AIState
+class AIPlayer : public people
 {
 public:
-    AIState();
-    AIState(people* _AI, people* _P1, QVector<Boom*> _BoomV);
-    AIState(const AIState& rhs);
-    AIState& operator = (const AIState& rhs);
-    ~AIState();
+    AIPlayer(int TYPE, int XX, int YY, QString NAME = "Unnamed", QWidget* parent = NULL);
+    QVector<AIAction> Search(const QPoint& src, const AITarget& dst);
+    bool TestSafe();
 
-	typedef int Move;
-	static const Move no_move = -1;
+    bool isNeedUpdate;
+    int actionIndex;
+    int danger[17][17];
 
-    bool Check(int type) const;
-    void do_move(Move move);
-	template<typename RandomEngine>
-    void do_random_move(RandomEngine *engine);
-	bool has_moves() const;
-    std::vector<Move> get_moves() const;
+    static ActionA_Type actionA[6];
+    int actionAIndex;
 
-    double get_result(int current_player_to_move);
+    QVector<AIAction> moves;
 
-    int player_to_move;
-    int Target;
-    int empty;
-    int pepCnt;
-
-    AIPlayer AI, P1;
-
-	std::vector<std::vector<int>> mapdata_ai;
-    QVector<AIBoom> BoomV;
-    //std::unique_ptr<AIPlayer> player_markers[2];
-    AIPlayer* player_markers[2];
-
-    double D0, N, DTarget;
-    static double C1, C2, C3, C4;
-
-
-
-    /*
-
-移动加权C1
-
-放置加权C2
-
-最近道具曼哈顿D0 = d * ri  （道具类型加权ri）
-
-人物曼哈顿di
-
-敌军/盟军人物加权C3 C4
-
-最近可破坏物体曼哈顿D5
-
-一次可破坏多少物体N
-    */
-
-private:
-    double ManhattanDistance(QPoint a, QPoint b);
-    double ManhattanDistance(QPoint ai);
-    int DestoryAtOnce(QPoint BoomLocate);
+    void update(const AITarget& dst);
 };
 
-AIState::Move ComputeMove(QVector<Boom*>& BoomV, people* AI, people* P1);
+int ComputeMove(AIPlayer& ai);
+bool CheckAccess(const int x, const int y);
+bool CheckTarget(const int x, const int y, const AITarget& target, const AIPlayer& player);
 
-/*
-class GameState
-{
-public:
-	typedef int Move;
-	static const Move no_move = ...
-
-		void do_move(Move move);
-	template<typename RandomEngine>
-	void do_random_move(*engine);
-	bool has_moves() const;
-	std::vector<Move> get_moves() const;
-
-	// Returns a value in {0, 0.5, 1}.
-	// This should not be an evaluation function, because it will only be
-	// called for finished games. Return 0.5 to indicate a draw.
-	double get_result(int current_player_to_move) const;
-
-	int player_to_move;
-
-	// ...
-private:
-	// ...
-};
-
-*/
+extern AIPlayer* AI;
