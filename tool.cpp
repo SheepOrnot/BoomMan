@@ -9,8 +9,8 @@ Tool::Tool(int TYPE,int XX,int YY,QWidget *parent = NULL)
     this->setGeometry(0,0,48,48);
     this->setParent(parent);
     QString str;
-    if(type==1) str = QString(":/tool/res\\tool\\heart.png");
-    if(type==2) str = QString(":/tool/res\\tool\\lighting.png");
+    if(type==1) str = QString(":/tool/res\\tool\\lifecrys.png");
+    if(type==2) str = QString(":/tool/res\\tool\\power.png");
     if(type==3) str = QString(":/tool/res\\tool\\shoes.png");
     if(type==4) str = QString(":/tool/res\\tool\\bomb.png");
     pix = QPixmap(str);

@@ -31,9 +31,9 @@
         <file>res/boom/boomA_Flame.png</file>
     </qresource>
     <qresource prefix="/tool">
-        <file>res/tool/heart.png</file>
-        <file>res/tool/lighting.png</file>
         <file>res/tool/shoes.png</file>
         <file>res/tool/bomb.png</file>
+        <file>res/tool/power.png</file>
+        <file>res/tool/lifecrys.png</file>
     </qresource>
 </RCC>
