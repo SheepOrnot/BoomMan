@@ -6,7 +6,7 @@ people *P1 = NULL;
 people *P2 = NULL;
 people *P3 = NULL;
 people *P4 = NULL;
-
+//Alex Dan Molly Roki
 people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent = NULL)
 {
     I = 0;
@@ -16,13 +16,16 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
     type = TYPE;//类型
     BoomMax = 1;//可以同时放几个炸弹
     BoomLength = 1;//炸弹范围
-    speed = 50;//人物速度
+    speed = 40;//人物速度
     BoomTime.push_back(QTime(0,0));//记录放置时间
     BoomLv = 0;
     BoomType = 0;//炸弹类型 0 为默认炸弹
     BoomRemain = 0;//炸弹个数剩余
     isAnimation =0;
-    Cname = "Alex";
+    if(TYPE==0) Cname = "Alex";
+    if(TYPE==1) Cname = "Dan";
+    if(TYPE==2) Cname = "Molly";
+    if(TYPE==3) Cname = "Roki";
     isWalk = 0;
     deviation = 0;
     blood = 1;

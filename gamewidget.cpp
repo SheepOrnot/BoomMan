@@ -52,8 +52,8 @@ GameWidget::GameWidget(QWidget *parent) :
         }
     }
 
-    P1 = new people(0,1,1,"P1",this);
-    P2 = new people(0,15,15,"P2",this);
+    P1 = new people(1,1,1,"P1",this);
+    P2 = new people(2,15,15,"P2",this);
     //AI = new people(0,12,12,"AI",this);
 
     AIComputing = 0;

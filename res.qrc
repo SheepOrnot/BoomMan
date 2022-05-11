@@ -13,6 +13,18 @@
         <file>res/character/Alex/Alex_run.png</file>
         <file>res/character/Alex/Alex_Died.png</file>
         <file>res/character/Alex/Alex_run_Died.png</file>
+        <file>res/character/Roki/Roki.png</file>
+        <file>res/character/Roki/Roki_Died.png</file>
+        <file>res/character/Roki/Roki_run.png</file>
+        <file>res/character/Roki/Roki_run_Died.png</file>
+        <file>res/character/Molly/Molly.png</file>
+        <file>res/character/Molly/Molly_Died.png</file>
+        <file>res/character/Molly/Molly_run.png</file>
+        <file>res/character/Molly/Molly_run_Died.png</file>
+        <file>res/character/Dan/Dan.png</file>
+        <file>res/character/Dan/Dan_Died.png</file>
+        <file>res/character/Dan/Dan_run.png</file>
+        <file>res/character/Dan/Dan_run_Died.png</file>
     </qresource>
     <qresource prefix="/boom">
         <file>res/boom/boomA_1.png</file>
