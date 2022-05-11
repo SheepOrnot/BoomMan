@@ -1,7 +1,7 @@
 #include "gamewidget.h"
 #include "ui_gamewidget.h"
 
-int GameWidget::AISpeed = 500;
+int GameWidget::AISpeed = 150;
 
 GameWidget::GameWidget(QWidget *parent) :
     QWidget(parent),
@@ -58,9 +58,9 @@ GameWidget::GameWidget(QWidget *parent) :
 
     AIComputing = 0;
     //是否开启AI
-    if(1<0)
+    if(1)
     {
-        AI = new people(0,12,12,"AI",this);
+        AI = new AIPlayer(0,13,15,"AI",this);
 
         AITime = new QTimer;
         AITime->start(AISpeed);
@@ -69,13 +69,15 @@ GameWidget::GameWidget(QWidget *parent) :
             if(AIComputing) return;
             AIComputing = 1;
             try{
-                auto move = ComputeMove(BoomV, AI, P1);
+                int move = ComputeMove(*AI);
+                //std::cerr << "receiveMoveCtrl:" << move << std::endl;
                 if(move >= 1 && move <= 4)
                     if(AI->Check(move))
                     {
                         AI->Walk(move);
                         AI->isWalk=0;
                     }
+                if(move == 5) BoomV.push_back(new BoomA(0, AI->X, AI->Y, this));
             }catch(int e)
             {
                 qDebug() << e << endl;
