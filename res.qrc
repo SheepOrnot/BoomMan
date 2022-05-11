@@ -33,5 +33,7 @@
     <qresource prefix="/tool">
         <file>res/tool/heart.png</file>
         <file>res/tool/lighting.png</file>
+        <file>res/tool/shoes.png</file>
+        <file>res/tool/bomb.png</file>
     </qresource>
 </RCC>

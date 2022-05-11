@@ -89,6 +89,8 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
                 {
                     if(Map[1][Y][X]==1) ++blood;
                     if(Map[1][Y][X]==2) ++BoomLv;
+                    if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed : 20);
+                    if(Map[1][Y][X]==4) BoomTime.push_front(QTime(0,0));
                     for(QVector<Tool*>::iterator it = ToolV.begin(); it != ToolV.end(); ++it)
                     if((*it)->X == X&& (*it)->Y == Y)
                     {
