@@ -36,6 +36,7 @@ public:
     int deviation;//人物偏向
     int isWalk;//走路状态
     int blood;//血量
+    int preMove;//上一步（用于发送到网络）
 
     QPixmap pixCha;//人物图像
     QPixmap pixRun;//人物跑步

@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,20 +19,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     AI.cpp \
     boom.cpp \
+    client.cpp \
     gamewidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    netplayer.cpp \
     people.cpp \
+    server.cpp \
     setting.cpp \
     tool.cpp
 
 HEADERS += \
     AI.h \
     boom.h \
+    client.h \
     gamewidget.h \
     mainwindow.h \
-    mcts2.h \
+    netplayer.h \
     people.h \
+    server.h \
     setting.h \
     tool.h
 

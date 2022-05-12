@@ -3,7 +3,7 @@
 
 int GameWidget::AISpeed = 150;
 
-GameWidget::GameWidget(QWidget *parent) :
+GameWidget::GameWidget(QWidget *parent, int _svrType) :
     QWidget(parent),
     ui(new Ui::GameWidget)
 {
@@ -58,7 +58,7 @@ GameWidget::GameWidget(QWidget *parent) :
 
     AIComputing = 0;
     //是否开启AI
-    if(1)
+    if(0)
     {
         AI = new AIPlayer(0,13,15,"AI",this);
 
@@ -86,59 +86,140 @@ GameWidget::GameWidget(QWidget *parent) :
         });
     }
 
+    svr = nullptr;
+    cli = nullptr;
+    svrType = _svrType;
+
+    //是否开启服务器
+    if (svrType == 1)
+    {
+        qDebug() << "open server" << endl;
+        svr = new Server(this, 8010);
+        cli = new Client(this);
+
+        //客户端信息直接发送给服务端处理moveNetPlayer
+        connect(this, SIGNAL(hasMoved(int, int)), cli, SLOT(slotSend(int, int)));               //发送数据到服务器
+        connect(cli, SIGNAL(moveNetPlayer(dataPack)), this, SLOT(updateClient(dataPack)));      //本地移动
+    }
+    //开启一个客户端
+    else if (svrType == 2)
+    {
+        qDebug() << "open client" << endl;
+        cli = new Client(this);
+
+        //客户端信息直接发送给服务端处理
+        connect(this, SIGNAL(hasMoved(int, int)), cli, SLOT(slotSend(int, int)));               //发送数据到服务器
+        connect(cli, SIGNAL(moveNetPlayer(dataPack)), this, SLOT(updateClient(dataPack)));      //本地移动
+    }
+
 }
-void GameWidget::keyPressEvent(QKeyEvent *event)
+
+void GameWidget::updateClient(dataPack p)
 {
-//    if(event->isAutoRepeat()) return;
-    switch(event->key())
+    //依据网络更新界面
+    if (p.player == 1)
+    {
+        if (p.move >= 1 && p.move <= 4)
+        {
+
+            P1->Walk(p.move);
+            P1->isWalk = 0;
+            if (svrType == 1) qDebug() << "server: P1 moving..." << endl;
+        }
+        else if (p.move == 5)
+        {
+            BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this));
+            P1->raise();
+        }
+    }
+    else if (p.player == 2)
+    {
+        if (p.move >= 1 && p.move <= 4)
+        {
+
+            P2->Walk(p.move);
+            P2->isWalk = 0;
+            if (svrType == 1) qDebug() << "server: P2 moving..." << endl;
+        }
+        else if (p.move == 5)
+        {
+            BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this));
+            P2->raise();
+        }
+    }
+
+}
+
+void GameWidget::keyPressEvent(QKeyEvent* event)
+{
+    //    if(event->isAutoRepeat()) return;
+    switch (event->key())
     {
     case Qt::Key_Escape:
-       qDebug()<<"Escape";
-       break;
+        qDebug() << "Escape";
+        break;
     case Qt::Key_D:
-       qDebug()<<"D";
-       P1->Walk(1);
-       break;
+        qDebug() << "D";
+        if (svrType) emit hasMoved(1, 1);
+        else P1->Walk(1);
+        break;
     case Qt::Key_W:
-       qDebug()<<"W";
-       P1->Walk(2);
-       break;
+        qDebug() << "W";
+        if (svrType) emit hasMoved(2, 1);
+        else P1->Walk(2);
+        break;
     case Qt::Key_A:
-       qDebug()<<"A";
-       P1->Walk(3);
-       break;
+        qDebug() << "A";
+        if (svrType) emit hasMoved(3, 1);
+        else P1->Walk(3);
+        break;
     case Qt::Key_S:
-       qDebug()<<"S";
-       P1->Walk(4);
-       break;
+        qDebug() << "S";
+        if (svrType) emit hasMoved(4, 1);
+        else P1->Walk(4);
+        break;
     case Qt::Key_Space:
-       qDebug()<<"Space";
-       if(P1->CanBoom())
-       BoomV.push_back(new BoomA(P1->BoomLv,P1->X,P1->Y,this));
-       P1->raise();
-       break;
+        qDebug() << "Space";
+        if (P1->CanBoom())
+        {
+            if (svrType) emit hasMoved(5, 1);
+            else
+            {
+                BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this));
+                P1->raise();
+            }
+        }
+        break;
     case Qt::Key_Right:
-       qDebug()<<"Right";
-       P2->Walk(1);
-       break;
+        qDebug() << "Right";
+        if (svrType) emit hasMoved(1, 2);
+        else P2->Walk(1);
+        break;
     case Qt::Key_Up:
-       qDebug()<<"Up";
-       P2->Walk(2);
-       break;
+        qDebug() << "Up";
+        if (svrType) emit hasMoved(2, 2);
+        else P2->Walk(2);
+        break;
     case Qt::Key_Left:
-       qDebug()<<"Left";
-       P2->Walk(3);
-       break;
+        qDebug() << "Left";
+        if (svrType) emit hasMoved(3, 2);
+        else P2->Walk(3);
+        break;
     case Qt::Key_Down:
-       qDebug()<<"Down";
-       P2->Walk(4);
-       break;
+        qDebug() << "Down";
+        if (svrType) emit hasMoved(4, 2);
+        else P2->Walk(4);
+        break;
     case Qt::Key_Enter:
-       qDebug()<<"Enter";
-       if(P2->CanBoom())
-       BoomV.push_back(new BoomA(P2->BoomLv,P2->X,P2->Y,this));
-       P2->raise();
-       break;
+        qDebug() << "Enter";
+        if (P2->CanBoom())
+            if (svrType) emit hasMoved(5, 2);
+            else
+            {
+                BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this));
+                P2->raise();
+            }
+        break;
     }
 }
 void GameWidget::keyReleaseEvent(QKeyEvent *event)
@@ -183,5 +264,15 @@ void GameWidget::keyReleaseEvent(QKeyEvent *event)
 
 GameWidget::~GameWidget()
 {
+    if (svr)
+    {
+        svr->close();
+        delete svr;
+    }
+    if (cli)
+    {
+        cli->close();
+        delete cli;
+    }
     delete ui;
 }

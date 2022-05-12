@@ -7,6 +7,9 @@
 #include "people.h"
 #include "boom.h"
 #include "AI.h"
+#include "netplayer.h"
+#include "server.h"
+#include "client.h"
 namespace Ui {
 class GameWidget;
 }
@@ -19,8 +22,11 @@ public:
     QTimer *AITime;
     static int AISpeed;
     int AIComputing;
+    Server* svr;
+    Client* cli;
+    int svrType;
 
-    explicit GameWidget(QWidget *parent = nullptr);
+    explicit GameWidget(QWidget *parent = nullptr, int svrType = 0);
     ~GameWidget();
 
 private:
@@ -29,6 +35,13 @@ private:
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+
+public slots:
+    void updateClient(dataPack p);
+
+
+signals:
+    void hasMoved(int move, int player);
 
 };
 
