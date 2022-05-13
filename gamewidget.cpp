@@ -61,6 +61,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
     if(0)
     {
         AI = new AIPlayer(0,13,15,"AI",this);
+        AIp = AI;
 
         AITime = new QTimer;
         AITime->start(AISpeed);
@@ -77,7 +78,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
                         AI->Walk(move);
                         AI->isWalk=0;
                     }
-                if(move == 5) BoomV.push_back(new BoomA(0, AI->X, AI->Y, this));
+                if(move == 5) BoomV.push_back(new BoomA(AI->BoomLv, AI->X, AI->Y, this));
             }catch(int e)
             {
                 qDebug() << e << endl;
@@ -121,7 +122,6 @@ void GameWidget::updateClient(dataPack p)
     {
         if (p.move >= 1 && p.move <= 4)
         {
-
             P1->Walk(p.move);
             P1->isWalk = 0;
             if (svrType == 1) qDebug() << "server: P1 moving..." << endl;

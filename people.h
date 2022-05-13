@@ -50,5 +50,5 @@ public:
 
 };
 
-extern people *P1,*P2,*P3,*P4;
+extern people *P1,*P2,*P3,*P4,*AIp;
 #endif // PEOPLE_H

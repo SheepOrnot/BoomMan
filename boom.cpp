@@ -35,10 +35,11 @@ int Boom::Check(int XX,int YY,QWidget *parent)
         }
     }
 
-    if(P1->X==XX&&P1->Y==YY) P1->Reduceblood();
-    if(P2->X==XX&&P2->Y==YY) P2->Reduceblood();
-//    if(P3->X==XX&&P3->Y==YY) P3->Reduceblood();
-//    if(P4->X==XX&&P4->Y==YY) P4->Reduceblood();
+    if(P1!=NULL&&P1->X==XX&&P1->Y==YY) P1->Reduceblood();
+    if(P2!=NULL&&P2->X==XX&&P2->Y==YY) P2->Reduceblood();
+    if(AIp!=NULL&&AIp->X==XX&&AIp->Y==YY) AIp->Reduceblood();
+//    if(P3!=NULL&&P3->X==XX&&P3->Y==YY) P3->Reduceblood();
+//    if(P4!=NULL&&P4->X==XX&&P4->Y==YY) P4->Reduceblood();
     if(Map[0][YY][XX] == 1) {Map[0][YY][XX]=0;Build[YY][XX]->hide(); return 1;}
     return 0;
 }

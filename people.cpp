@@ -6,6 +6,7 @@ people *P1 = NULL;
 people *P2 = NULL;
 people *P3 = NULL;
 people *P4 = NULL;
+people *AIp = NULL;
 //Alex Dan Molly Roki
 people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent = NULL)
 {
