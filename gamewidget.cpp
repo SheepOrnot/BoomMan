@@ -9,6 +9,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
 {
     ui->setupUi(this);
     this->setFixedSize(960,790);/*设置固定大小*/
+    this->setWindowFlags(Qt::FramelessWindowHint);
 
     for(int i=1;i<16;i++)
     {
@@ -95,7 +96,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
     if (svrType == 1)
     {
         qDebug() << "open server" << endl;
-        svr = new Server(this, 8010);
+        svr = new Server(this, 1024);
         cli = new Client(this);
 
         //客户端信息直接发送给服务端处理moveNetPlayer
@@ -164,29 +165,29 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_D:
         qDebug() << "D";
-        if (svrType) emit hasMoved(1, 1);
+        if (svrType) {if(svrType == 1) emit hasMoved(1, 1);}
         else P1->Walk(1);
         break;
     case Qt::Key_W:
         qDebug() << "W";
-        if (svrType) emit hasMoved(2, 1);
+        if (svrType) {if(svrType == 1) emit hasMoved(2, 1);}
         else P1->Walk(2);
         break;
     case Qt::Key_A:
         qDebug() << "A";
-        if (svrType) emit hasMoved(3, 1);
+        if (svrType) {if(svrType == 1) emit hasMoved(3, 1);}
         else P1->Walk(3);
         break;
     case Qt::Key_S:
         qDebug() << "S";
-        if (svrType) emit hasMoved(4, 1);
+        if (svrType) {if(svrType == 1) emit hasMoved(4, 1);}
         else P1->Walk(4);
         break;
     case Qt::Key_Space:
         qDebug() << "Space";
         if (P1->CanBoom())
         {
-            if (svrType) emit hasMoved(5, 1);
+            if (svrType) {if(svrType == 1) emit hasMoved(5, 1);}
             else
             {
                 BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this));
@@ -196,28 +197,28 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Right:
         qDebug() << "Right";
-        if (svrType) emit hasMoved(1, 2);
+        if (svrType) { if(svrType == 2) emit hasMoved(1, 2); }
         else P2->Walk(1);
         break;
     case Qt::Key_Up:
         qDebug() << "Up";
-        if (svrType) emit hasMoved(2, 2);
+        if (svrType) { if(svrType == 2) emit hasMoved(2, 2); }
         else P2->Walk(2);
         break;
     case Qt::Key_Left:
         qDebug() << "Left";
-        if (svrType) emit hasMoved(3, 2);
+        if (svrType) { if(svrType == 2) emit hasMoved(3, 2); }
         else P2->Walk(3);
         break;
     case Qt::Key_Down:
         qDebug() << "Down";
-        if (svrType) emit hasMoved(4, 2);
+        if (svrType) { if(svrType == 2) emit hasMoved(4, 2); }
         else P2->Walk(4);
         break;
     case Qt::Key_Enter:
         qDebug() << "Enter";
         if (P2->CanBoom())
-            if (svrType) emit hasMoved(5, 2);
+            if (svrType) {if(svrType == 2) emit hasMoved(5, 2);}
             else
             {
                 BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this));
