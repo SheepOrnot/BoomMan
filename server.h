@@ -4,7 +4,9 @@
 #include <QTcpServer>
 #include <QObject>
 #include <QTcpSocket>
+#include <QNetworkInterface>
 #include "setting.h"
+#include "people.h"
 
 class TcpClientSocket : public QTcpSocket
 {

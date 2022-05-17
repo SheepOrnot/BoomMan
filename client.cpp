@@ -5,7 +5,7 @@ Client::Client(QWidget *parent,Qt::WindowFlags f)
     : QDialog(parent,f)
 {
     status = false;  //  连接or未连接
-    port = 15745;
+    port = 1024;
     serverIP =new QHostAddress();
 
     slotEnter();
@@ -17,7 +17,7 @@ void Client::slotEnter()
 {
     if(!status)											//(a)
     {
-        QString ip = "109.166.36.55";
+        QString ip = "192.168.43.103";
         serverIP->setAddress(ip);
 
         /* 创建了一个QTcpSocket类对象，并将信号/槽连接起来 */

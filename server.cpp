@@ -25,8 +25,31 @@ void TcpClientSocket::slotDisconnected()
 
 Server::Server(QObject *parent,int port):QTcpServer(parent)
 {
-    listen(QHostAddress::Any,port);
-//    listen(QHostAddress("109.166.36.55"), 15745);
+    QString myAddr;
+    QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();       //返回所有IP地址，然后进行遍历
+    for(int i=0;i<ipAddressesList.length();i++)
+    {
+        QString myAddr;
+        QHostAddress  addr = ipAddressesList.at(i);
+        qDebug() << addr.toString();      //打印返回信息
+        if(addr.toString().contains("192."))      //筛选
+        {
+            myAddr = addr.toString();
+            qDebug() <<myAddr;
+            qDebug() << "***************";
+            //ui->Edit_serve_IP->setText(myAddr);
+        }
+    }
+    int ret = listen(QHostAddress(myAddr),1024);
+    if(!ret)
+    {
+        qDebug() << "listen failed";
+    }
+    else
+    {
+        qDebug() << "listen successed";
+    }
+    this->setMaxPendingConnections(4);     //设置监听数量
 }
 void Server::incomingConnection(int socketDescriptor)
 {
@@ -44,13 +67,12 @@ void Server::updateClients(dataPack p)
 {
     dataPack data;
     data.type = p.type;
-    for(int i = 0; i < 16; i ++ )
-    {
-        for(int j = 0; j < 16; j ++ )
-        {
-            data.Map[0][i][j] = p.Map[0][i][j];
-        }
-    }
+
+    data.playerPos[1][0] = P1->X;
+    data.playerPos[1][1] = P1->Y;
+    data.playerPos[2][0] = P2->X;
+    data.playerPos[2][1] = P2->Y;
+
     data.player = p.player;
     data.move = p.move;
 
