@@ -36,4 +36,12 @@
         <file>res/tool/power.png</file>
         <file>res/tool/lifecrys.png</file>
     </qresource>
+    <qresource prefix="/button">
+        <file>res/button/CreateNetwork.png</file>
+        <file>res/button/JoinNetwork.png</file>
+        <file>res/button/Start.png</file>
+    </qresource>
+    <qresource prefix="/window">
+        <file>res/window/MainWindow.png</file>
+    </qresource>
 </RCC>

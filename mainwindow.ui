@@ -6,65 +6,79 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1028</width>
+    <height>722</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border-image: url(:/window/res/window/MainWindow.png);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="Start">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>180</y>
+      <x>340</x>
+      <y>270</y>
       <width>351</width>
-      <height>71</height>
+      <height>111</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/button/res/button/Start.png);</string>
+    </property>
     <property name="text">
-     <string>单机游戏</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="svrOpen">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>280</y>
+      <x>340</x>
+      <y>410</y>
       <width>351</width>
-      <height>71</height>
+      <height>111</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/button/res/button/CreateNetwork.png);</string>
+    </property>
     <property name="text">
-     <string>创建网络游戏</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="cliOpen">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>370</y>
+      <x>340</x>
+      <y>550</y>
       <width>351</width>
-      <height>81</height>
+      <height>111</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/button/res/button/JoinNetwork.png);</string>
+    </property>
     <property name="text">
-     <string>加入一个现有游戏</string>
+     <string/>
     </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1028</width>
      <height>26</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
