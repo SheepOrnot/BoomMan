@@ -1,7 +1,7 @@
 #include "tool.h"
 
-int Tool::BaseX = 100 -48;
-int Tool::BaseY = 50 -48;
+int Tool::BaseX = 215 -48;
+int Tool::BaseY = 34 -48;
 QVector<Tool*> ToolV;
 Tool::Tool(int TYPE,int XX,int YY,QWidget *parent = NULL)
 {

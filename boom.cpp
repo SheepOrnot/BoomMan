@@ -1,7 +1,7 @@
 #include "boom.h"
 QVector<Boom*> BoomV;
-int Boom::BaseX = 100 -48;
-int Boom::BaseY = 50 -48;
+int Boom::BaseX = 215 -48;
+int Boom::BaseY = 34 -48;
 int Boom::Check(int XX,int YY,QWidget *parent)
 {
     if(XX<1||XX>15||YY<1||YY>15||Map[0][YY][XX]>1) return 2;

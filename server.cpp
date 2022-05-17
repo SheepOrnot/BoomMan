@@ -26,6 +26,7 @@ void TcpClientSocket::slotDisconnected()
 Server::Server(QObject *parent,int port):QTcpServer(parent)
 {
     listen(QHostAddress::Any,port);
+//    listen(QHostAddress("109.166.36.55"), 15745);
 }
 void Server::incomingConnection(int socketDescriptor)
 {

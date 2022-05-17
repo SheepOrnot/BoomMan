@@ -1,7 +1,7 @@
 #include "people.h"
 
-int people::BaseX = 100 -48;
-int people::BaseY = 50 -20 -48 -14;
+int people::BaseX = 215 -48;
+int people::BaseY = 34 -20 -48 -14;
 people *P1 = NULL;
 people *P2 = NULL;
 people *P3 = NULL;

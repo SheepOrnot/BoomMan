@@ -8,7 +8,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
     ui(new Ui::GameWidget)
 {
     ui->setupUi(this);
-    this->setFixedSize(960,960);/*设置固定大小*/
+    this->setFixedSize(960,790);/*设置固定大小*/
 
     for(int i=1;i<16;i++)
     {
@@ -25,7 +25,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
             label->setGeometry(0,0,48,48);
             label->setPixmap(pix);
             label->setParent(this);
-            label->move(100+(j-1)*48,50+(i-1)*48);
+            label->move(215+(j-1)*48,34+(i-1)*48);
 
         }
     }
@@ -47,7 +47,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
             Build[i][j]->setGeometry(0,0,48,48);
             Build[i][j]->setPixmap(pix);
             Build[i][j]->setParent(this);
-            Build[i][j]->move(100+(j-1)*48,50+(i-1)*48);
+            Build[i][j]->move(215+(j-1)*48,34+(i-1)*48);
 
         }
     }
