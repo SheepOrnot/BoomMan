@@ -14,7 +14,7 @@ public:
     people(const people& rhs);
     void Walk(int TYPE);//走路动画
     void SetPos(int TYPE);//静止时朝向
-    void MovePos(int XX,int YY);//改变坐标
+    void MovePos(int XX,int YY,int de);//改变坐标
     bool Check(int TYPE);
     void Reduceblood();
     bool CanBoom();

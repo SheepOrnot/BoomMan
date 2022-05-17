@@ -51,7 +51,7 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
     /**///
     this->setGeometry(0,0,48,68);
     this->SetPos(4);
-    this->MovePos(X,Y);
+    this->MovePos(X,Y,0);
     this->setParent(parent);
     Time1  = new QTimer(this);
     Time2  = new QTimer(this);
@@ -177,12 +177,25 @@ void people::Walk(int TYPE)
     Time1->start(this->speed);
 }
 
-void people::MovePos(int XX,int YY)
+void people::MovePos(int XX,int YY,int de = 0)
 {
     if(blood<=0) return;
-    if(isAnimation) return;
     if(XX<1||XX>15||YY<1||YY>15) return;
-    this->move(BaseX+X*48,BaseY+Y*48);
+    X = XX, Y = YY;
+    if((de==1&& X>=15)||(de==2&& Y<=1)||(de==3&& X<=1)||(de==4&& Y>=15)) de=0;
+    if(de==1&&Map[0][Y][X+1]>0) de=0;
+    if(de==2&&Map[0][Y-1][X]>0) de=0;
+    if(de==3&&Map[0][Y][X-1]>0) de=0;
+    if(de==4&&Map[0][Y+1][X]>0) de=0;
+    isAnimation = isWalk = 0;
+    int DatX,DatY;
+    DatX = DatY = 0;
+    deviation = de;
+    if(deviation == 1) DatX =  48/3;
+    if(deviation == 2) DatY = -48/3;
+    if(deviation == 3) DatX = -48/3;
+    if(deviation == 4) DatY =  48/3;
+    this->move(BaseX+X*48+DatX,BaseY+Y*48+DatY);
 }
 
 void people::SetPos(int TYPE)
