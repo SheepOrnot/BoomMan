@@ -7,6 +7,7 @@ people *P2 = NULL;
 people *P3 = NULL;
 people *P4 = NULL;
 people *AIp = NULL;
+int GMode = 0;
 //Alex Dan Molly Roki
 people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent = NULL)
 {
@@ -219,11 +220,6 @@ void people::Reduceblood()
     pixCha = QPixmap(str);
     str = QString(":/character/res\\character\\%1\\%2_run_Died.png").arg(this->Cname).arg(this->Cname);
     pixRun = QPixmap(str);
-    if(blood<=0)
-    {
-        str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
-        GameBoard->Cha.setPixmap(QPixmap(str).copy(48*3,28,48,68));
-    }
     if(blood > 0)
     {
         Time3->start(500);
@@ -233,6 +229,81 @@ void people::Reduceblood()
     Time1->stop();
     this->setPixmap(pixCha.copy(48*(orientation-1),28,48,68));
     Time2->start(1300);
+
+    if(blood<=0)
+    {
+        str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
+        GameBoard->Cha.setPixmap(QPixmap(str).copy(48*3,28,48,68));
+        QMessageBox Res;
+        bool fl = 0;
+        if(P1!=NULL&&P1->blood>0) fl = 1;
+        if(P2!=NULL&&P2->blood>0) fl = 1;
+        if(P3!=NULL&&P3->blood>0) fl = 1;
+        if(P4!=NULL&&P4->blood>0) fl = 1;
+        if(fl==0)
+        {
+            GMode = 0;
+            Res.setText("平局");
+            Res.exec();
+        }
+        if(GMode==1&&P1!=NULL&&P2!=NULL&&(P1->blood<=0||P2->blood<=0))
+        {
+            GMode = 0;
+            if(P1->blood<=0)
+            {
+                Res.setText(QString("%1 胜利了！").arg(P2->name));
+                Res.exec();
+            }
+            if(P2->blood<=0)
+            {
+                Res.setText(QString("%1 胜利了！").arg(P1->name));
+                Res.exec();
+            }
+        }
+        if(GMode==2&&P1!=NULL&&P2!=NULL&&(P1->blood<=0||P2->blood<=0))
+        {
+            GMode = 0;
+            if(P1->blood<=0)
+            {
+                Res.setText(QString("%1 胜利了！").arg(P2->name));
+                Res.exec();
+            }
+            if(P2->blood<=0)
+            {
+                Res.setText(QString("%1 胜利了！").arg(P1->name));
+                Res.exec();
+            }
+        }
+        if(GMode==3&&P1!=NULL&&P3!=NULL&&(P1->blood<=0||P3->blood<=0))
+        {
+            GMode = 0;
+            if(P1->blood<=0)
+            {
+                Res.setText(QString("%1 胜利了！").arg(P3->name));
+                Res.exec();
+            }
+            if(P3->blood<=0)
+            {
+                Res.setText(QString("%1 胜利了！").arg(P1->name));
+                Res.exec();
+            }
+        }
+        if(GMode==4&&P1!=NULL&&P2!=NULL&&P3!=NULL&&P4!=NULL&&
+           ((P1->blood<=0&&P2->blood<=0)||(P3->blood<=0&&P4->blood<=0)))
+        {
+            GMode = 0;
+            if(P1->blood<=0&&P2->blood<=0)
+            {
+                Res.setText(QString("玩家失败"));
+                Res.exec();
+            }
+            if(P3->blood<=0&&P4->blood<=0)
+            {
+                Res.setText(QString("玩家胜利"));
+                Res.exec();
+            }
+        }
+    }
 //    QMessageBox WR;
 //    WR.setText(name+QString(" Lose"));
 //    WR.exec();

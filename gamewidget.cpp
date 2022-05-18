@@ -10,6 +10,8 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     ui->setupUi(this);
     this->setFixedSize(960,790);/*设置固定大小*/
 
+    GMode = gamemode;
+
     for(int i=1;i<16;i++)
     {
         for(int j=1;j<16;j++)
