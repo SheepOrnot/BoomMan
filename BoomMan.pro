@@ -20,6 +20,7 @@ SOURCES += \
     AI.cpp \
     boom.cpp \
     client.cpp \
+    gameboard.cpp \
     gamewidget.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     AI.h \
     boom.h \
     client.h \
+    gameboard.h \
     gamewidget.h \
     mainwindow.h \
     netplayer.h \

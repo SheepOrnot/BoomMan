@@ -7,6 +7,7 @@
 #include<QTimer>
 #include"setting.h"
 #include"tool.h"
+#include "gameboard.h"
 class people :public QLabel
 {
 public:
@@ -47,6 +48,9 @@ public:
     static int BaseY;
 
     enum Walk_Type{ Right = 1, Up, Left, Down };
+
+    gameboard *GameBoard;
+
 
 };
 

@@ -31,6 +31,8 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
     deviation = 0;
     blood = 1;
 
+    GameBoard = new gameboard(TYPE,name,parent);
+
     /**///图像初始化
     QString str = QString(":/character/res\\character\\%1\\%2.png").arg(this->Cname).arg(this->Cname);
     pixCha = QPixmap(str); //右上左下
@@ -90,8 +92,9 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
                 {
                     if(Map[1][Y][X]==1) ++blood;
                     if(Map[1][Y][X]==2) ++BoomLv;
-                    if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed : 20);
+                    if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed-5 : 20);
                     if(Map[1][Y][X]==4) BoomTime.push_front(QTime(0,0));
+                    GameBoard->Set(blood,speed,BoomTime.size(),BoomLv);
                     for(QVector<Tool*>::iterator it = ToolV.begin(); it != ToolV.end(); ++it)
                     if((*it)->X == X&& (*it)->Y == Y)
                     {
@@ -210,10 +213,17 @@ void people::Reduceblood()
 {
     this->raise();
     --blood;
+    if(blood<0) blood = 0;
+    GameBoard->Set(blood,speed,BoomTime.size(),BoomLv);
     QString str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
     pixCha = QPixmap(str);
     str = QString(":/character/res\\character\\%1\\%2_run_Died.png").arg(this->Cname).arg(this->Cname);
     pixRun = QPixmap(str);
+    if(blood<=0)
+    {
+        str = QString(":/character/res\\character\\%1\\%2_Died.png").arg(this->Cname).arg(this->Cname);
+        GameBoard->Cha.setPixmap(QPixmap(str).copy(48*3,28,48,68));
+    }
     if(blood > 0)
     {
         Time3->start(500);

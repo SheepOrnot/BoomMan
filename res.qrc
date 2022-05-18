@@ -35,6 +35,10 @@
         <file>res/tool/bomb.png</file>
         <file>res/tool/power.png</file>
         <file>res/tool/lifecrys.png</file>
+        <file>res/tool/PlayerBoom.png</file>
+        <file>res/tool/PlayerHeart.png</file>
+        <file>res/tool/PlayerPower.png</file>
+        <file>res/tool/PlayerSpeed.png</file>
     </qresource>
     <qresource prefix="/button">
         <file>res/button/CreateNetwork.png</file>
