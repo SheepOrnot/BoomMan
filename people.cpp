@@ -152,6 +152,7 @@ bool people::Check(int TYPE)
 
 void people::Walk(int TYPE)
 {
+    if(GMode==0) return;
     if(blood<=0) return;
     if(isAnimation) return;
     if(TYPE>4||TYPE<1) return;
@@ -311,6 +312,7 @@ void people::Reduceblood()
 
 bool people::CanBoom()
 {
+    if(GMode==0) return 0;
     if(blood<=0) return 0;
     if(Map[0][Y][X]>0) return 0;
     if(BoomTime.front().secsTo(QTime::currentTime())<8) return 0;
