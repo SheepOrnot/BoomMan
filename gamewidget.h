@@ -7,7 +7,6 @@
 #include "people.h"
 #include "boom.h"
 #include "AI.h"
-#include "netplayer.h"
 #include "server.h"
 #include "client.h"
 namespace Ui {

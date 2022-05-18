@@ -24,7 +24,6 @@ SOURCES += \
     gamewidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    netplayer.cpp \
     people.cpp \
     server.cpp \
     setting.cpp \
@@ -37,7 +36,6 @@ HEADERS += \
     gameboard.h \
     gamewidget.h \
     mainwindow.h \
-    netplayer.h \
     people.h \
     server.h \
     setting.h \
