@@ -53,7 +53,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType) :
     }
 
     P1 = new people(1,1,1,"P1",this);
-    P2 = new people(3,15,15,"P2",this);
+    P2 = new people(2,15,15,"P2",this);
     //AI = new people(0,12,12,"AI",this);
 
     AIComputing = 0;
