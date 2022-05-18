@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#gamepara{border-image: url(:/window/res/window/MainWindow.png);}</string>
+  </property>
   <widget class="QLabel" name="playselect">
    <property name="geometry">
     <rect>
@@ -42,14 +45,17 @@
   <widget class="QPushButton" name="start">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>330</x>
      <y>520</y>
      <width>261</width>
      <height>101</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/button/res/button/Start.png);</string>
+   </property>
    <property name="text">
-    <string>开始游戏</string>
+    <string/>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox">
@@ -60,6 +66,9 @@
      <width>621</width>
      <height>71</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="title">
     <string/>
@@ -121,8 +130,8 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>68</width>
-      <height>15</height>
+      <width>41</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -147,8 +156,8 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>68</width>
-      <height>15</height>
+      <width>41</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">

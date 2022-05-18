@@ -2,19 +2,34 @@
 #include "ui_gamepara.h"
 
 gamepara::gamepara(QWidget *parent, int svrType) :
-    QWidget(parent),
+    QMainWindow(parent),
     ui(new Ui::gamepara)
 {
     ui->setupUi(this);
+
+    //QGraphicsOpacityEffect *groupBox = new QGraphicsOpacityEffect;
+    //QGraphicsOpacityEffect *Button = new QGraphicsOpacityEffect;
+    //groupBox->setOpacity(0.1);
+    //Button->setOpacity(1);
+    //ui->groupBox->setGraphicsEffect(groupBox);
+    //ui->groupBox_2->setGraphicsEffect(groupBox);
+    //ui->groupBox_3->setGraphicsEffect(groupBox);
+
+    //ui->Alex->setGraphicsEffect(Button);
+    //ui->Dan->setGraphicsEffect(Button);
+    //ui->Molly->setGraphicsEffect(Button);
+    //ui->Roki->setGraphicsEffect(Button);
 
     if(svrType == 1) hideP2();
     if(svrType == 2) hideP1();
     if(svrType)
     {
-        ui->pe1v1->hide();
-        ui->pp1v1->hide();
-        ui->ppee2v2->hide();
+        ui->groupBox_3->hide();
     }
+
+    connect(ui->pe1v1, &QPushButton::clicked, [=](){showAll();hideP2();});
+    connect(ui->pp1v1, &QPushButton::clicked, [=](){showAll();});
+    connect(ui->ppee2v2, &QPushButton::clicked, [=](){showAll();});
 
     connect(ui->start, &QPushButton::clicked, [=]()
     {
@@ -24,25 +39,34 @@ gamepara::gamepara(QWidget *parent, int svrType) :
         if(ui->ppee2v2->isChecked()) gamemode = 4;
         if(svrType) gamemode = 1;
 
+        if(gamemode == -1) {QMessageBox::information(nullptr, "啊哦~", "游戏模式还没选"); return;}
+
         if(gamemode == 1)
         {
             if(svrType == 1) checkP1();
             if(svrType == 2) checkP2();
+            if(pSel1 == -1) {QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
+            else if(pSel2 == -1) {QMessageBox::information(nullptr, "啊哦~", "P2还没选"); return;}
         }
         else if(gamemode == 2)
         {
             checkP1();
             checkP2();
+            if(pSel1 == -1) {QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
+            else if(pSel2 == -1) {QMessageBox::information(nullptr, "啊哦~", "P2还没选"); return;}
         }
         else if(gamemode == 3)
         {
             checkP1();
             checkAI_1();
+            if(pSel1 == -1) {QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
         }
         else if(gamemode == 4)
         {
             checkP1();
             checkP2();
+            if(pSel1 == -1) {QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
+            else if(pSel2 == -1) {QMessageBox::information(nullptr, "啊哦~", "P2还没选"); return;}
             checkAI_2();
         }
 
@@ -54,20 +78,20 @@ gamepara::gamepara(QWidget *parent, int svrType) :
 
 }
 
+void gamepara::showAll()
+{
+    ui->groupBox->show();
+    ui->groupBox_2->show();
+}
+
 void gamepara::hideP1()
 {
-    ui->Alex->hide();
-    ui->Dan->hide();
-    ui->Molly->hide();
-    ui->Roki->hide();
+    ui->groupBox->hide();
 }
 
 void gamepara::hideP2()
 {
-    ui->Alex_2->hide();
-    ui->Dan_2->hide();
-    ui->Molly_2->hide();
-    ui->Roki_2->hide();
+    ui->groupBox_2->hide();
 }
 
 void gamepara::checkP1()
