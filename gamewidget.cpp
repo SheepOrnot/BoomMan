@@ -1,8 +1,6 @@
 #include "gamewidget.h"
 #include "ui_gamewidget.h"
 
-int GameWidget::AISpeed = 150;
-
 GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int pSel3, int pSel4, int gamemode) :
     QWidget(parent),
     ui(new Ui::GameWidget)
@@ -54,65 +52,49 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
         }
     }
 
-    P1 = new people(1,1,1,"P1",this);
-    P2 = new people(2,15,15,"P2",this);
-    //AI = new people(0,12,12,"AI",this);
-
-    AIComputing = 0;
-    //是否开启AI
-    if(0)
-    {
-        AI = new AIPlayer(0,13,15,"AI",this);
-        AIp = AI;
-
-        AITime = new QTimer;
-        AITime->start(AISpeed);
-
-        connect(AITime,&QTimer::timeout,[=](){
-            if(AIComputing) return;
-            AIComputing = 1;
-            try{
-                int move = ComputeMove(*AI);
-                //std::cerr << "receiveMoveCtrl:" << move << std::endl;
-                if(move >= 1 && move <= 4)
-                    if(AI->Check(move))
-                    {
-                        AI->Walk(move);
-                        AI->isWalk=0;
-                    }
-                if(move == 5) BoomV.push_back(new BoomA(AI->BoomLv, AI->X, AI->Y, this));
-            }catch(int e)
-            {
-                qDebug() << e << endl;
-            }
-            AIComputing = 0;
-        });
-    }
-
     svr = nullptr;
     cli = nullptr;
     svrType = _svrType;
-
-    //是否开启服务器
-    if (svrType == 1)
+    if(gamemode == 1)
     {
-        qDebug() << "open server" << endl;
-        svr = new Server(this, 1024);
-        cli = new Client(this);
+        P1 = new people(1,1,1,"P1",this);
+        P2 = new people(2,15,15,"P2",this);
 
-        //客户端信息直接发送给服务端处理moveNetPlayer
-        connect(this, SIGNAL(hasMoved(int, int)), cli, SLOT(slotSend(int, int)));               //发送数据到服务器
-        connect(cli, SIGNAL(moveNetPlayer(dataPack)), this, SLOT(updateClient(dataPack)));      //本地移动
+        //是否开启服务器
+        if (svrType == 1)
+        {
+            qDebug() << "open server" << endl;
+
+            connect(this, SIGNAL(hasMoved(int, int)), cli, SLOT(slotSend(int, int)));               //发送数据到服务器
+            connect(cli, SIGNAL(moveNetPlayer(dataPack)), this, SLOT(updateClient(dataPack)));      //本地移动
+        }
+        //开启一个客户端
+        else if (svrType == 2)
+        {
+            qDebug() << "open client" << endl;
+
+            connect(this, SIGNAL(hasMoved(int, int)), cli, SLOT(slotSend(int, int)));               //发送数据到服务器
+            connect(cli, SIGNAL(moveNetPlayer(dataPack)), this, SLOT(updateClient(dataPack)));      //本地移动
+        }
+
     }
-    //开启一个客户端
-    else if (svrType == 2)
+    else if(gamemode == 2)
     {
-        qDebug() << "open client" << endl;
-        cli = new Client(this);
-
-        //客户端信息直接发送给服务端处理
-        connect(this, SIGNAL(hasMoved(int, int)), cli, SLOT(slotSend(int, int)));               //发送数据到服务器
-        connect(cli, SIGNAL(moveNetPlayer(dataPack)), this, SLOT(updateClient(dataPack)));      //本地移动
+        P1 = new people(pSel1,1,1,"P1",this);
+        P2 = new people(pSel2,15,15,"P2",this);
+    }
+    else if(gamemode == 3)
+    {
+        P1 = new people(pSel1,1,1,"P1",this);
+        AI = new AIPlayer(pSel3,15,15,"AI",this);
+        AIp = AI;
+    }
+    else if(gamemode == 4)
+    {
+        P1 = new people(pSel1,1,1,"P1",this);
+        P2 = new people(pSel2,15,15,"P2",this);
+        AI = new AIPlayer(pSel3,1,15,"AI",this);
+        AIp = AI;
     }
 
 }
@@ -120,37 +102,40 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 void GameWidget::updateClient(dataPack p)
 {
     //依据网络更新界面
-    if (p.player == 1)
+    if(p.type == 1)
     {
-        if(p.playerPos[1][0] != P1->X || p.playerPos[1][1] != P1->Y)
-            P1->MovePos(p.playerPos[1][0], p.playerPos[1][1], P1->deviation);
-        if (p.move >= 1 && p.move <= 4)
+        if (p.player == 1)
         {
-            P1->Walk(p.move);
-            P1->isWalk = 0;
-            if (svrType == 1) qDebug() << "server: P1 moving..." << endl;
+            if(p.playerPos[1][0] != P1->X || p.playerPos[1][1] != P1->Y)
+                P1->MovePos(p.playerPos[1][0], p.playerPos[1][1], P1->deviation);
+            if (p.move >= 1 && p.move <= 4)
+            {
+                P1->Walk(p.move);
+                P1->isWalk = 0;
+                if (svrType == 1) qDebug() << "server: P1 moving..." << endl;
+            }
+            else if (p.move == 5)
+            {
+                BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this));
+                P1->raise();
+            }
         }
-        else if (p.move == 5)
+        else if (p.player == 2)
         {
-            BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this));
-            P1->raise();
-        }
-    }
-    else if (p.player == 2)
-    {
-        if(p.playerPos[2][0] != P2->X || p.playerPos[2][1] != P2->Y)
-            P2->MovePos(p.playerPos[2][0], p.playerPos[2][1], P2->deviation);
-        if (p.move >= 1 && p.move <= 4)
-        {
+            if(p.playerPos[2][0] != P2->X || p.playerPos[2][1] != P2->Y)
+                P2->MovePos(p.playerPos[2][0], p.playerPos[2][1], P2->deviation);
+            if (p.move >= 1 && p.move <= 4)
+            {
 
-            P2->Walk(p.move);
-            P2->isWalk = 0;
-            if (svrType == 1) qDebug() << "server: P2 moving..." << endl;
-        }
-        else if (p.move == 5)
-        {
-            BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this));
-            P2->raise();
+                P2->Walk(p.move);
+                P2->isWalk = 0;
+                if (svrType == 1) qDebug() << "server: P2 moving..." << endl;
+            }
+            else if (p.move == 5)
+            {
+                BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this));
+                P2->raise();
+            }
         }
     }
 

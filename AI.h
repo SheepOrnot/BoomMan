@@ -2,6 +2,7 @@
 #include<QQueue>
 #include<QMap>
 #include<QString>
+#include<QTime>
 #include<iostream>
 #include<qalgorithms.h>
 #include"people.h"
@@ -51,6 +52,10 @@ public:
     bool isNeedUpdate;
     int actionIndex;
     int danger[17][17];
+
+    QTimer *AITime;
+    static int AISpeed;
+    int AIComputing = 0;
 
     static ActionA_Type actionA[6];
     int actionAIndex;

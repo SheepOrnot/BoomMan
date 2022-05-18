@@ -16,20 +16,10 @@ class Client : public QDialog
     Q_OBJECT
 
 public:
-    Client(QWidget *parent = 0,Qt::WindowFlags f=0);
+    Client(QWidget *parent = 0,QString addr = "",int _port = 1024);
     ~Client();
+    bool isConnected() { return status; }
 private:
-    QListWidget *contentListWidget;
-    QLineEdit *sendLineEdit;
-    QPushButton *sendBtn;
-    QLabel *userNameLabel;
-    QLineEdit *userNameLineEdit;
-    QLabel *serverIPLabel;
-    QLineEdit *serverIPLineEdit;
-    QLabel *portLabel;
-    QLineEdit *portLineEdit;
-    QPushButton *enterBtn;
-    QGridLayout *mainLayout;
     bool status;
     int port;
     QHostAddress *serverIP;
@@ -37,8 +27,8 @@ private:
     QTcpSocket *tcpSocket;
 signals:
     void moveNetPlayer(dataPack p);
+    void playerSel(dataPack p);
 public slots:
-    void slotEnter();
     void slotConnected();
     void slotDisconnected();
     void dataReceived();
@@ -46,3 +36,6 @@ public slots:
 };
 
 #endif // TCPCLIENT_H
+
+
+extern Client* cli;

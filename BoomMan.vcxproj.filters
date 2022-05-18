@@ -56,6 +56,12 @@
     <ClCompile Include="client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamepara.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="gamewidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="netplayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="people.cpp">
@@ -91,15 +94,18 @@
     <QtMoc Include="client.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <ClInclude Include="gameboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="gamepara.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="gamewidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <ClInclude Include="netplayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="people.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,6 +126,8 @@
     
     
     
+    
+    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
@@ -132,8 +140,12 @@
     
     
     
+    
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="gamepara.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
     <QtUic Include="gamewidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
@@ -154,6 +166,21 @@
     <None Include="res\character\Alex\Alex_run_Died.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\button\CreateNetwork.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Dan\Dan.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Dan\Dan_Died.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Dan\Dan_run.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Dan\Dan_run_Died.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="res\floor\Floors_TILESET_A2_.jpg">
       <Filter>Resource Files</Filter>
     </None>
@@ -166,19 +193,64 @@
     <None Include="res\floor\Floors_original_shading_TILESET_A5_.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\button\JoinNetwork.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\window\MainWindow.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Molly\Molly.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Molly\Molly_Died.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Molly\Molly_run.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Molly\Molly_run_Died.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\tool\PlayerBoom.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\tool\PlayerHeart.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\tool\PlayerPower.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\tool\PlayerSpeed.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Roki\Roki.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Roki\Roki_Died.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Roki\Roki_run.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\character\Roki\Roki_run_Died.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\button\Start.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\tool\bomb.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="res\boom\boomA_1.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\boom\boomA_Flame.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\tool\heart.png">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\floor\item1.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\tool\lighting.png">
+    <None Include="res\tool\lifecrys.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\floor\normalFloor.jpg">
@@ -187,8 +259,14 @@
     <None Include="res\floor\normalFloor2.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\tool\power.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <QtRcc Include="res.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+    <None Include="res\tool\shoes.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -18,9 +18,6 @@ class GameWidget : public QWidget
     Q_OBJECT
 
 public:
-    QTimer *AITime;
-    static int AISpeed;
-    int AIComputing;
     Server* svr;
     Client* cli;
     int svrType;

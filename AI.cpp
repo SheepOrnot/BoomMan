@@ -1,7 +1,7 @@
 #include"AI.h"
 
 AIPlayer* AI = NULL;
-
+int AIPlayer::AISpeed = 150;
 ActionA_Type AIPlayer::actionA[6] = { GetItem, DWall, GetItem, DWall, GetItem, DWall };
 
 bool CheckTarget(const int x, const int y, const AITarget& target, const AIPlayer& player)
@@ -179,6 +179,29 @@ AIPlayer::AIPlayer(int TYPE, int XX, int YY, QString NAME, QWidget* parent) : pe
     actionIndex = 0;
     actionAIndex = 0;
     moves.clear();
+
+    AITime = new QTimer;
+    AITime->start(AISpeed);
+
+    connect(AITime,&QTimer::timeout,[=](){
+        if(AIComputing) return;
+        AIComputing = 1;
+        try{
+            int move = ComputeMove(*this);
+            //std::cerr << "receiveMoveCtrl:" << move << std::endl;
+            if(move >= 1 && move <= 4)
+                if(this->Check(move))
+                {
+                    this->Walk(move);
+                    this->isWalk=0;
+                }
+            if(move == 5) BoomV.push_back(new BoomA(this->BoomLv, this->X, this->Y, this));
+        }catch(int e)
+        {
+            qDebug() << e << endl;
+        }
+        AIComputing = 0;
+    });
 }
 
 void AIPlayer::update(const AITarget& dst)

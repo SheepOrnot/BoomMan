@@ -1,5 +1,7 @@
 #include "server.h"
 
+Server* svr = nullptr;
+
 TcpClientSocket::TcpClientSocket(QObject *parent)
 {
     connect(this,SIGNAL(readyRead()),this,SLOT(dataReceived()));        //(a)
@@ -23,8 +25,9 @@ void TcpClientSocket::slotDisconnected()
 }
 
 
-Server::Server(QObject *parent,int port):QTcpServer(parent)
+Server::Server(QObject *parent, QString addr, int port):QTcpServer(parent)
 {
+    /*
     QString myAddr;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();       //返回所有IP地址，然后进行遍历
     for(int i=0;i<ipAddressesList.length();i++)
@@ -40,7 +43,9 @@ Server::Server(QObject *parent,int port):QTcpServer(parent)
             //ui->Edit_serve_IP->setText(myAddr);
         }
     }
-    int ret = listen(QHostAddress(myAddr),1024);
+    */
+
+    int ret = listen(QHostAddress(addr),port);
     if(!ret)
     {
         qDebug() << "listen failed";
@@ -67,14 +72,21 @@ void Server::updateClients(dataPack p)
 {
     dataPack data;
     data.type = p.type;
+    if(data.type >= 100)
+    {
+        data.player = p.player;
+    }
+    else if(data.type == 1)
+    {
+        data.playerPos[1][0] = P1->X;
+        data.playerPos[1][1] = P1->Y;
+        data.playerPos[2][0] = P2->X;
+        data.playerPos[2][1] = P2->Y;
 
-    data.playerPos[1][0] = P1->X;
-    data.playerPos[1][1] = P1->Y;
-    data.playerPos[2][0] = P2->X;
-    data.playerPos[2][1] = P2->Y;
+        data.player = p.player;
+        data.move = p.move;
+    }
 
-    data.player = p.player;
-    data.move = p.move;
 
     for(int i=0;i<tcpClientSocketList.count();i++)          //(b)
     {

@@ -1,43 +1,33 @@
 #include "client.h"
 #include <QMessageBox>
 #include <QHostInfo>
-Client::Client(QWidget *parent,Qt::WindowFlags f)
-    : QDialog(parent,f)
+
+Client* cli = nullptr;
+
+Client::Client(QWidget *parent, QString addr, int _port)
+    : QDialog(parent)
 {
     status = false;  //  连接or未连接
-    port = 1024;
-    serverIP =new QHostAddress();
+    port = _port;
+    serverIP =new QHostAddress(addr);
 
-    slotEnter();
-    //connect(enterBtn,SIGNAL(clicked()),this,SLOT(slotEnter()));         //开启连接
-    //connect(sendBtn,SIGNAL(clicked()),this,SLOT(slotSend()));           //发送数据
-}
+    /* 创建了一个QTcpSocket类对象，并将信号/槽连接起来 */
+    tcpSocket = new QTcpSocket(this);
+    connect(tcpSocket,SIGNAL(connected()),this,SLOT (slotConnected()));
+    connect(tcpSocket,SIGNAL(disconnected()),this,SLOT (slotDisconnected ()));
+    connect(tcpSocket,SIGNAL(readyRead()),this,SLOT (dataReceived()));
+    tcpSocket->connectToHost(*serverIP,port);
 
-void Client::slotEnter()
-{
-    if(!status)											//(a)
-    {
-        QString ip = "192.168.43.103";
-        serverIP->setAddress(ip);
 
-        /* 创建了一个QTcpSocket类对象，并将信号/槽连接起来 */
-        tcpSocket = new QTcpSocket(this);
-        connect(tcpSocket,SIGNAL(connected()),this,SLOT (slotConnected()));
-        connect(tcpSocket,SIGNAL(disconnected()),this,SLOT (slotDisconnected ()));
-        connect(tcpSocket,SIGNAL(readyRead()),this,SLOT (dataReceived()));
-        tcpSocket->connectToHost(*serverIP,port);		//(c)
-        status=true;
-    }
-    else
-    {
-        tcpSocket->disconnectFromHost();				//(f)
-        status=false;                                   //将status状态复位
-    }
+    //tcpSocket->disconnectFromHost();
+    //status=false;
+
 }
 
 void Client::slotConnected()
 {
     //成功打开连接之后...（初始化）
+    status = true;
     qDebug() << "Client: Success Connect" << endl;
 }
 
@@ -48,6 +38,11 @@ void Client::slotSend(int move, int player)
     data.type = 1;
     data.player = player;
     data.move = move;
+
+    if(move >= 100)
+    {
+        data.type = move;
+    }
 
     QByteArray buffer;
     buffer.append(reinterpret_cast<char*>(&data), sizeof(data));
@@ -69,7 +64,8 @@ void Client::dataReceived()
     if (!buffer.isEmpty()) {
         dataPack* p = reinterpret_cast<dataPack*>(buffer.data());
 
-        emit moveNetPlayer(*p);
+        if(p->type == 1) emit moveNetPlayer(*p);
+        else if(p->type >= 100) emit playerSel(*p);
         //qDebug() << "read from client......" << p->name << "  " << p->age;
     }
 }

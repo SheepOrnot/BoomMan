@@ -1,7 +1,7 @@
 #include "gamepara.h"
 #include "ui_gamepara.h"
 
-gamepara::gamepara(QWidget *parent, int svrType) :
+gamepara::gamepara(QWidget *parent, int _svrType) :
     QMainWindow(parent),
     ui(new Ui::gamepara)
 {
@@ -20,16 +20,77 @@ gamepara::gamepara(QWidget *parent, int svrType) :
     //ui->Molly->setGraphicsEffect(Button);
     //ui->Roki->setGraphicsEffect(Button);
 
-    if(svrType == 1) hideP2();
-    if(svrType == 2) hideP1();
+    svrType = _svrType;
+
+    if(svrType == 1)
+    {
+        hideP2();
+        svr = new Server(this, "127.0.0.1", 1024);
+        cli = new Client(this, "127.0.0.1", 1024);
+    }
+    else if(svrType == 2)
+    {
+        hideP1();
+        cli = new Client(this, "127.0.0.1", 1024);
+    }
+
     if(svrType)
     {
         ui->groupBox_3->hide();
+    }
+    else
+    {
+        ui->IP->hide();
+        ui->labelIP->hide();
     }
 
     connect(ui->pe1v1, &QPushButton::clicked, [=](){showAll();hideP2();});
     connect(ui->pp1v1, &QPushButton::clicked, [=](){showAll();});
     connect(ui->ppee2v2, &QPushButton::clicked, [=](){showAll();});
+
+    connect(ui->Alex, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Alex->setChecked(false); return; }
+        cli->slotSend(101, 0);
+    });
+    connect(ui->Dan, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Dan->setChecked(false); return; }
+        cli->slotSend(101, 1);
+    });
+    connect(ui->Molly, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Molly->setChecked(false); return; }
+        cli->slotSend(101, 2);
+    });
+    connect(ui->Roki, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Roki->setChecked(false); return; }
+        cli->slotSend(101, 3);
+    });
+
+    connect(ui->Alex_2, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Alex_2->setChecked(false); return; }
+        cli->slotSend(102, 0);
+    });
+    connect(ui->Dan_2, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Dan_2->setChecked(false); return; }
+        cli->slotSend(102, 1);
+    });
+    connect(ui->Molly_2, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Molly_2->setChecked(false); return; }
+        cli->slotSend(102, 2);
+    });
+    connect(ui->Roki_2, &QPushButton::clicked, [=]()
+    {
+        if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); ui->Roki_2->setChecked(false); return; }
+        cli->slotSend(102, 3);
+    });
+
+    connect(cli, SIGNAL(playerSel(dataPack)), this, SLOT(cliSel(dataPack)));
 
     connect(ui->start, &QPushButton::clicked, [=]()
     {
@@ -45,8 +106,13 @@ gamepara::gamepara(QWidget *parent, int svrType) :
         {
             if(svrType == 1) checkP1();
             if(svrType == 2) checkP2();
+
+            if(svrType == 1 && svr->connectionNum() != 2) {QMessageBox::information(nullptr, "啊哦~", "目前没有人连接上服务器"); return; }
+            if(!cli->isConnected()) {QMessageBox::information(nullptr, "啊哦~", "你还没连接上服务器"); return; }
+
             if(pSel1 == -1) {QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
             else if(pSel2 == -1) {QMessageBox::information(nullptr, "啊哦~", "P2还没选"); return;}
+
         }
         else if(gamemode == 2)
         {
@@ -76,6 +142,18 @@ gamepara::gamepara(QWidget *parent, int svrType) :
 
     });
 
+}
+
+void gamepara::cliSel(dataPack p)
+{
+    if(p.type == 101)
+    {
+        pSel1 = p.player;
+    }
+    else if(p.type == 102)
+    {
+        pSel2 = p.player;
+    }
 }
 
 void gamepara::showAll()

@@ -19,7 +19,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <OutputDirectory>release\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
     <CharacterSet>NotSet</CharacterSet>
@@ -202,10 +202,11 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="boom.cpp" />
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="gameboard.cpp" />
+    <ClCompile Include="gamepara.cpp" />
     <ClCompile Include="gamewidget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="netplayer.cpp" />
     <ClCompile Include="people.cpp" />
     <ClCompile Include="server.cpp" />
     <ClCompile Include="setting.cpp" />
@@ -216,11 +217,13 @@
     <ClInclude Include="boom.h" />
     <QtMoc Include="client.h">
     </QtMoc>
+    <ClInclude Include="gameboard.h" />
+    <QtMoc Include="gamepara.h">
+    </QtMoc>
     <QtMoc Include="gamewidget.h">
     </QtMoc>
     <QtMoc Include="mainwindow.h">
     </QtMoc>
-    <ClInclude Include="netplayer.h" />
     <ClInclude Include="people.h" />
     <QtMoc Include="server.h">
     </QtMoc>
@@ -246,6 +249,8 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="gamepara.ui">
+    </QtUic>
     <QtUic Include="gamewidget.ui">
     </QtUic>
     <QtUic Include="mainwindow.ui">
@@ -256,19 +261,41 @@
     <None Include="res\character\Alex\Alex_Died.png" />
     <None Include="res\character\Alex\Alex_run.png" />
     <None Include="res\character\Alex\Alex_run_Died.png" />
+    <None Include="res\button\CreateNetwork.png" />
+    <None Include="res\character\Dan\Dan.png" />
+    <None Include="res\character\Dan\Dan_Died.png" />
+    <None Include="res\character\Dan\Dan_run.png" />
+    <None Include="res\character\Dan\Dan_run_Died.png" />
     <None Include="res\floor\Floors_TILESET_A2_.jpg" />
     <None Include="res\floor\Floors_TILESET_A2_.png" />
     <None Include="res\floor\Floors_original_shading_TILESET_A5_.jpg" />
     <None Include="res\floor\Floors_original_shading_TILESET_A5_.png" />
+    <None Include="res\button\JoinNetwork.png" />
+    <None Include="res\window\MainWindow.png" />
+    <None Include="res\character\Molly\Molly.png" />
+    <None Include="res\character\Molly\Molly_Died.png" />
+    <None Include="res\character\Molly\Molly_run.png" />
+    <None Include="res\character\Molly\Molly_run_Died.png" />
+    <None Include="res\tool\PlayerBoom.png" />
+    <None Include="res\tool\PlayerHeart.png" />
+    <None Include="res\tool\PlayerPower.png" />
+    <None Include="res\tool\PlayerSpeed.png" />
+    <None Include="res\character\Roki\Roki.png" />
+    <None Include="res\character\Roki\Roki_Died.png" />
+    <None Include="res\character\Roki\Roki_run.png" />
+    <None Include="res\character\Roki\Roki_run_Died.png" />
+    <None Include="res\button\Start.png" />
+    <None Include="res\tool\bomb.png" />
     <None Include="res\boom\boomA_1.png" />
     <None Include="res\boom\boomA_Flame.png" />
-    <None Include="res\tool\heart.png" />
     <None Include="res\floor\item1.png" />
-    <None Include="res\tool\lighting.png" />
+    <None Include="res\tool\lifecrys.png" />
     <None Include="res\floor\normalFloor.jpg" />
     <None Include="res\floor\normalFloor2.png" />
+    <None Include="res\tool\power.png" />
     <QtRcc Include="res.qrc">
     </QtRcc>
+    <None Include="res\tool\shoes.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
