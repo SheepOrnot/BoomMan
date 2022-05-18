@@ -21,6 +21,7 @@ SOURCES += \
     boom.cpp \
     client.cpp \
     gameboard.cpp \
+    gamepara.cpp \
     gamewidget.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     boom.h \
     client.h \
     gameboard.h \
+    gamepara.h \
     gamewidget.h \
     mainwindow.h \
     people.h \
@@ -42,6 +44,7 @@ HEADERS += \
     tool.h
 
 FORMS += \
+    gamepara.ui \
     gamewidget.ui \
     mainwindow.ui
 

@@ -25,7 +25,7 @@ public:
     Client* cli;
     int svrType;
 
-    explicit GameWidget(QWidget *parent = nullptr, int svrType = 0);
+    explicit GameWidget(QWidget *parent = nullptr, int svrType = 0, int pSel1 = 0, int pSel2 = 0, int pSel3 = 0, int pSel4 = 0, int gamemode = 1);
     ~GameWidget();
 
 private:

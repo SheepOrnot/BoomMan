@@ -3,7 +3,7 @@
 
 int GameWidget::AISpeed = 150;
 
-GameWidget::GameWidget(QWidget *parent, int _svrType) :
+GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int pSel3, int pSel4, int gamemode) :
     QWidget(parent),
     ui(new Ui::GameWidget)
 {

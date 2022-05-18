@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>gamepara</class>
+ <widget class="QWidget" name="gamepara">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1028</width>
+    <height>722</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QRadioButton" name="Alex">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>180</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Alex</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="Dan">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>180</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Dan</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="Molly">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>180</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Molly</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="Roki">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>180</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Roki</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="playselect">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>180</y>
+     <width>68</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>人物选择</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="pp1v1">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>250</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1v1:PVP</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="pe1v1">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>250</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1v1:PVE</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="ppee2v2">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>250</y>
+     <width>110</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>2v2:PPVEE</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="gamemode">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>250</y>
+     <width>68</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>游戏模式</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="start">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>420</y>
+     <width>261</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>开始</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
