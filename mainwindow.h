@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include"gamewidget.h"
+#include"gamepara.h"
 #include"setting.h"
 
 QT_BEGIN_NAMESPACE
@@ -14,9 +14,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-
-    GameWidget *game;
-
+    gamepara *para;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

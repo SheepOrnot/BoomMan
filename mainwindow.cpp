@@ -7,22 +7,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
-
     connect(ui->Start, &QPushButton::clicked, [=](){
-        game = new GameWidget(nullptr, 0);
-        game->show();
+        para = new gamepara(nullptr, 0);
+        para->show();
         this->close();
     });
     connect(ui->svrOpen, &QPushButton::clicked, [=](){
-        game = new GameWidget(nullptr, 1);
-        game->show();
+        para = new gamepara(nullptr, 1);
+        para->show();
         this->close();
     });
     connect(ui->cliOpen, &QPushButton::clicked, [=](){
-        game = new GameWidget(nullptr, 2);
-        game->show();
+        para = new gamepara(nullptr, 2);
+        para->show();
         this->close();
     });
 }
