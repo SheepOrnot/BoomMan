@@ -25,8 +25,6 @@ public:
     int gamemode = -1;
     int pSel1 = -1, pSel2 = -1, pSel3 = -1, pSel4 = -1;
 
-    Server* svr;
-    Client* cli;
     int svrType = 0;
 
     void checkP1();

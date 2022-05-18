@@ -52,8 +52,6 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
         }
     }
 
-    svr = nullptr;
-    cli = nullptr;
     svrType = _svrType;
     if(gamemode == 1)
     {
