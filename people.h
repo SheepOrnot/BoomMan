@@ -55,5 +55,5 @@ public:
 };
 
 extern int GMode;
-extern people *P1,*P2,*P3,*P4,*AIp;
+extern people *P1,*P2,*P3,*P4;
 #endif // PEOPLE_H

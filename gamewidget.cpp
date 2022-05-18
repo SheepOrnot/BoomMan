@@ -84,15 +84,14 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     else if(gamemode == 3)
     {
         P1 = new people(pSel1,1,1,"P1",this);
-        AI = new AIPlayer(pSel3,15,15,"AI",this);
-        AIp = AI;
+        P3 = new AIPlayer(pSel3,15,15,"AI",this);
     }
     else if(gamemode == 4)
     {
         P1 = new people(pSel1,1,1,"P1",this);
         P2 = new people(pSel2,15,15,"P2",this);
-        AI = new AIPlayer(pSel3,1,15,"AI",this);
-        AIp = AI;
+        P3 = new AIPlayer(pSel3,1,15,"A1",this);
+        P4 = new AIPlayer(pSel4,15,1,"A2",this);
     }
 
 }
@@ -150,26 +149,26 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_D:
         qDebug() << "D";
         if (svrType) {if(svrType == 1) emit hasMoved(1, 1);}
-        else P1->Walk(1);
+        else if(P1!=NULL)P1->Walk(1);
         break;
     case Qt::Key_W:
         qDebug() << "W";
         if (svrType) {if(svrType == 1) emit hasMoved(2, 1);}
-        else P1->Walk(2);
+        else if(P1!=NULL)P1->Walk(2);
         break;
     case Qt::Key_A:
         qDebug() << "A";
         if (svrType) {if(svrType == 1) emit hasMoved(3, 1);}
-        else P1->Walk(3);
+        else if(P1!=NULL)P1->Walk(3);
         break;
     case Qt::Key_S:
         qDebug() << "S";
         if (svrType) {if(svrType == 1) emit hasMoved(4, 1);}
-        else P1->Walk(4);
+        else if(P1!=NULL)P1->Walk(4);
         break;
     case Qt::Key_Space:
         qDebug() << "Space";
-        if (P1->CanBoom())
+        if (P1!=NULL&&P1->CanBoom())
         {
             if (svrType) {if(svrType == 1) emit hasMoved(5, 1);}
             else
@@ -182,26 +181,26 @@ void GameWidget::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Right:
         qDebug() << "Right";
         if (svrType) { if(svrType == 2) emit hasMoved(1, 2); }
-        else P2->Walk(1);
+        else if(P2!=NULL)P2->Walk(1);
         break;
     case Qt::Key_Up:
         qDebug() << "Up";
         if (svrType) { if(svrType == 2) emit hasMoved(2, 2); }
-        else P2->Walk(2);
+        else if(P2!=NULL)P2->Walk(2);
         break;
     case Qt::Key_Left:
         qDebug() << "Left";
         if (svrType) { if(svrType == 2) emit hasMoved(3, 2); }
-        else P2->Walk(3);
+        else if(P2!=NULL)P2->Walk(3);
         break;
     case Qt::Key_Down:
         qDebug() << "Down";
         if (svrType) { if(svrType == 2) emit hasMoved(4, 2); }
-        else P2->Walk(4);
+        else if(P2!=NULL)P2->Walk(4);
         break;
     case Qt::Key_Enter:
         qDebug() << "Enter";
-        if (P2->CanBoom())
+        if (P2!=NULL&&P2->CanBoom())
             if (svrType) {if(svrType == 2) emit hasMoved(5, 2);}
             else
             {
@@ -218,35 +217,35 @@ void GameWidget::keyReleaseEvent(QKeyEvent *event)
     {
     case Qt::Key_D:
        qDebug()<<"R_D";
-       P1->isWalk = 0;
+       if(P1!=NULL) P1->isWalk = 0;
        break;
     case Qt::Key_W:
        qDebug()<<"R_W";
-       P1->isWalk = 0;
+       if(P1!=NULL) P1->isWalk = 0;
        break;
     case Qt::Key_A:
        qDebug()<<"R_A";
-       P1->isWalk = 0;
+       if(P1!=NULL) P1->isWalk = 0;
        break;
     case Qt::Key_S:
        qDebug()<<"R_S";
-       P1->isWalk = 0;
+       if(P1!=NULL) P1->isWalk = 0;
        break;
     case Qt::Key_Right:
        qDebug()<<"R_Right";
-       P2->isWalk = 0;
+       if(P2!=NULL) P2->isWalk = 0;
        break;
     case Qt::Key_Up:
        qDebug()<<"R_Up";
-       P2->isWalk = 0;
+       if(P2!=NULL) P2->isWalk = 0;
        break;
     case Qt::Key_Left:
        qDebug()<<"R_Left";
-       P2->isWalk = 0;
+       if(P2!=NULL) P2->isWalk = 0;
        break;
     case Qt::Key_Down:
        qDebug()<<"R_Down";
-       P2->isWalk = 0;
+       if(P2!=NULL) P2->isWalk = 0;
        break;
     }
 }
