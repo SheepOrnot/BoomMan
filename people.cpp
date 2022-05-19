@@ -305,6 +305,11 @@ void people::Reduceblood()
             }
         }
     }
+    if(GMode==0)
+    {
+        qApp->closeAllWindows();
+        QProcess::startDetached(qApp->applicationFilePath(), QStringList());
+    }
 //    QMessageBox WR;
 //    WR.setText(name+QString(" Lose"));
 //    WR.exec();

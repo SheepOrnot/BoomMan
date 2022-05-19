@@ -5,6 +5,8 @@
 #include<QString>
 #include<QObject>
 #include<QTimer>
+#include<QApplication>
+#include<QProcess>
 #include"setting.h"
 #include"tool.h"
 #include "gameboard.h"
