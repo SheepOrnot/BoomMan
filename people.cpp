@@ -51,13 +51,13 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
         WR.exec();
     }
     /**///
+    Time1  = new QTimer(this);
+    Time2  = new QTimer(this);
+    Time3  = new QTimer(this);
     this->setGeometry(0,0,48,68);
     this->SetPos(4);
     this->MovePos(X,Y,0);
     this->setParent(parent);
-    Time1  = new QTimer(this);
-    Time2  = new QTimer(this);
-    Time3  = new QTimer(this);
     connect(Time1,&QTimer::timeout,[=](){
         if(I==0) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+0*48,28,48,68));
         if(I==1) this->setPixmap(pixRun.copy((isAnimation-1)*6*48+1*48,28,48,68));
