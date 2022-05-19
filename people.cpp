@@ -232,6 +232,7 @@ void people::SetPos(int TYPE)
 void people::Reduceblood()
 {
     this->raise();
+    if(blood==0) return;
     --blood;
     if(blood<0) blood = 0;
     GameBoard->Set(blood,speed,BoomTime.size(),BoomLv);
