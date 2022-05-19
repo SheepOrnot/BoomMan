@@ -11,8 +11,8 @@ extern QLabel *Build[16][16];
 
 typedef struct _dataPack
 {
-    int type, player, move;
-    int playerPos[6][2];
+    short int type, player, move;
+    short int playerPos[3][2];
 }dataPack;
 
 #endif // SETTING_H
