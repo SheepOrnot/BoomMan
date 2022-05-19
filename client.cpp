@@ -24,11 +24,17 @@ Client::Client(QWidget *parent, QString addr, int _port)
 
 }
 
+void Client::retry()
+{
+    tcpSocket->connectToHost(*serverIP,port);
+}
+
 void Client::slotConnected()
 {
     //成功打开连接之后...（初始化）
     status = true;
     qDebug() << "Client: Success Connect" << endl;
+    emit connected();
 }
 
 void Client::slotSend(int move, int player)

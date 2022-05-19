@@ -19,6 +19,7 @@ public:
     Client(QWidget *parent = 0,QString addr = "",int _port = 1024);
     ~Client();
     bool isConnected() { return status; }
+    void retry();
 private:
     bool status;
     int port;
@@ -28,6 +29,7 @@ private:
 signals:
     void moveNetPlayer(dataPack p);
     void playerSel(dataPack p);
+    void connected();
 public slots:
     void slotConnected();
     void slotDisconnected();

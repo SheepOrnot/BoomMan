@@ -44,6 +44,8 @@
         <file>res/button/CreateNetwork.png</file>
         <file>res/button/JoinNetwork.png</file>
         <file>res/button/Start.png</file>
+        <file>res/button/CreateSvr.png</file>
+        <file>res/button/JoinSvr.png</file>
     </qresource>
     <qresource prefix="/window">
         <file>res/window/MainWindow.png</file>

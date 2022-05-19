@@ -47,6 +47,10 @@ public:
     QRadioButton *pp1v1;
     QLineEdit *IP;
     QLabel *labelIP;
+    QPushButton *JoinSvr;
+    QPushButton *CreateSvr;
+    QLabel *connectNumT;
+    QLabel *connectNum;
 
     void setupUi(QWidget *gamepara)
     {
@@ -119,6 +123,20 @@ public:
         labelIP = new QLabel(gamepara);
         labelIP->setObjectName(QStringLiteral("labelIP"));
         labelIP->setGeometry(QRect(60, 140, 71, 16));
+        JoinSvr = new QPushButton(gamepara);
+        JoinSvr->setObjectName(QStringLiteral("JoinSvr"));
+        JoinSvr->setGeometry(QRect(320, 580, 261, 101));
+        JoinSvr->setStyleSheet(QStringLiteral("border-image: url(:/button/res/button/JoinSvr.png);"));
+        CreateSvr = new QPushButton(gamepara);
+        CreateSvr->setObjectName(QStringLiteral("CreateSvr"));
+        CreateSvr->setGeometry(QRect(320, 580, 261, 101));
+        CreateSvr->setStyleSheet(QStringLiteral("border-image: url(:/button/res/button/CreateSvr.png);"));
+        connectNumT = new QLabel(gamepara);
+        connectNumT->setObjectName(QStringLiteral("connectNumT"));
+        connectNumT->setGeometry(QRect(460, 140, 68, 15));
+        connectNum = new QLabel(gamepara);
+        connectNum->setObjectName(QStringLiteral("connectNum"));
+        connectNum->setGeometry(QRect(530, 140, 68, 15));
 
         retranslateUi(gamepara);
 
@@ -148,6 +166,10 @@ public:
         pe1v1->setText(QApplication::translate("gamepara", "1v1:PVE", Q_NULLPTR));
         pp1v1->setText(QApplication::translate("gamepara", "1v1:PVP", Q_NULLPTR));
         labelIP->setText(QApplication::translate("gamepara", "\346\234\215\345\212\241\345\231\250IP", Q_NULLPTR));
+        JoinSvr->setText(QString());
+        CreateSvr->setText(QString());
+        connectNumT->setText(QApplication::translate("gamepara", "\345\275\223\345\211\215\344\272\272\346\225\260", Q_NULLPTR));
+        connectNum->setText(QApplication::translate("gamepara", "0", Q_NULLPTR));
     } // retranslateUi
 
 };

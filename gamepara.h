@@ -25,6 +25,8 @@ public:
     int gamemode = -1;
     int pSel1 = -1, pSel2 = -1, pSel3 = -1, pSel4 = -1;
 
+    int connectNum = 0;
+
     int svrType = 0;
 
     void checkP1();
@@ -40,7 +42,8 @@ private:
 
 public slots:
     void cliSel(dataPack p);
-
+    void connectOk();
+    void newConnect();
 };
 
 #endif // GAMEPARA_H
