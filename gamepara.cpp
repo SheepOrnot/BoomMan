@@ -20,6 +20,11 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
     //ui->Molly->setGraphicsEffect(Button);
     //ui->Roki->setGraphicsEffect(Button);
 
+    QPixmap icon(":/boom/res\\boom\\boomA_1.png");
+
+    this->setWindowTitle("炸弹人");
+    this->setWindowIcon(icon);
+
     svrType = _svrType;
 
     if(svrType == 1)

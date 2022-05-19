@@ -6,7 +6,12 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     ui(new Ui::GameWidget)
 {
     ui->setupUi(this);
-    this->setFixedSize(960,790);/*设置固定大小*/
+    this->setFixedSize(960,790);
+
+    QPixmap icon(":/boom/res\\boom\\boomA_1.png");
+
+    this->setWindowTitle("炸弹人");
+    this->setWindowIcon(icon);
 
     GMode = gamemode;
 
