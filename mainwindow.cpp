@@ -14,19 +14,32 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->Start, &QPushButton::clicked, [=](){
         para = new gamepara(nullptr, 0);
+        para->fa = this;
         para->show();
-        this->close();
+        this->hide();
+
+        connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
+
     });
     connect(ui->svrOpen, &QPushButton::clicked, [=](){
         para = new gamepara(nullptr, 1);
+        para->fa = this;
         para->show();
-        this->close();
+        this->hide();
+
+        connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
+
     });
     connect(ui->cliOpen, &QPushButton::clicked, [=](){
         para = new gamepara(nullptr, 2);
+        para->fa = this;
         para->show();
-        this->close();
+        this->hide();
+
+        connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
+
     });
+
 }
 
 MainWindow::~MainWindow()

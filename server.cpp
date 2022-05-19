@@ -114,3 +114,13 @@ void Server::slotDisconnected(int descriptor)
     }
     return;
 }
+
+Server::~Server()
+{
+    for(int i = 0; i < tcpClientSocketList.size(); i ++ )
+    {
+        delete tcpClientSocketList[i];
+    }
+    qDebug() << "server detroy";
+    return;
+}

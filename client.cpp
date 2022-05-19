@@ -79,5 +79,7 @@ void Client::dataReceived()
 
 Client::~Client()
 {
-
+    delete tcpSocket;
+    delete serverIP;
+    qDebug() << "client detroy";
 }

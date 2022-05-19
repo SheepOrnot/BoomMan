@@ -26,6 +26,7 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
     this->setWindowIcon(icon);
 
     svrType = _svrType;
+    fa = parent;
 
     if(svrType == 1)
     {
@@ -64,6 +65,13 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
     }
 
     qDebug() << "checkpoint1";
+
+    connect(ui->back, &QPushButton::clicked, [=]()
+    {
+        fa->show();
+        this->close();
+        emit callClose();
+    });
 
     connect(ui->CreateSvr, &QPushButton::clicked, [=]()
     {
@@ -292,5 +300,8 @@ void gamepara::checkAI_2()
 
 gamepara::~gamepara()
 {
+    qDebug() << "gamepara detroy";
+    if(svr) delete svr;
+    if(cli) delete cli;
     delete ui;
 }

@@ -21,6 +21,7 @@ public:
     ~gamepara();
 
     GameWidget *game;
+    QWidget *fa = nullptr;
 
     int gamemode = -1;
     int pSel1 = -1, pSel2 = -1, pSel3 = -1, pSel4 = -1;
@@ -44,6 +45,9 @@ public slots:
     void cliSel(dataPack p);
     void connectOk();
     void newConnect();
+
+signals:
+    void callClose();
 };
 
 #endif // GAMEPARA_H

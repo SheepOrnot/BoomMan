@@ -51,6 +51,7 @@ public:
     QPushButton *CreateSvr;
     QLabel *connectNumT;
     QLabel *connectNum;
+    QPushButton *back;
 
     void setupUi(QWidget *gamepara)
     {
@@ -158,6 +159,10 @@ public:
         connectNum->setGeometry(QRect(730, 50, 121, 41));
         connectNum->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
 "color: rgb(255, 255, 255);"));
+        back = new QPushButton(gamepara);
+        back->setObjectName(QStringLiteral("back"));
+        back->setGeometry(QRect(810, 40, 161, 61));
+        back->setStyleSheet(QStringLiteral("border-image: url(:/button/res/button/back.png);"));
 
         retranslateUi(gamepara);
 
@@ -191,6 +196,7 @@ public:
         CreateSvr->setText(QString());
         connectNumT->setText(QApplication::translate("gamepara", "\345\275\223\345\211\215\344\272\272\346\225\260", Q_NULLPTR));
         connectNum->setText(QApplication::translate("gamepara", "0", Q_NULLPTR));
+        back->setText(QString());
     } // retranslateUi
 
 };
