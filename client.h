@@ -19,7 +19,7 @@ public:
     Client(QWidget *parent = 0,QString addr = "",int _port = 1024);
     ~Client();
     bool isConnected() { return status; }
-    void retry();
+    void retry(QString addr);
 private:
     bool status;
     int port;

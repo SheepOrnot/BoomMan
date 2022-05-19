@@ -25,15 +25,15 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
     if(svrType == 1)
     {
         //hideP2();
-        //svr = new Server(this, "192.168.43.103", 1024);
-        //cli = new Client(this, "192.168.43.103", 1024);
+        //svr = new Server(this, "127.0.0.1", 1024);
+        cli = new Client(this, "127.0.0.1", 1024);
         ui->start->hide();
         ui->JoinSvr->hide();
     }
     else if(svrType == 2)
     {
         //hideP1();
-        //cli = new Client(this, "192.168.43.103", 1024);
+        cli = new Client(this, "127.0.0.1", 1024);
         ui->start->hide();
         ui->CreateSvr->hide();
         ui->connectNum->hide();
@@ -62,7 +62,7 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
         if(addr.size() == 0) {QMessageBox::information(nullptr, "啊哦~", "IP地址是空的"); return; }
         if(!svr) svr = new Server(this, addr, 1024);
         if(!cli) cli = new Client(this, addr, 1024);
-        else if(cli) cli->retry();
+        else if(cli) cli->retry(addr);
 
         connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
         connect(svr, SIGNAL(newConnection()), this, SLOT(newConnect()));
@@ -73,7 +73,7 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
         QString addr = ui->IP->text();
         if(addr.size() == 0) {QMessageBox::information(nullptr, "啊哦~", "IP地址是空的"); return; }
         if(!cli) cli = new Client(this, addr, 1024);
-        else if(cli) cli->retry();
+        else if(cli) cli->retry(addr);
 
         connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
     });

@@ -24,8 +24,9 @@ Client::Client(QWidget *parent, QString addr, int _port)
 
 }
 
-void Client::retry()
+void Client::retry(QString addr)
 {
+    serverIP->setAddress(addr);
     tcpSocket->connectToHost(*serverIP,port);
 }
 
