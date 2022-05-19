@@ -52,6 +52,10 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
     {
         ui->IP->hide();
         ui->labelIP->hide();
+        ui->CreateSvr->hide();
+        ui->JoinSvr->hide();
+        ui->connectNum->hide();
+        ui->connectNumT->hide();
     }
 
     qDebug() << "checkpoint1";
