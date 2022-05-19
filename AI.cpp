@@ -21,6 +21,14 @@ bool CheckAccess(const int x, const int y)
     return Map[0][y][x] == 0;
 }
 
+bool AIPlayer::CANBOOM()
+{
+    if(GMode==0) return 0;
+    if(blood<=0) return 0;
+    if(Map[0][Y][X]>0) return 0;
+    if(BoomTime.front().secsTo(QTime::currentTime())<8) return 0;
+    return 1;
+}
 AIWalk_Type reserveWalk(AIWalk_Type type)
 {
     if (type == Up) return Down;
@@ -71,7 +79,7 @@ QVector<AIAction> AIPlayer::Search(const QPoint& src, const AITarget& dst)
 
                 if (dst.type == Wall_D)
                 {
-                    if(this->CanBoom()) moves.push_back(AIAction(p.x, p.y, SetBoom));
+                    if(this->CANBOOM()) moves.push_back(AIAction(p.x, p.y, SetBoom));
                     else moves.push_back(AIAction(p.x, p.y, DoNothing));
                 }
                 else if(dst.type == SafeArea)
@@ -180,6 +188,8 @@ AIPlayer::AIPlayer(int TYPE, int XX, int YY, QString NAME, QWidget* parent) : pe
     actionAIndex = 0;
     moves.clear();
 
+    fa = parent;
+
     AITime = new QTimer;
     AITime->start(AISpeed);
 
@@ -195,7 +205,10 @@ AIPlayer::AIPlayer(int TYPE, int XX, int YY, QString NAME, QWidget* parent) : pe
                     this->Walk(move);
                     this->isWalk=0;
                 }
-            if(move == 5) BoomV.push_back(new BoomA(this->BoomLv, this->X, this->Y, this));
+            if(move == 5&& (this->CanBoom())) {
+                BoomV.push_back(new BoomA(this->BoomLv, this->X, this->Y, fa)); this->raise();
+                std::cerr<<"1212"<<std::endl;
+            }
         }catch(int e)
         {
             qDebug() << e << endl;

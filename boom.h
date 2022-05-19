@@ -23,6 +23,8 @@ protected:
     int CountDown1;//爆装倒计时
     int CountDown2;//痕迹倒计时
 
+    QWidget *fa;
+
     QTimer *Time2;
     QTimer *Time3;
 

@@ -48,6 +48,7 @@ public:
     AIPlayer(int TYPE, int XX, int YY, QString NAME = "Unnamed", QWidget* parent = NULL);
     QVector<AIAction> Search(const QPoint& src, const AITarget& dst);
     bool TestSafe();
+    bool CANBOOM();
 
     bool isNeedUpdate;
     int actionIndex;
@@ -59,6 +60,8 @@ public:
 
     static ActionA_Type actionA[6];
     int actionAIndex;
+
+    QWidget *fa = nullptr;
 
     QVector<AIAction> moves;
 

@@ -233,6 +233,7 @@ void people::Reduceblood()
 {
     this->raise();
     if(blood==0) return;
+    if(GMode==0) return;
     --blood;
     if(blood<0) blood = 0;
     GameBoard->Set(blood,speed,BoomTime.size(),BoomLv);

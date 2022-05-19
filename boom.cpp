@@ -46,6 +46,7 @@ int Boom::Check(int XX,int YY,QWidget *parent)
 }
 Boom::Boom(int XX,int YY,QWidget *parent)
 {
+    fa = parent;
     X = XX, Y = YY;
     CountDown1 = 4000;
     CountDown2 = 300;
@@ -67,24 +68,23 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
         WR.setText("Picture BoomA Lose");
         WR.exec();
     }
+    std::cerr<<"qwqwqwqwqw"<<std::endl;
     this->setPixmap(QPixmap(str)); //右上左下
     this->show();
     Map[0][Y][X] = 2;
     connect(Time2,&QTimer::timeout,[=](){
         Time2->stop();
-        if(GMode!=0){
         this->hide();
         Map[0][Y][X] = 0;
-        Check(X,Y,parent);
-        for(int i = 1; i <= R &&GMode!=0&& !Check(X+i,Y,parent); ++i);
-        for(int i = 1; i <= R &&GMode!=0&& !Check(X-i,Y,parent); ++i);
-        for(int i = 1; i <= R &&GMode!=0&& !Check(X,Y+i,parent); ++i);
-        for(int i = 1; i <= R &&GMode!=0&& !Check(X,Y-i,parent); ++i);
-        Time3->start(CountDown2);}
+        Check(X,Y,fa);
+        for(int i = 1; i <= R && !Check(X+i,Y,fa); ++i);
+        for(int i = 1; i <= R && !Check(X-i,Y,fa); ++i);
+        for(int i = 1; i <= R && !Check(X,Y+i,fa); ++i);
+        for(int i = 1; i <= R && !Check(X,Y-i,fa); ++i);
+        Time3->start(CountDown2);
     });
     connect(Time3,&QTimer::timeout,[=](){
         Time3->stop();
-        if(GMode!=0){
         while(!v.empty())
         {
             v.back()->hide();
@@ -98,9 +98,8 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
             BoomV.pop_back();
             break;
         }
-        delete this;}
+        delete this;
     });
-
     Time2->start(CountDown1);
 }
 
