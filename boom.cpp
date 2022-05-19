@@ -72,17 +72,19 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
     Map[0][Y][X] = 2;
     connect(Time2,&QTimer::timeout,[=](){
         Time2->stop();
+        if(GMode!=0){
         this->hide();
         Map[0][Y][X] = 0;
         Check(X,Y,parent);
-        for(int i = 1; i <= R && !Check(X+i,Y,parent); ++i);
-        for(int i = 1; i <= R && !Check(X-i,Y,parent); ++i);
-        for(int i = 1; i <= R && !Check(X,Y+i,parent); ++i);
-        for(int i = 1; i <= R && !Check(X,Y-i,parent); ++i);
-        Time3->start(CountDown2);
+        for(int i = 1; i <= R &&GMode!=0&& !Check(X+i,Y,parent); ++i);
+        for(int i = 1; i <= R &&GMode!=0&& !Check(X-i,Y,parent); ++i);
+        for(int i = 1; i <= R &&GMode!=0&& !Check(X,Y+i,parent); ++i);
+        for(int i = 1; i <= R &&GMode!=0&& !Check(X,Y-i,parent); ++i);
+        Time3->start(CountDown2);}
     });
     connect(Time3,&QTimer::timeout,[=](){
         Time3->stop();
+        if(GMode!=0){
         while(!v.empty())
         {
             v.back()->hide();
@@ -96,7 +98,7 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
             BoomV.pop_back();
             break;
         }
-        delete this;
+        delete this;}
     });
 
     Time2->start(CountDown1);
