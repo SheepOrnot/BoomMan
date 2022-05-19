@@ -25,8 +25,8 @@ gamepara::gamepara(QWidget *parent, int _svrType) :
     if(svrType == 1)
     {
         hideP2();
-        svr = new Server(this, "127.0.0.1", 1024);
-        cli = new Client(this, "127.0.0.1", 1024);
+        svr = new Server(this, "192.168.43.103", 1024);
+        cli = new Client(this, "192.168.43.103", 1024);
     }
     else if(svrType == 2)
     {

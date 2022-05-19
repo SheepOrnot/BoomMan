@@ -192,6 +192,7 @@ void people::MovePos(int XX,int YY,int de = 0)
     if(de==3&&Map[0][Y][X-1]>0) de=0;
     if(de==4&&Map[0][Y+1][X]>0) de=0;
     isAnimation = isWalk = 0;
+    Time1->stop();
     int DatX,DatY;
     DatX = DatY = 0;
     deviation = de;

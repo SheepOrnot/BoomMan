@@ -82,6 +82,8 @@ void Server::updateClients(dataPack p)
         data.playerPos[1][1] = P1->Y;
         data.playerPos[2][0] = P2->X;
         data.playerPos[2][1] = P2->Y;
+        data.Deviation[1] = P1->deviation;
+        data.Deviation[2] = P2->deviation;
 
         data.player = p.player;
         data.move = p.move;

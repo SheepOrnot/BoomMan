@@ -103,8 +103,8 @@ void GameWidget::updateClient(dataPack p)
     {
         if (p.player == 1)
         {
-            if(p.playerPos[1][0] != P1->X || p.playerPos[1][1] != P1->Y)
-                P1->MovePos(p.playerPos[1][0], p.playerPos[1][1], P1->deviation);
+            if(p.playerPos[1][0] != P1->X || p.playerPos[1][1] != P1->Y || p.Deviation[1] != P1->deviation)
+                P1->MovePos(p.playerPos[1][0], p.playerPos[1][1], p.Deviation[1]);
             if (p.move >= 1 && p.move <= 4)
             {
                 P1->Walk(p.move);
@@ -119,8 +119,8 @@ void GameWidget::updateClient(dataPack p)
         }
         else if (p.player == 2)
         {
-            if(p.playerPos[2][0] != P2->X || p.playerPos[2][1] != P2->Y)
-                P2->MovePos(p.playerPos[2][0], p.playerPos[2][1], P2->deviation);
+            if(p.playerPos[2][0] != P2->X || p.playerPos[2][1] != P2->Y || p.Deviation[2] != P2->deviation)
+                P2->MovePos(p.playerPos[2][0], p.playerPos[2][1], p.Deviation[2]);
             if (p.move >= 1 && p.move <= 4)
             {
 
