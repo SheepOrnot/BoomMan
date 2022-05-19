@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
-    this->setWindowTitle("炸弹人");
+    this->setWindowTitle("boom man");
     this->setWindowIcon(icon);
 
     connect(ui->Start, &QPushButton::clicked, [=](){

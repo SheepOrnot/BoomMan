@@ -72,7 +72,11 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
     this->setPixmap(QPixmap(str)); //右上左下
     this->show();
     Map[0][Y][X] = 2;
+
+    qDebug() << "BoomSet: (" << X << "," << Y << ")";
+
     connect(Time2,&QTimer::timeout,[=](){
+        //if(X == 10 && Y == 1) return;
         Time2->stop();
         this->hide();
         Map[0][Y][X] = 0;
@@ -84,6 +88,7 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
         Time3->start(CountDown2);
     });
     connect(Time3,&QTimer::timeout,[=](){
+        //if(X == 10 && Y == 1) return;
         Time3->stop();
         while(!v.empty())
         {
@@ -100,6 +105,7 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
         }
         delete this;
     });
+
     Time2->start(CountDown1);
 }
 

@@ -10,7 +10,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
-    this->setWindowTitle("炸弹人");
+    this->setWindowTitle("boom man");
     this->setWindowIcon(icon);
 
     GMode = gamemode;

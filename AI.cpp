@@ -145,7 +145,7 @@ QVector<AIAction> AIPlayer::Search(const QPoint& src, const AITarget& dst)
                 }
 
 
-                std::cerr << "*****Action*****" << std::endl;
+                std::cerr << "*****Action*****" << this << std::endl;
                 for(auto i : moves)
                 {
                     std::cerr << i.type << " ";
@@ -198,14 +198,15 @@ AIPlayer::AIPlayer(int TYPE, int XX, int YY, QString NAME, QWidget* parent) : pe
         AIComputing = 1;
         try{
             int move = ComputeMove(*this);
-            //std::cerr << "receiveMoveCtrl:" << move << std::endl;
+
+            qDebug() << "receiveMoveCtrl:" << move << "  " << this->name;
             if(move >= 1 && move <= 4)
                 if(this->Check(move))
                 {
                     this->Walk(move);
                     this->isWalk=0;
                 }
-            if(move == 5&& (this->CanBoom())) {
+            if(move == 5 && (this->CanBoom())) {
                 BoomV.push_back(new BoomA(this->BoomLv, this->X, this->Y, fa)); this->raise();
                 std::cerr<<"1212"<<std::endl;
             }
