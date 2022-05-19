@@ -98,7 +98,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 
 bool GameWidget::playerCheck(people* p)
 {
-    if(GMode) return 0;
+    if(GMode==0) return 0;
     if(p->blood<=0) return 0;
     if(p->isAnimation) return 0;
     return 1;
