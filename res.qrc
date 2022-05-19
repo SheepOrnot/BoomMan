@@ -49,5 +49,6 @@
     </qresource>
     <qresource prefix="/window">
         <file>res/window/MainWindow.png</file>
+        <file>res/window/bkWall.png</file>
     </qresource>
 </RCC>

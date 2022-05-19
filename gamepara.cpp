@@ -270,6 +270,7 @@ void gamepara::checkAI_2()
         if(!vis[i])
         {
             pSel3 = i;
+            vis[i] = 1;
             break;
         }
     }

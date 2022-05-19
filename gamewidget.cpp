@@ -94,6 +94,11 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
         P4 = new AIPlayer(pSel4,15,1,"A2",this);
     }
 
+    qDebug() << "GameStart******************************************";
+    qDebug() << "gamemode:" << gamemode;
+    qDebug() << "pSel:" << pSel1 << "  " << pSel2 << "  " << pSel3 << "  " << pSel4;
+    qDebug() << "GameStart******************************************";
+
 }
 
 bool GameWidget::playerCheck(people* p)

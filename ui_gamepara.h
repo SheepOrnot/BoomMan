@@ -56,87 +56,108 @@ public:
     {
         if (gamepara->objectName().isEmpty())
             gamepara->setObjectName(QStringLiteral("gamepara"));
-        gamepara->resize(1028, 722);
-        gamepara->setStyleSheet(QStringLiteral("#gamepara{border-image: url(:/window/res/window/MainWindow.png);}"));
+        gamepara->resize(1048, 748);
+        gamepara->setStyleSheet(QLatin1String("#gamepara{border-image: url(:/window/res/window/bkWall.png);}\n"
+"\n"
+""));
         playselect = new QLabel(gamepara);
         playselect->setObjectName(QStringLiteral("playselect"));
-        playselect->setGeometry(QRect(60, 260, 61, 16));
+        playselect->setGeometry(QRect(50, 130, 181, 61));
+        playselect->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         gamemode = new QLabel(gamepara);
         gamemode->setObjectName(QStringLiteral("gamemode"));
-        gamemode->setGeometry(QRect(60, 420, 68, 15));
+        gamemode->setGeometry(QRect(40, 460, 161, 71));
+        gamemode->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         start = new QPushButton(gamepara);
         start->setObjectName(QStringLiteral("start"));
-        start->setGeometry(QRect(320, 580, 261, 101));
+        start->setGeometry(QRect(390, 580, 261, 101));
         start->setStyleSheet(QStringLiteral("border-image: url(:/button/res/button/Start.png);"));
         groupBox = new QGroupBox(gamepara);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(170, 210, 621, 71));
-        groupBox->setStyleSheet(QStringLiteral(""));
+        groupBox->setGeometry(QRect(200, 140, 771, 141));
+        groupBox->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         Molly = new QRadioButton(groupBox);
         Molly->setObjectName(QStringLiteral("Molly"));
-        Molly->setGeometry(QRect(350, 40, 110, 19));
+        Molly->setGeometry(QRect(300, 70, 141, 51));
         Alex = new QRadioButton(groupBox);
         Alex->setObjectName(QStringLiteral("Alex"));
-        Alex->setGeometry(QRect(70, 40, 110, 19));
+        Alex->setGeometry(QRect(10, 70, 141, 51));
         Dan = new QRadioButton(groupBox);
         Dan->setObjectName(QStringLiteral("Dan"));
-        Dan->setGeometry(QRect(210, 40, 110, 19));
+        Dan->setGeometry(QRect(170, 70, 131, 51));
         Roki = new QRadioButton(groupBox);
         Roki->setObjectName(QStringLiteral("Roki"));
-        Roki->setGeometry(QRect(480, 40, 110, 19));
+        Roki->setGeometry(QRect(460, 70, 161, 51));
         label = new QLabel(groupBox);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 40, 41, 16));
+        label->setGeometry(QRect(10, 10, 81, 41));
+        label->setStyleSheet(QString::fromUtf8("font: 75 24pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         groupBox_2 = new QGroupBox(gamepara);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(170, 310, 621, 51));
+        groupBox_2->setGeometry(QRect(200, 300, 771, 141));
+        groupBox_2->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         label_2 = new QLabel(groupBox_2);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(10, 20, 41, 16));
+        label_2->setGeometry(QRect(10, 10, 81, 51));
         Molly_2 = new QRadioButton(groupBox_2);
         Molly_2->setObjectName(QStringLiteral("Molly_2"));
-        Molly_2->setGeometry(QRect(350, 20, 110, 19));
+        Molly_2->setGeometry(QRect(300, 70, 131, 41));
         Alex_2 = new QRadioButton(groupBox_2);
         Alex_2->setObjectName(QStringLiteral("Alex_2"));
-        Alex_2->setGeometry(QRect(70, 20, 110, 19));
+        Alex_2->setGeometry(QRect(10, 70, 131, 41));
         Roki_2 = new QRadioButton(groupBox_2);
         Roki_2->setObjectName(QStringLiteral("Roki_2"));
-        Roki_2->setGeometry(QRect(480, 20, 110, 19));
+        Roki_2->setGeometry(QRect(470, 70, 151, 41));
         Dan_2 = new QRadioButton(groupBox_2);
         Dan_2->setObjectName(QStringLiteral("Dan_2"));
-        Dan_2->setGeometry(QRect(210, 20, 110, 19));
+        Dan_2->setGeometry(QRect(170, 70, 131, 41));
         groupBox_3 = new QGroupBox(gamepara);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(170, 390, 621, 71));
+        groupBox_3->setGeometry(QRect(200, 470, 771, 71));
+        groupBox_3->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         ppee2v2 = new QRadioButton(groupBox_3);
         ppee2v2->setObjectName(QStringLiteral("ppee2v2"));
-        ppee2v2->setGeometry(QRect(350, 30, 110, 19));
+        ppee2v2->setGeometry(QRect(460, 20, 231, 31));
         pe1v1 = new QRadioButton(groupBox_3);
         pe1v1->setObjectName(QStringLiteral("pe1v1"));
-        pe1v1->setGeometry(QRect(210, 30, 110, 19));
+        pe1v1->setGeometry(QRect(240, 20, 171, 31));
         pp1v1 = new QRadioButton(groupBox_3);
         pp1v1->setObjectName(QStringLiteral("pp1v1"));
-        pp1v1->setGeometry(QRect(70, 30, 110, 19));
+        pp1v1->setGeometry(QRect(10, 10, 171, 51));
         IP = new QLineEdit(gamepara);
         IP->setObjectName(QStringLiteral("IP"));
-        IP->setGeometry(QRect(170, 130, 231, 31));
+        IP->setGeometry(QRect(200, 60, 281, 31));
+        IP->setStyleSheet(QString::fromUtf8("font: 75 5pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+""));
         labelIP = new QLabel(gamepara);
         labelIP->setObjectName(QStringLiteral("labelIP"));
-        labelIP->setGeometry(QRect(60, 140, 71, 16));
+        labelIP->setGeometry(QRect(50, 50, 191, 41));
+        labelIP->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         JoinSvr = new QPushButton(gamepara);
         JoinSvr->setObjectName(QStringLiteral("JoinSvr"));
-        JoinSvr->setGeometry(QRect(320, 580, 261, 101));
+        JoinSvr->setGeometry(QRect(390, 580, 261, 101));
         JoinSvr->setStyleSheet(QStringLiteral("border-image: url(:/button/res/button/JoinSvr.png);"));
         CreateSvr = new QPushButton(gamepara);
         CreateSvr->setObjectName(QStringLiteral("CreateSvr"));
-        CreateSvr->setGeometry(QRect(320, 580, 261, 101));
+        CreateSvr->setGeometry(QRect(390, 580, 261, 101));
         CreateSvr->setStyleSheet(QStringLiteral("border-image: url(:/button/res/button/CreateSvr.png);"));
         connectNumT = new QLabel(gamepara);
         connectNumT->setObjectName(QStringLiteral("connectNumT"));
-        connectNumT->setGeometry(QRect(460, 140, 68, 15));
+        connectNumT->setGeometry(QRect(530, 40, 161, 61));
+        connectNumT->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
         connectNum = new QLabel(gamepara);
         connectNum->setObjectName(QStringLiteral("connectNum"));
-        connectNum->setGeometry(QRect(530, 140, 68, 15));
+        connectNum->setGeometry(QRect(730, 50, 121, 41));
+        connectNum->setStyleSheet(QString::fromUtf8("font: 75 20pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+"color: rgb(255, 255, 255);"));
 
         retranslateUi(gamepara);
 
