@@ -193,6 +193,24 @@ void people::MovePos(int XX,int YY,int de = 0)
     if(de==4&&Map[0][Y+1][X]>0) de=0;
     isAnimation = isWalk = 0;
     Time1->stop();
+    if(Map[1][Y][X]>0)
+    {
+        if(Map[1][Y][X]==1) ++blood;
+        if(Map[1][Y][X]==2) ++BoomLv;
+        if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed-5 : 20);
+        if(Map[1][Y][X]==4) BoomTime.push_front(QTime(0,0));
+        GameBoard->Set(blood,speed,BoomTime.size(),BoomLv);
+        for(QVector<Tool*>::iterator it = ToolV.begin(); it != ToolV.end(); ++it)
+        if((*it)->X == X&& (*it)->Y == Y)
+        {
+            (*it)->hide();
+            delete (*it);
+            std::iter_swap(it,ToolV.end()-1);
+            ToolV.pop_back();
+            break;
+        }
+        Map[1][Y][X] = 0;
+    }
     int DatX,DatY;
     DatX = DatY = 0;
     deviation = de;
