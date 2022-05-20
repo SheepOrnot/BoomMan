@@ -2,6 +2,7 @@
 #define TOOL_H
 
 #include"setting.h"
+#include<QDebug>
 class Tool :public QLabel
 {
 public:

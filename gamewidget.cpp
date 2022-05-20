@@ -34,7 +34,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     srand(time(0));
 
     int ITEM[6];
-    ITEM[1] = 10;
+    ITEM[1] = 15;
     ITEM[2] = 10;
     ITEM[3] = 10;
     ITEM[4] = 10;

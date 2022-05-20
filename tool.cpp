@@ -21,7 +21,7 @@ Tool::Tool(int TYPE,int XX,int YY,QWidget *parent = NULL)
         WR.exec();
     }
     this->setPixmap(pix);
-    this->move(BaseX+X*48,BaseY+Y*48);
+    this->move(215-48+X*48,34-48+Y*48);
     this->show();
     //P3
     //P4
