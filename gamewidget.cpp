@@ -5,6 +5,7 @@ inline int Rand(int x)
 {
     return rand()%x+1;
 }
+
 bool Checkmap(int x,int y)
 {
     if(Map[0][x][y]) return 0;
@@ -15,6 +16,7 @@ bool Checkmap(int x,int y)
     if((y==14&&x==1)||(y==14&&x==2)) return 0;
     return 1;
 }
+
 GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int pSel3, int pSel4, int gamemode) :
     QWidget(parent),
     ui(new Ui::GameWidget)
