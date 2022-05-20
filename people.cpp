@@ -341,6 +341,7 @@ bool people::CanBoom()
     if(GMode==0) return 0;
     if(blood<=0) return 0;
     if(Map[0][Y][X]>0) return 0;
+    qDebug() << "****************CanBoom():  " << BoomTime.front() << "  " << this->name;
     if(BoomTime.front().secsTo(QTime::currentTime())<8) return 0;
     BoomTime.pop_front();
     BoomTime.push_back(QTime::currentTime());
