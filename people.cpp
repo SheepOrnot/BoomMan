@@ -153,6 +153,7 @@ void people::Walk(int TYPE)
 {
     if(GMode==0) return;
     if(blood<=0) return;
+    std::cerr<<TYPE<<std::endl;
     if(isAnimation) return;
     if(TYPE>4||TYPE<1) return;
     SetPos(TYPE);

@@ -1,7 +1,7 @@
 #include"AI.h"
 
 AIPlayer* AI = NULL;
-int AIPlayer::AISpeed = 150;
+int AIPlayer::AISpeed = 100;
 ActionA_Type AIPlayer::actionA[6] = { GetItem, DWall, GetItem, DWall, GetItem, DWall };
 
 bool CheckTarget(const int x, const int y, const AITarget& target, const AIPlayer& player)
@@ -10,7 +10,7 @@ bool CheckTarget(const int x, const int y, const AITarget& target, const AIPlaye
     else if (target.type == Wall_D) return Map[0][y][x] == 1;
     else if (target.type == Boom) return Map[0][y][x] == 2;
     else if (target.type == SafeArea) return Map[0][y][x] == 0 && player.danger[y][x] == 0;
-    else if (target.type == Item) return Map[1][y][x];
+    else if (target.type == Item) return (Map[0][y][x]==0)&&(Map[1][y][x]);
 
     return 0;
 }
@@ -205,10 +205,7 @@ AIPlayer::AIPlayer(int TYPE, int XX, int YY, QString NAME, QWidget* parent) : pe
                     this->Walk(move);
                     this->isWalk=0;
                 }
-            if(move == 5&& (this->CanBoom())) {
-                BoomV.push_back(new BoomA(this->BoomLv, this->X, this->Y, fa)); this->raise();
-                std::cerr<<"1212"<<std::endl;
-            }
+            if(move == 5&& (this->CanBoom())) {BoomV.push_back(new BoomA(this->BoomLv, this->X, this->Y, fa)); this->raise();}
         }catch(int e)
         {
             qDebug() << e << endl;

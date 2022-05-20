@@ -9,6 +9,7 @@
 #include "AI.h"
 #include "server.h"
 #include "client.h"
+#include <random>
 namespace Ui {
 class GameWidget;
 }

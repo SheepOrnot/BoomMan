@@ -68,7 +68,6 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
         WR.setText("Picture BoomA Lose");
         WR.exec();
     }
-    std::cerr<<"qwqwqwqwqw"<<std::endl;
     this->setPixmap(QPixmap(str)); //右上左下
     this->show();
     Map[0][Y][X] = 2;

@@ -1,6 +1,20 @@
 #include "gamewidget.h"
 #include "ui_gamewidget.h"
 
+inline int Rand(int x)
+{
+    return rand()%x+1;
+}
+bool Checkmap(int x,int y)
+{
+    if(Map[0][x][y]) return 0;
+    if((x==1||x==15)&&(y==1||y==15)) return 0;
+    if((y==1&&x==2)||(x==2&&y==2)) return 0;
+    if((x==14&&y==1)||(x==15&&y==2)) return 0;
+    if((x==15&&y==14)||(x==14&&y==15)) return 0;
+    if((y==14&&x==1)||(y==14&&x==2)) return 0;
+    return 1;
+}
 GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int pSel3, int pSel4, int gamemode) :
     QWidget(parent),
     ui(new Ui::GameWidget)
@@ -14,6 +28,30 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     this->setWindowIcon(icon);
 
     GMode = gamemode;
+
+    srand(time(0));
+
+    int ITEM[6];
+    ITEM[1] = 10;
+    ITEM[2] = 10;
+    ITEM[3] = 10;
+    ITEM[4] = 10;
+    for(int x,y,u = 100; u; --u)
+    {
+        do
+        {
+            x = Rand(16),y = Rand(16);
+        }
+        while(!Checkmap(x,y));
+        Map[0][x][y] = 1;
+        for(int i = 1; i <= 4; ++i)
+            if(ITEM[i])
+            {
+                ITEM[i]--;
+                Map[1][x][y] = i;
+                break;
+            }
+    }
 
     for(int i=1;i<16;i++)
     {
@@ -43,7 +81,10 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
             Build[i][j] = new QLabel;
             if(!Map[0][i][j]) continue;
             //绘制图片
-            QPixmap pix = QPixmap(":/floor/res\\floor\\item1.png");
+            QPixmap pix;
+            if(Map[0][i][j]==1)
+            pix = QPixmap(":/floor/res\\floor\\item1.png");
+            else pix = QPixmap(":/floor/res\\floor\\wall1.png");
             if(!pix)
             {
                 QMessageBox::information(this, "error!", "Pixmap Open Fail!");
@@ -94,15 +135,10 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     else if(gamemode == 4)
     {
         P1 = new people(pSel1,1,1,"P1",this);
-        P2 = new people(pSel2,15,15,"P2",this);
+        P2 = new people(pSel2,15,1,"P2",this);
         P3 = new AIPlayer(pSel3,1,15,"A1",this);
-        P4 = new AIPlayer(pSel4,15,1,"A2",this);
+        P4 = new AIPlayer(pSel4,15,15,"A2",this);
     }
-
-    qDebug() << "GameStart******************************************";
-    qDebug() << "gamemode:" << gamemode;
-    qDebug() << "pSel:" << pSel1 << "  " << pSel2 << "  " << pSel3 << "  " << pSel4;
-    qDebug() << "GameStart******************************************";
 
 }
 
