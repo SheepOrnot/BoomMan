@@ -8,6 +8,7 @@
         <file>res/floor/normalFloor2.png</file>
         <file>res/floor/item1.png</file>
         <file>res/floor/wall1.png</file>
+        <file>res/floor/centre1.png</file>
     </qresource>
     <qresource prefix="/character">
         <file>res/character/Alex/Alex.png</file>

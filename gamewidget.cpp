@@ -82,6 +82,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
         {
             Build[i][j] = new QLabel;
             if(!Map[0][i][j]) continue;
+            if((i>=7&&i<=9)&&(j>=7&&j<=9)) continue;
             //绘制图片
             QPixmap pix;
             if(Map[0][i][j]==1)
@@ -99,6 +100,18 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 
         }
     }
+
+    QPixmap pix = QPixmap(":/floor/res\\floor\\centre1.png");
+    if(!pix)
+    {
+        QMessageBox::information(this, "error!", "Pixmap Open Fail!");
+        return;
+    }
+    QLabel *Centre = new QLabel;
+    Centre->setGeometry(0,0,48*3,48*3);
+    Centre->setPixmap(pix);
+    Centre->setParent(this);
+    Centre->move(215+(7-1)*48,34+(7-1)*48);
 
     svrType = _svrType;
     if(gamemode == 1)
