@@ -1,4 +1,4 @@
-#include "gamewidget.h"
+﻿#include "gamewidget.h"
 #include "ui_gamewidget.h"
 
 inline int Rand(int x)
@@ -23,6 +23,8 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 {
     ui->setupUi(this);
     this->setFixedSize(960,790);
+
+    qDebug() << "GW:checkpoint1";
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
@@ -113,6 +115,8 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     Centre->setParent(this);
     Centre->move(215+(7-1)*48,34+(7-1)*48);
 
+    qDebug() << "GW:checkpoint2";
+
     svrType = _svrType;
     if(gamemode == 1)
     {
@@ -154,6 +158,8 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
         P3 = new AIPlayer(pSel3,1,15,"A1",this);
         P4 = new AIPlayer(pSel4,15,15,"A2",this);
     }
+
+    qDebug() << "GW:checkpoint3";
 
 }
 

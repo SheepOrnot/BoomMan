@@ -1,4 +1,4 @@
-#include "gamepara.h"
+﻿#include "gamepara.h"
 #include "ui_gamepara.h"
 
 gamepara::gamepara(QWidget* parent, int _svrType) :
@@ -201,6 +201,7 @@ void gamepara::newConnect()
 {
     connectNum++;
     ui->connectNum->setText(QString(connectNum + '0'));
+    QMessageBox::information(nullptr, "好诶~", "有新的连接");
 }
 
 void gamepara::connectOk()
