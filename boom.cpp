@@ -5,7 +5,7 @@ int Boom::BaseY = 34 -48;
 int Boom::Check(int XX,int YY,QWidget *parent)
 {
     if(XX<1||XX>15||YY<1||YY>15||Map[0][YY][XX]>1) return 2;
-    QString str = QString(":/boom/res\\boom\\boomA_1.png");
+    QString str = QString(":/boom/res\\boom\\boomA_Flame.png");
     QPixmap pix = QPixmap(str);
     QLabel *LA = new QLabel;
     LA->setGeometry(0,0,48,48);
