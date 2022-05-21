@@ -1,4 +1,4 @@
-#include "client.h"
+﻿#include "client.h"
 #include <QMessageBox>
 #include <QHostInfo>
 
@@ -18,7 +18,7 @@ void Client::doconnect(QString addr)
     serverIP->setAddress(addr);
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket,SIGNAL(connected()),this,SLOT (slotConnected()));
-    connect(tcpSocket,SIGNAL(disconnected()),this,SLOT (slotDisconnected ()));
+    connect(tcpSocket,SIGNAL(disconnected()),this,SLOT(slotDisconnected()),Qt::QueuedConnection);
     connect(tcpSocket,SIGNAL(readyRead()),this,SLOT (dataReceived()));
     tcpSocket->connectToHost(*serverIP,port);
     qDebug() << "doconnect: " << serverIP->toString() << " : " << port << "  status:" << tcpSocket->isValid();
@@ -72,9 +72,10 @@ void Client::dataReceived()
         dataPack* p = reinterpret_cast<dataPack*>(buffer.data());
 
         if(p->type == 1) emit moveNetPlayer(*p);
-        else if(p->type >= 100) emit playerSel(*p);
-        else if(p->type == 2000) emit gamestart(*p);
+        else if(p->type >= 100 && p->type < 1000) emit playerSel(*p);
+        else if(p->type == 2000) {emit gamestart_cli(*p); qDebug() << "REV:gameStart";}
         //qDebug() << "read from client......" << p->name << "  " << p->age;
+        qDebug() << "dataRev: data->type:" << p->type;
     }
 }
 

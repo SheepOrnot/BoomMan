@@ -1,11 +1,11 @@
-#include "server.h"
+﻿#include "server.h"
 
 Server* svr = nullptr;
 
 TcpClientSocket::TcpClientSocket(QObject *parent)
 {
-    connect(this,SIGNAL(readyRead()),this,SLOT(dataReceived()));        //(a)
-    connect(this,SIGNAL(disconnected()),this,SLOT(slotDisconnected())); //(b)
+    connect(this,SIGNAL(readyRead()),this,SLOT(dataReceived()));
+    connect(this,SIGNAL(disconnected()),this,SLOT(slotDisconnected()),Qt::QueuedConnection);
 }
 void TcpClientSocket::dataReceived()
 {

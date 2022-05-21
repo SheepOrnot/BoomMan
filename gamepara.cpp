@@ -7,19 +7,6 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 {
     ui->setupUi(this);
 
-    //QGraphicsOpacityEffect *groupBox = new QGraphicsOpacityEffect;
-    //QGraphicsOpacityEffect *Button = new QGraphicsOpacityEffect;
-    //groupBox->setOpacity(0.1);
-    //Button->setOpacity(1);
-    //ui->groupBox->setGraphicsEffect(groupBox);
-    //ui->groupBox_2->setGraphicsEffect(groupBox);
-    //ui->groupBox_3->setGraphicsEffect(groupBox);
-
-    //ui->Alex->setGraphicsEffect(Button);
-    //ui->Dan->setGraphicsEffect(Button);
-    //ui->Molly->setGraphicsEffect(Button);
-    //ui->Roki->setGraphicsEffect(Button);
-
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
     m_background = new QLabel(this);
@@ -92,6 +79,9 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
     }
 
     qDebug() << "checkpoint1";
+
+    if(svrType == 2) connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
+    if(svrType == 2) connect(cli, SIGNAL(gamestart_cli(dataPack)), this, SLOT(gamestart_gp(dataPack)));
 
     connect(ui->back, &QPushButton::clicked, [=]()
         {
@@ -186,7 +176,6 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 
     connect(ui->start, &QPushButton::clicked, [=]()
         {
-
             if (ui->pp1v1->isChecked()) gamemode = 2;
             if (ui->pe1v1->isChecked()) gamemode = 3;
             if (ui->ppee2v2->isChecked()) gamemode = 4;
@@ -241,8 +230,7 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 
         });
 
-    if(svrType == 2) connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
-    if(svrType == 2) connect(cli, SIGNAL(gamestart(dataPack)), this, SLOT(gamestart(dataPack)));
+
 }
 
 bool gamepara::checkIP(QString ip)
@@ -274,21 +262,24 @@ void gamepara::waitSvrConnect()
 void gamepara::waitSvrStart()
 {
     m_background->show();
-    overtime->start(5000);
+    overtime->start(15000);
 }
 
 void gamepara::gamestart()
 {
+    qDebug() << "gamestart mapseed" << mapseed;
     game = new GameWidget(nullptr, svrType, pSel1, pSel2, pSel3, pSel4, gamemode, mapseed);
     game->show();
-    this->close();
+    this->hide();
 }
 
-void gamepara::gamestart(dataPack p)
+void gamepara::gamestart_gp(dataPack p)
 {
+    qDebug() << "gamestart_gp  mapseed:" << p.player;
+    overtime->stop();
     game = new GameWidget(nullptr, svrType, pSel1, pSel2, pSel3, pSel4, gamemode, p.player);
     game->show();
-    this->close();
+    this->hide();
 }
 
 void gamepara::newConnect()
@@ -400,5 +391,10 @@ gamepara::~gamepara()
     qDebug() << "gamepara detroy";
     if (svr) delete svr;
     if (cli) delete cli;
+    delete m_background;
+    delete backgroundMovie;
+    delete overtime;
+    delete IPfile;
+
     delete ui;
 }

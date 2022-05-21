@@ -1,4 +1,4 @@
-#ifndef TCPCLIENT_H
+﻿#ifndef TCPCLIENT_H
 #define TCPCLIENT_H
 
 #include <QDialog>
@@ -31,7 +31,7 @@ signals:
     void moveNetPlayer(dataPack p);
     void playerSel(dataPack p);
     void connected();
-    void gamestart(dataPack p);
+    void gamestart_cli(dataPack p);
 public slots:
     void slotConnected();
     void slotDisconnected();

@@ -1,4 +1,4 @@
-#ifndef GAMEPARA_H
+﻿#ifndef GAMEPARA_H
 #define GAMEPARA_H
 
 #include <QMainWindow>
@@ -56,7 +56,7 @@ public slots:
     void cliSel(dataPack p);
     void connectOk();
     void newConnect();
-    void gamestart(dataPack p);
+    void gamestart_gp(dataPack p);
     void gamestart();
 
 signals:

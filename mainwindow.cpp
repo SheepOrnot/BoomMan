@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
-
+    para = nullptr;
     this->setWindowTitle("炸弹人");
     this->setWindowIcon(icon);
 
@@ -25,27 +25,35 @@ MainWindow::MainWindow(QWidget *parent)
 
     });
     connect(ui->svrOpen, &QPushButton::clicked, [=](){
-        para = new gamepara(nullptr, 1);
-        para->fa = this;
-        para->show();
+        //para = new gamepara(nullptr, 1);
+        //para->fa = this;
+        //para->show();
 
-        //svr = new Server(nullptr, "127.0.0.1", 1025);
-        //cli = new Client(nullptr, "127.0.0.1", 1025);
+        svr = new Server(nullptr, 1025);
+        cli = new Client(nullptr, 1025);
+        svr->dolisten("127.0.0.1");
+        cli->doconnect("127.0.0.1");
 
-        //game = new GameWidget(nullptr, 0, 0, 1, -1, -1 );
-        //game->show();
+        game = new GameWidget(nullptr, 1, 0, 1, -1, -1 );
+        game->show();
         this->hide();
 
-        connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
+        //connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
 
     });
     connect(ui->cliOpen, &QPushButton::clicked, [=](){
-        para = new gamepara(nullptr, 2);
-        para->fa = this;
-        para->show();
+        //para = new gamepara(nullptr, 2);
+        //para->fa = this;
+        //para->show();
+
+        cli = new Client(nullptr, 1025);
+        cli->doconnect("127.0.0.1");
+
+        game = new GameWidget(nullptr, 2, 0, 1, -1, -1 );
+        game->show();
         this->hide();
 
-        connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
+        //connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
 
     });
 
