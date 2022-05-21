@@ -291,37 +291,37 @@ void gamepara::on_Alex_clicked()
 void gamepara::on_Alex_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(201, 0);
+    if (svrType) cli->slotSend(102, 0);
 }
 void gamepara::on_Dan_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(102, 0);
+    if (svrType) cli->slotSend(101, 1);
 }
 void gamepara::on_Dan_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(202, 0);
+    if (svrType) cli->slotSend(102, 1);
 }
 void gamepara::on_Molly_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(103, 0);
+    if (svrType) cli->slotSend(101, 2);
 }
 void gamepara::on_Molly_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(203, 0);
+    if (svrType) cli->slotSend(102, 2);
 }
 void gamepara::on_Roki_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(104, 0);
+    if (svrType) cli->slotSend(101, 3);
 }
 void gamepara::on_Roki_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(204, 0);
+    if (svrType) cli->slotSend(102, 3);
 }
 
 
