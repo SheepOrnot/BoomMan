@@ -4,24 +4,23 @@
 
 Client* cli = nullptr;
 
-Client::Client(QWidget *parent, QString addr, int _port)
+Client::Client(QWidget *parent, int _port)
     : QDialog(parent)
 {
     status = false;  //  连接or未连接
     port = _port;
-    serverIP =new QHostAddress(addr);
+    serverIP =new QHostAddress;
 
-    /* 创建了一个QTcpSocket类对象，并将信号/槽连接起来 */
+}
+
+void Client::doconnect(QString addr)
+{
+    serverIP->setAddress(addr);
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket,SIGNAL(connected()),this,SLOT (slotConnected()));
     connect(tcpSocket,SIGNAL(disconnected()),this,SLOT (slotDisconnected ()));
     connect(tcpSocket,SIGNAL(readyRead()),this,SLOT (dataReceived()));
     tcpSocket->connectToHost(*serverIP,port);
-
-
-    //tcpSocket->disconnectFromHost();
-    //status=false;
-
 }
 
 void Client::retry(QString addr)
@@ -83,4 +82,5 @@ Client::~Client()
     delete tcpSocket;
     delete serverIP;
     qDebug() << "client detroy";
+    cli = nullptr;
 }

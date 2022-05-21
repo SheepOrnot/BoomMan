@@ -25,7 +25,7 @@ void TcpClientSocket::slotDisconnected()
 }
 
 
-Server::Server(QObject *parent, QString addr, int port):QTcpServer(parent)
+Server::Server(QObject *parent, int _port):QTcpServer(parent)
 {
     /*
     QString myAddr;
@@ -45,7 +45,14 @@ Server::Server(QObject *parent, QString addr, int port):QTcpServer(parent)
     }
     */
 
-    int ret = listen(QHostAddress(addr),port);
+    port = _port;
+
+
+}
+
+void Server::dolisten(QString addr)
+{
+    int ret = listen(QHostAddress(addr),1024);
     if(!ret)
     {
         qDebug() << "listen failed";
@@ -56,6 +63,7 @@ Server::Server(QObject *parent, QString addr, int port):QTcpServer(parent)
     }
     this->setMaxPendingConnections(4);     //设置监听数量
 }
+
 void Server::incomingConnection(int socketDescriptor)
 {
     TcpClientSocket *tcpClientSocket=new TcpClientSocket(this);
@@ -122,5 +130,6 @@ Server::~Server()
         delete tcpClientSocketList[i];
     }
     qDebug() << "server detroy";
+    svr = nullptr;
     return;
 }

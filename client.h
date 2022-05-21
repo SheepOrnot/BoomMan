@@ -16,10 +16,11 @@ class Client : public QDialog
     Q_OBJECT
 
 public:
-    Client(QWidget *parent = 0,QString addr = "",int _port = 1024);
+    Client(QWidget *parent = 0, int _port = 1024);
     ~Client();
     bool isConnected() { return status; }
     void retry(QString addr);
+    void doconnect(QString addr);
 private:
     bool status;
     int port;
