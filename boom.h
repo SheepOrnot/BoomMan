@@ -10,7 +10,7 @@ class Boom :public QLabel
 {
 public:
     Boom(int XX,int YY,QWidget *parent);
-    int Check(int XX,int YY,QWidget *parent);
+    virtual int Check(int XX,int YY,QWidget *parent) = 0;
     ~Boom();
     static int BaseX;
     static int BaseY;
@@ -34,6 +34,7 @@ class BoomA : public Boom
 {
 public:
     BoomA(int Lv,int XX,int YY,QWidget *parent);
+    int Check(int XX,int YY,QWidget *parent);
     ~BoomA(){;}
 
 };
