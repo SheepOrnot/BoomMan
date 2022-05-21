@@ -120,8 +120,8 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     svrType = _svrType;
     if(gamemode == 1)
     {
-        P1 = new people(1,1,1,"P1",this);
-        P2 = new people(2,15,15,"P2",this);
+        P1 = new people(pSel1,1,1,"P1",this);
+        P2 = new people(pSel2,15,15,"P2",this);
 
         //是否开启服务器
         if (svrType == 1)

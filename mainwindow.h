@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include"gamepara.h"
 #include"setting.h"
+#include"gamewidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 
 public:
     gamepara *para;
+    GameWidget *game;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

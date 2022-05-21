@@ -1,5 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "server.h"
+#include "client.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,6 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
         para = new gamepara(nullptr, 1);
         para->fa = this;
         para->show();
+
+        //svr = new Server(nullptr, "127.0.0.1", 1025);
+        //cli = new Client(nullptr, "127.0.0.1", 1025);
+
+        //game = new GameWidget(nullptr, 0, 0, 1, -1, -1 );
+        //game->show();
         this->hide();
 
         connect(para, &gamepara::callClose, this, [=](){delete para; para = nullptr;});
