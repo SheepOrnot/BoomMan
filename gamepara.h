@@ -59,6 +59,24 @@ public slots:
     void gamestart_gp(dataPack p);
     void gamestart();
 
+    void on_pe1v1_clicked();
+    void on_pp1v1_clicked();
+    void on_ppee2v2_clicked();
+
+    void on_Alex_clicked();
+    void on_Alex_2_clicked();
+    void on_Dan_clicked();
+    void on_Dan_2_clicked();
+    void on_Molly_clicked();
+    void on_Molly_2_clicked();
+    void on_Roki_clicked();
+    void on_Roki_2_clicked();
+
+    void on_start_clicked();
+    void on_back_clicked();
+    void on_CreateSvr_clicked();
+    void on_JoinSvr_clicked();
+
 signals:
     void callClose();
 };
