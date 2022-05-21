@@ -17,7 +17,7 @@ bool Checkmap(int x,int y)
     return 1;
 }
 
-GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int pSel3, int pSel4, int gamemode) :
+GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int pSel3, int pSel4, int gamemode, int mapseed) :
     QWidget(parent),
     ui(new Ui::GameWidget)
 {
@@ -33,7 +33,7 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 
     GMode = gamemode;
 
-    srand(time(0));
+    srand(mapseed);
 
     int ITEM[6];
     ITEM[1] = 15;

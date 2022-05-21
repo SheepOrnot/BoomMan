@@ -73,6 +73,7 @@ void Client::dataReceived()
 
         if(p->type == 1) emit moveNetPlayer(*p);
         else if(p->type >= 100) emit playerSel(*p);
+        else if(p->type == 2000) emit gamestart(*p);
         //qDebug() << "read from client......" << p->name << "  " << p->age;
     }
 }

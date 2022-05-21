@@ -134,7 +134,7 @@ public:
         IP = new QLineEdit(gamepara);
         IP->setObjectName(QStringLiteral("IP"));
         IP->setGeometry(QRect(200, 60, 281, 31));
-        IP->setStyleSheet(QString::fromUtf8("font: 75 5pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
+        IP->setStyleSheet(QString::fromUtf8("font: 75 15pt \"\346\200\235\346\272\220\345\256\213\344\275\223\";\n"
 ""));
         labelIP = new QLabel(gamepara);
         labelIP->setObjectName(QStringLiteral("labelIP"));

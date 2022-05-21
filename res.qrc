@@ -53,5 +53,6 @@
     <qresource prefix="/window">
         <file>res/window/MainWindow.png</file>
         <file>res/window/bkWall.png</file>
+        <file>res/window/loading.gif</file>
     </qresource>
 </RCC>

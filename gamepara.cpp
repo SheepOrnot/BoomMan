@@ -22,11 +22,38 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
+    m_background = new QLabel(this);
+    m_background->setGeometry(0,0,1048,748);
+    backgroundMovie = new QMovie(":/window/res\\window\\loading.gif",QByteArray(),this);
+    backgroundMovie->start();
+    m_background->setMovie(backgroundMovie);
+
+    m_background->hide();
+
+    overtime = new QTimer(this);
+    connect(overtime, &QTimer::timeout, [=]()
+    {
+        QMessageBox::information(nullptr, "啊哦~", "连接超时！");
+        overtime->stop();
+        m_background->hide();
+    });
+
     this->setWindowTitle("炸弹人");
     this->setWindowIcon(icon);
 
+
+    IPfile = new QFile("./IP.txt");
+    bool ret = IPfile->open(QIODevice::ReadOnly | QIODevice::Text);
+    if(ret) qDebug() << "File Open Success";
+    else qDebug() << "File Open Fail";
+
+    IPfile->readLine(IP, 50);
+    ui->IP->setText(IP);
+    IPfile->close();
+
     svrType = _svrType;
     fa = parent;
+    mapseed = time(0);
 
     if (svrType == 1)
     {
@@ -77,6 +104,13 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
         {
             QString addr = ui->IP->text();
             if (addr.size() == 0) { QMessageBox::information(nullptr, "啊哦~", "IP地址是空的"); return; }
+            if (!checkIP(addr)) { QMessageBox::information(nullptr, "啊哦~", "IP地址写错了"); return; }
+
+            IPfile->open(QIODevice::WriteOnly | QIODevice::Text |  QIODevice::Truncate);
+            QTextStream in(IPfile);
+            in << addr;
+            IPfile->close();
+
             if (!svr) svr = new Server(this, addr, 1024);
             if (!cli) cli = new Client(this, addr, 1024);
             else if (cli) cli->retry(addr);
@@ -89,10 +123,17 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
         {
             QString addr = ui->IP->text();
             if (addr.size() == 0) { QMessageBox::information(nullptr, "啊哦~", "IP地址是空的"); return; }
+            if (!checkIP(addr)) { QMessageBox::information(nullptr, "啊哦~", "IP地址写错了"); return; }
+
+            IPfile->open(QIODevice::WriteOnly | QIODevice::Text |  QIODevice::Truncate);
+            QTextStream in(IPfile);
+            in << addr;
+            IPfile->close();
+
             if (!cli) cli = new Client(this, addr, 1024);
             else if (cli) cli->retry(addr);
 
-            connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
+            waitSvrConnect();
         });
 
 
@@ -166,6 +207,12 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
                 if (pSel1 == -1) { QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
                 else if (pSel2 == -1) { QMessageBox::information(nullptr, "啊哦~", "P2还没选"); return; }
 
+                if(svrType == 1) cli->slotSend(2000, mapseed);
+                else if(svrType == 2)
+                {
+                    waitSvrStart();
+                }
+
             }
             else if (gamemode == 2)
             {
@@ -189,12 +236,61 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
                 checkAI_2();
             }
 
-            game = new GameWidget(nullptr, svrType, pSel1, pSel2, pSel3, pSel4, gamemode);
-            game->show();
-            this->close();
+            if(svrType != 2)
+            {
+                gamestart();
+            }
 
         });
 
+    if(svrType == 2) connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
+    if(svrType == 2) connect(cli, SIGNAL(gamestart(dataPack)), this, SLOT(gamestart(dataPack)));
+}
+
+bool gamepara::checkIP(QString ip)
+{
+    if(ip[0] == ' ' || ip[ip.size() - 1] == ' ') return false;
+
+    int dot = 0, numcnt = 0;
+    for(int i = 0; i < ip.size(); i ++)
+    {
+        if(ip[i].isNumber()) numcnt ++;
+        else if(ip[i] == '.') dot ++, numcnt = 0;
+        else return false;
+
+        if(numcnt >= 4) return false;
+    }
+
+    if(dot != 3) return false;
+    if(dot == 3 && numcnt == 0) return false;
+
+    return true;
+}
+
+void gamepara::waitSvrConnect()
+{
+    m_background->show();
+    overtime->start(5000);
+}
+
+void gamepara::waitSvrStart()
+{
+    m_background->show();
+    overtime->start(5000);
+}
+
+void gamepara::gamestart()
+{
+    game = new GameWidget(nullptr, svrType, pSel1, pSel2, pSel3, pSel4, gamemode, mapseed);
+    game->show();
+    this->close();
+}
+
+void gamepara::gamestart(dataPack p)
+{
+    game = new GameWidget(nullptr, svrType, pSel1, pSel2, pSel3, pSel4, gamemode, p.player);
+    game->show();
+    this->close();
 }
 
 void gamepara::newConnect()

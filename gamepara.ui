@@ -302,7 +302,7 @@ color: rgb(255, 255, 255);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 75 5pt &quot;思源宋体&quot;;
+    <string notr="true">font: 75 15pt &quot;思源宋体&quot;;
 </string>
    </property>
   </widget>

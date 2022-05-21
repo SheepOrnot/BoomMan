@@ -30,6 +30,7 @@ signals:
     void moveNetPlayer(dataPack p);
     void playerSel(dataPack p);
     void connected();
+    void gamestart(dataPack p);
 public slots:
     void slotConnected();
     void slotDisconnected();

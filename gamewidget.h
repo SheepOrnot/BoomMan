@@ -22,7 +22,7 @@ public:
     int svrType;
     bool playerCheck(people* p);
 
-    explicit GameWidget(QWidget *parent = nullptr, int svrType = 0, int pSel1 = 0, int pSel2 = 0, int pSel3 = 0, int pSel4 = 0, int gamemode = 1);
+    explicit GameWidget(QWidget *parent = nullptr, int svrType = 0, int pSel1 = 0, int pSel2 = 0, int pSel3 = 0, int pSel4 = 0, int gamemode = 1, int mapseed = 0);
     ~GameWidget();
 
 private:
