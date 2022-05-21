@@ -52,7 +52,7 @@ Server::Server(QObject *parent, int _port):QTcpServer(parent)
 
 void Server::dolisten(QString addr)
 {
-    int ret = listen(QHostAddress(addr),1024);
+    int ret = listen(QHostAddress(addr),port);
     if(!ret)
     {
         qDebug() << "listen failed";
@@ -62,6 +62,7 @@ void Server::dolisten(QString addr)
         qDebug() << "listen successed";
     }
     this->setMaxPendingConnections(4);     //设置监听数量
+    qDebug() << "dolisten: " << addr << " : " << port;
 }
 
 void Server::incomingConnection(int socketDescriptor)

@@ -307,6 +307,7 @@ void gamepara::connectOk()
     if (svrType == 1) ui->groupBox->show();
     else if (svrType == 2) ui->groupBox_2->show();
     overtime->stop();
+    m_background->hide();
     QMessageBox::information(nullptr, "好诶~", "连接成功");
 }
 

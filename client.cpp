@@ -21,6 +21,7 @@ void Client::doconnect(QString addr)
     connect(tcpSocket,SIGNAL(disconnected()),this,SLOT (slotDisconnected ()));
     connect(tcpSocket,SIGNAL(readyRead()),this,SLOT (dataReceived()));
     tcpSocket->connectToHost(*serverIP,port);
+    qDebug() << "doconnect: " << serverIP->toString() << " : " << port << "  status:" << tcpSocket->isValid();
 }
 
 void Client::retry(QString addr)
