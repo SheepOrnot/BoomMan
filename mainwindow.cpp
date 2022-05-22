@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(1028,722);
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 

@@ -7,6 +7,8 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 {
     ui->setupUi(this);
 
+    this->setFixedSize(1048,748);
+
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
     m_background = new QLabel(this);
