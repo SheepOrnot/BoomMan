@@ -210,7 +210,6 @@ void gamepara::on_start_clicked()
         if(svrType == 2) connect(cli, SIGNAL(gamestart_cli(dataPack)), this, SLOT(gamestart_gp(dataPack)));
         if(svrType != 2)
         {
-            if(svrType == 1)
             gamestart();
         }
 
