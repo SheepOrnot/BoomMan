@@ -51,6 +51,23 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
         cli = new Client(this, 1024);
         ui->start->hide();
         ui->JoinSvr->hide();
+
+        QString myAddr;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        for(int i=0;i<ipAddressesList.length();i++)
+        {
+            QString myAddr;
+            QHostAddress  addr = ipAddressesList.at(i);
+            qDebug() << addr.toString();
+            if(addr.toString().contains("192."))
+            {
+                myAddr = addr.toString();
+                qDebug() <<myAddr;
+                qDebug() << "***************";
+                ui->IP->setText(myAddr);
+            }
+        }
+
     }
     else if (svrType == 2)
     {
@@ -73,21 +90,7 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
         ui->groupBox->hide();
         ui->groupBox_2->hide();
 
-        QString myAddr;
-        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
-        for(int i=0;i<ipAddressesList.length();i++)
-        {
-            QString myAddr;
-            QHostAddress  addr = ipAddressesList.at(i);
-            qDebug() << addr.toString();
-            if(addr.toString().contains("192."))
-            {
-                myAddr = addr.toString();
-                qDebug() <<myAddr;
-                qDebug() << "***************";
-                ui->IP->setText(myAddr);
-            }
-        }
+
     }
     else
     {

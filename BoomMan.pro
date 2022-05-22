@@ -1,6 +1,8 @@
 QT       += core gui
 QT       += network
 
+RC_FILE = logo.rc
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
