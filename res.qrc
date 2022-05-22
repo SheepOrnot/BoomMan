@@ -49,6 +49,7 @@
         <file>res/button/CreateSvr.png</file>
         <file>res/button/JoinSvr.png</file>
         <file>res/button/back.png</file>
+        <file>res/button/ready.png</file>
     </qresource>
     <qresource prefix="/window">
         <file>res/window/MainWindow.png</file>

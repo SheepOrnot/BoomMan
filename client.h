@@ -36,6 +36,7 @@ signals:
     void playerSel(dataPack p);
     void connected();
     void gamestart_cli(dataPack p);
+    void cliReady_cli();
 public slots:
     void slotConnected();
     void slotDisconnected();

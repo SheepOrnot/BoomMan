@@ -74,6 +74,7 @@ void Client::dataReceived()
         if(p->type == 1) updateClientW(*p); //emit moveNetPlayer(*p);
         else if(p->type >= 100 && p->type < 1000) emit playerSel(*p);
         else if(p->type == 2000) {emit gamestart_cli(*p); qDebug() << "REV:gameStart";}
+        else if(p->type == 2002) {emit cliReady_cli(); }
         //qDebug() << "read from client......" << p->name << "  " << p->age;
         qDebug() << "dataRev: data->type:" << p->type;
     }

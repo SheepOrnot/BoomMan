@@ -60,6 +60,9 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
         ui->CreateSvr->hide();
         ui->connectNum->hide();
         ui->connectNumT->hide();
+
+        ui->start->setStyleSheet("border-image: url(:/button/res/button/ready.png);");
+
     }
 
     if (svrType)
@@ -83,9 +86,8 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
     qDebug() << "checkpoint1";
 
     if(svrType) connect(cli, SIGNAL(playerSel(dataPack)), this, SLOT(cliSel(dataPack)));
+    if(svrType == 1) connect(cli, SIGNAL(cliReady_cli()), this, SLOT(cliReady()));
     if(svrType == 2) connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
-
-
 
 }
 
@@ -149,12 +151,17 @@ void gamepara::on_start_clicked()
 
             if(svrType == 1)
             {
+                if(!ready_cli) { QMessageBox::information(nullptr, "啊哦~", "对方还没准备好"); return; }
+
                 dataPack p;
                 p.move = 2000, p.player = mapseed;
                 cli->slotSend(p);
             }
             else if(svrType == 2)
             {
+                dataPack p;
+                p.move = 2002, p.player = 200;
+                cli->slotSend(p);
                 waitSvrStart();
             }
 
@@ -184,11 +191,16 @@ void gamepara::on_start_clicked()
         if(svrType == 2) connect(cli, SIGNAL(gamestart_cli(dataPack)), this, SLOT(gamestart_gp(dataPack)));
         if(svrType != 2)
         {
+            if(svrType == 1)
             gamestart();
         }
 
     }
 
+void gamepara::cliReady()
+{
+    ready_cli = 1;
+}
 
 void gamepara::on_pe1v1_clicked() {showAll(); hideP2();}
 void gamepara::on_pp1v1_clicked() {showAll(); }

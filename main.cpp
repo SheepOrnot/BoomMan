@@ -6,31 +6,6 @@
 #include <QDir>
 #include "ccrashstack.h"
 
-// 保存程序异常崩溃的信息
-LONG ApplicationCrashHandler(EXCEPTION_POINTERS *pException)
-{
-    //创建 Dump 文件
-    HANDLE hDumpFile = CreateFile(L"crash.dmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    if(hDumpFile != INVALID_HANDLE_VALUE)
-    {
-        //Dump 信息
-        MINIDUMP_EXCEPTION_INFORMATION dumpInfo;
-        dumpInfo.ExceptionPointers = pException;
-        dumpInfo.ThreadId = GetCurrentThreadId();
-        dumpInfo.ClientPointers = TRUE;
-
-        // 写入 dump 文件内容
-        MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &dumpInfo, NULL, NULL);
-    }
-
-    //弹出一个错误对话框
-    QMessageBox msgBox;
-    msgBox.setText("application crash!");
-    msgBox.exec();
-
-    return EXCEPTION_EXECUTE_HANDLER;
-}
-
 long __stdcall   callback(_EXCEPTION_POINTERS*   excp)
 {
     CCrashStack crashStack(excp);
@@ -43,7 +18,7 @@ long __stdcall   callback(_EXCEPTION_POINTERS*   excp)
     QString file_path = dir.currentPath();
 
     QDir *folder_path = new QDir;
-    bool exist = folder_path->exists(file_path.append("\\MyApp"));
+    bool exist = folder_path->exists(file_path.append("\\crash"));
     if(!exist)
     {
         folder_path->mkdir(file_path);
@@ -66,13 +41,6 @@ long __stdcall   callback(_EXCEPTION_POINTERS*   excp)
 
 int main(int argc, char *argv[])
 {
-
-    //注册异常捕获函数
-    //SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)ApplicationCrashHandler);
-
-    // set printf and fprintf out immediately
-    //setvbuf(stdout, NULL, _IONBF, 0);
-    //setvbuf(stderr, NULL, _IONBF, 0);
 
     SetUnhandledExceptionFilter(callback);
 

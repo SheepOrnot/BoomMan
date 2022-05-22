@@ -30,6 +30,7 @@ public:
     QFile *IPfile;
     char IP[20];
 
+    int ready_cli = 0;
     int gamemode = -1;
     int pSel1 = -1, pSel2 = -1, pSel3 = -1, pSel4 = -1;
     int mapseed;
@@ -54,6 +55,7 @@ private:
 
 public slots:
     void cliSel(dataPack p);
+    void cliReady();
     void connectOk();
     void newConnect();
     void gamestart_gp(dataPack p);
