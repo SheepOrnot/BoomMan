@@ -72,6 +72,22 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
         ui->playselect->hide();
         ui->groupBox->hide();
         ui->groupBox_2->hide();
+
+        QString myAddr;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        for(int i=0;i<ipAddressesList.length();i++)
+        {
+            QString myAddr;
+            QHostAddress  addr = ipAddressesList.at(i);
+            qDebug() << addr.toString();
+            if(addr.toString().contains("192."))
+            {
+                myAddr = addr.toString();
+                qDebug() <<myAddr;
+                qDebug() << "***************";
+                ui->IP->setText(myAddr);
+            }
+        }
     }
     else
     {
