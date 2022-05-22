@@ -82,7 +82,7 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 
     if(svrType) connect(cli, SIGNAL(playerSel(dataPack)), this, SLOT(cliSel(dataPack)));
     if(svrType == 2) connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
-    if(svrType == 2) connect(cli, SIGNAL(gamestart_cli(dataPack)), this, SLOT(gamestart_gp(dataPack)));
+
 
 
 }
@@ -179,6 +179,7 @@ void gamepara::on_start_clicked()
             checkAI_2();
         }
 
+        if(svrType == 2) connect(cli, SIGNAL(gamestart_cli(dataPack)), this, SLOT(gamestart_gp(dataPack)));
         if(svrType != 2)
         {
             gamestart();

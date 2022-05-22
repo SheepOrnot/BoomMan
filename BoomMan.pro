@@ -7,7 +7,7 @@ CONFIG += c++11
 
 QMAKE_LFLAGS_WINDOWS += -Wl,--stack,64000000
 
-QMAKE_LFLAGS_RELEASE = /INCREMENTAL:NO /DEBUG
+#QMAKE_LFLAGS_RELEASE = /INCREMENTAL:NO /DEBUG
 
 LIBS += -lDbgHelp
 
@@ -19,7 +19,7 @@ QMAKE_CXXFLAGS_RELEASE += -g
 QMAKE_CFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE -= -O2
 #release在最后link时默认有"-s”参数，表示"Omit all symbol information from the output file"，因此要去掉该参数
-QMAKE_LFLAGS_RELEASE = -mthreads -Wl
+QMAKE_LFLAGS_RELEASE = -mthreads
 
 # QMAKE_LFLAGS += /STACK:128000000
 

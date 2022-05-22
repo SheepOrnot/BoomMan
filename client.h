@@ -24,6 +24,7 @@ public:
     void retry(QString addr);
     void doconnect(QString addr);
     void updateClientW(dataPack p);
+    QWidget *fa = nullptr;
 private:
     bool status;
     int port;

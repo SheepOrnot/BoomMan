@@ -96,7 +96,7 @@ void Client::updateClientW(dataPack p)
             }
             else if (p.move == 5)
             {
-                BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this));
+                BoomV.push_back(new BoomA(P1->BoomLv, P1->X, P1->Y, this->fa));
                 P1->raise();
             }
             else if (p.move >= 10 && p.move <= 19) P1->isWalk = 0;
@@ -114,7 +114,7 @@ void Client::updateClientW(dataPack p)
             }
             else if (p.move == 5)
             {
-                BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this));
+                BoomV.push_back(new BoomA(P2->BoomLv, P2->X, P2->Y, this->fa));
                 P2->raise();
             }
             else if (p.move >= 20 && p.move <= 29) P2->isWalk = 0;
