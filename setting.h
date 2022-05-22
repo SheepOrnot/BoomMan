@@ -9,6 +9,8 @@
 extern int Map[2][16][16];
 extern QLabel *Build[16][16];
 
+extern int GsvrType;
+
 typedef struct _dataPack
 {
     int type, player, move;

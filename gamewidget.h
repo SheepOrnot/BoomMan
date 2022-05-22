@@ -21,6 +21,7 @@ class GameWidget : public QWidget
 public:
     int svrType;
     bool playerCheck(people* p);
+    void hasMoved(int move, int player);
 
     explicit GameWidget(QWidget *parent = nullptr, int svrType = 0, int pSel1 = 0, int pSel2 = 0, int pSel3 = 0, int pSel4 = 0, int gamemode = 1, int mapseed = 0);
     ~GameWidget();
@@ -33,11 +34,11 @@ protected:
     void keyReleaseEvent(QKeyEvent *event);
 
 public slots:
-    void updateClient(dataPack p);
+    //void updateClient(dataPack p);
 
 
 signals:
-    void hasMoved(int move, int player);
+    void hasMovedSignal(dataPack p);
 
 };
 

@@ -10,6 +10,8 @@
 #include <QHostAddress>
 #include <QTcpSocket>
 #include "setting.h"
+#include "people.h"
+#include "boom.h"
 
 class Client : public QDialog
 {
@@ -21,6 +23,7 @@ public:
     bool isConnected() { return status; }
     void retry(QString addr);
     void doconnect(QString addr);
+    void updateClientW(dataPack p);
 private:
     bool status;
     int port;
@@ -36,7 +39,8 @@ public slots:
     void slotConnected();
     void slotDisconnected();
     void dataReceived();
-    void slotSend(int move, int player);
+    //void slotSend(int move, int player);
+    void slotSend(dataPack p);
 };
 
 #endif // TCPCLIENT_H

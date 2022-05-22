@@ -9,20 +9,20 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 
     QPixmap icon(":/boom/res\\boom\\boomA_1.png");
 
-    //m_background = new QLabel(this);
-    //m_background->setGeometry(0,0,1048,748);
-    //backgroundMovie = new QMovie(":/window/res\\window\\loading.gif",QByteArray(),this);
-    //backgroundMovie->start();
-    //m_background->setMovie(backgroundMovie);
+    m_background = new QLabel(this);
+    m_background->setGeometry(0,0,1048,748);
+    backgroundMovie = new QMovie(":/window/res\\window\\loading.gif",QByteArray(),this);
+    backgroundMovie->start();
+    m_background->setMovie(backgroundMovie);
 
-    //m_background->hide();
+    m_background->hide();
 
     overtime = new QTimer(this);
     connect(overtime, &QTimer::timeout, [=]()
     {
         QMessageBox::information(nullptr, "啊哦~", "连接超时！");
         overtime->stop();
-        //m_background->hide();
+        m_background->hide();
     });
 
     this->setWindowTitle("炸弹人");
@@ -44,7 +44,7 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
 
     if (svrType == 1)
     {
-        //hideP2();
+        hideP2();
         svr = new Server(this, 1024);
         cli = new Client(this, 1024);
         ui->start->hide();
@@ -52,7 +52,7 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
     }
     else if (svrType == 2)
     {
-        //hideP1();
+        hideP1();
         cli = new Client(this, 1024);
         ui->start->hide();
         ui->CreateSvr->hide();
@@ -83,103 +83,6 @@ gamepara::gamepara(QWidget* parent, int _svrType) :
     if(svrType) connect(cli, SIGNAL(playerSel(dataPack)), this, SLOT(cliSel(dataPack)));
     if(svrType == 2) connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
     if(svrType == 2) connect(cli, SIGNAL(gamestart_cli(dataPack)), this, SLOT(gamestart_gp(dataPack)));
-
-    /*
-    connect(ui->back, &QPushButton::clicked, [=]()
-        {
-            fa->show();
-            this->close();
-            emit callClose();
-        });
-    connect(ui->CreateSvr, &QPushButton::clicked, [=]()
-        {
-            QString addr = ui->IP->text();
-            if (addr.size() == 0) { QMessageBox::information(nullptr, "啊哦~", "IP地址是空的"); return; }
-            if (!checkIP(addr)) { QMessageBox::information(nullptr, "啊哦~", "IP地址写错了"); return; }
-
-            IPfile->open(QIODevice::WriteOnly | QIODevice::Text |  QIODevice::Truncate);
-            QTextStream in(IPfile);
-            in << addr;
-            IPfile->close();
-
-            svr->dolisten(addr);
-            cli->doconnect(addr);
-
-            connect(cli, SIGNAL(connected()), this, SLOT(connectOk()));
-            connect(svr, SIGNAL(newConnection()), this, SLOT(newConnect()));
-        });
-
-    connect(ui->JoinSvr, &QPushButton::clicked, [=]()
-        {
-            QString addr = ui->IP->text();
-            if (addr.size() == 0) { QMessageBox::information(nullptr, "啊哦~", "IP地址是空的"); return; }
-            if (!checkIP(addr)) { QMessageBox::information(nullptr, "啊哦~", "IP地址写错了"); return; }
-
-            IPfile->open(QIODevice::WriteOnly | QIODevice::Text |  QIODevice::Truncate);
-            QTextStream in(IPfile);
-            in << addr;
-            IPfile->close();
-
-            cli->doconnect(addr);
-
-            waitSvrConnect();
-        });
-    */
-
-
-    //connect(ui->pe1v1, &QPushButton::clicked, [=]() {showAll(); hideP2(); });
-    //connect(ui->pp1v1, &QPushButton::clicked, [=]() {showAll(); });
-    //connect(ui->ppee2v2, &QPushButton::clicked, [=]() {showAll(); });
-    /*
-    connect(ui->Alex, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-            if (svrType) cli->slotSend(101, 0);
-        });
-    connect(ui->Dan, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Dan->setChecked(false); return; }
-            if (svrType) cli->slotSend(101, 1);
-        });
-    connect(ui->Molly, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Molly->setChecked(false); return; }
-            if (svrType) cli->slotSend(101, 2);
-        });
-    connect(ui->Roki, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Roki->setChecked(false); return; }
-            if (svrType) cli->slotSend(101, 3);
-        });
-
-    connect(ui->Alex_2, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 2 && !cli->isConnected()) { QMessageBox::information(nullptr, "啊哦~", "你还没连接上服务器"); ui->Alex_2->setChecked(false); return; }
-            if (svrType) cli->slotSend(102, 0);
-        });
-    connect(ui->Dan_2, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 2 && !cli->isConnected()) { QMessageBox::information(nullptr, "啊哦~", "你还没连接上服务器"); ui->Dan_2->setChecked(false); return; }
-            if (svrType) cli->slotSend(102, 1);
-        });
-    connect(ui->Molly_2, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 2 && !cli->isConnected()) { QMessageBox::information(nullptr, "啊哦~", "你还没连接上服务器"); ui->Molly_2->setChecked(false); return; }
-            if (svrType) cli->slotSend(102, 2);
-        });
-    connect(ui->Roki_2, &QPushButton::clicked, [=]()
-        {
-            if (svrType == 2 && !cli->isConnected()) { QMessageBox::information(nullptr, "啊哦~", "你还没连接上服务器"); ui->Roki_2->setChecked(false); return; }
-            if (svrType) cli->slotSend(102, 3);
-        });
-    */
-
-
-    /*
-    connect(ui->start, &QPushButton::clicked, [=]()
-        );
-
-    */
 
 
 }
@@ -242,7 +145,12 @@ void gamepara::on_start_clicked()
             if (pSel1 == -1) { QMessageBox::information(nullptr, "啊哦~", "P1还没选"); return; }
             else if (pSel2 == -1) { QMessageBox::information(nullptr, "啊哦~", "P2还没选"); return; }
 
-            if(svrType == 1) cli->slotSend(2000, mapseed);
+            if(svrType == 1)
+            {
+                dataPack p;
+                p.move = 2000, p.player = mapseed;
+                cli->slotSend(p);
+            }
             else if(svrType == 2)
             {
                 waitSvrStart();
@@ -286,42 +194,82 @@ void gamepara::on_ppee2v2_clicked() {showAll(); }
 void gamepara::on_Alex_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(101, 0);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 101, p.player = 0;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Alex_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(102, 0);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 102, p.player = 0;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Dan_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(101, 1);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 101, p.player = 1;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Dan_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(102, 1);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 102, p.player = 1;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Molly_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(101, 2);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 101, p.player = 2;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Molly_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(102, 2);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 102, p.player = 2;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Roki_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(101, 3);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 101, p.player = 3;
+        cli->slotSend(p);
+    }
 }
 void gamepara::on_Roki_2_clicked()
 {
     if (svrType == 1 && svr->connectionNum() != 2) { QMessageBox::information(nullptr, "啊哦~", "目前没有其他人连接上服务器"); ui->Alex->setChecked(false); return; }
-    if (svrType) cli->slotSend(102, 3);
+    if (svrType)
+    {
+        dataPack p;
+        p.move = 102, p.player = 3;
+        cli->slotSend(p);
+    }
 }
 
 
@@ -347,13 +295,13 @@ bool gamepara::checkIP(QString ip)
 
 void gamepara::waitSvrConnect()
 {
-    //m_background->show();
+    m_background->show();
     overtime->start(5000);
 }
 
 void gamepara::waitSvrStart()
 {
-    //m_background->show();
+    m_background->show();
     overtime->start(15000);
 }
 
@@ -390,7 +338,7 @@ void gamepara::connectOk()
     if (svrType == 1) ui->groupBox->show();
     else if (svrType == 2) ui->groupBox_2->show();
     overtime->stop();
-    //m_background->hide();
+    m_background->hide();
     QMessageBox::information(nullptr, "好诶~", "连接成功");
 }
 
@@ -483,7 +431,7 @@ gamepara::~gamepara()
     qDebug() << "gamepara detroy";
     if (svr) delete svr;
     if (cli) delete cli;
-    //delete //m_background;
+    delete m_background;
     delete backgroundMovie;
     delete overtime;
     delete IPfile;
