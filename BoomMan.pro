@@ -7,7 +7,7 @@ RC_FILE = logo.rc
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
-CONFIG += resources_big
+#CONFIG += resources_big
 
 QMAKE_LFLAGS_WINDOWS += -Wl,--stack,64000000
 
