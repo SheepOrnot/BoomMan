@@ -1,9 +1,15 @@
 # BoomMan
+![BoomMan](res/snap/snap1.png)
+游戏炸弹人
 
-一个炸弹人游戏
+## 特性
+* 基于QT5.9.9
+* 可进行局域网联机
+* 可选机器人
 
-基于QT5.9.9
 
-_Beta V0.0.1_
+## 在GitHub上获取
 
-Have FUN!!!
+[Release](https://github.com/SheepOrnot/BoomMan/releases/latest)
+
+## Have FUN!!!
