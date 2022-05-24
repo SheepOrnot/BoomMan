@@ -11,7 +11,7 @@ QMAKE_LFLAGS_WINDOWS += -Wl,--stack,64000000
 
 #QMAKE_LFLAGS_RELEASE = /INCREMENTAL:NO /DEBUG
 
-LIBS += -lDbgHelp
+#LIBS += -lDbgHelp
 
 
 #加入调试信息
