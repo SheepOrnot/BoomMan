@@ -1,5 +1,5 @@
 # BoomMan
-
+![BoomMan](res/snap/snap1.png)
 游戏炸弹人
 
 ## 特性
