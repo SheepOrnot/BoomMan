@@ -7,6 +7,7 @@
 #include<iostream>
 #include<QMediaPlayer>
 #include<QSoundEffect>
+#include<QMediaPlaylist>
 
 extern int Map[2][16][16];
 extern QLabel *Build[16][16];

@@ -166,10 +166,18 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 
     qDebug() << "GW:checkpoint3";
 
-    QMediaPlayer *BeginSound = new QMediaPlayer(this);
-    BeginSound->setMedia(QUrl("qrc:/sound/res/sound/begin.mp3"));
-    BeginSound->setVolume(50);
-    BeginSound->play();
+    QMediaPlaylist *backGroundMusicList = new QMediaPlaylist(this);
+    QMediaPlayer *backGroundMusic = new QMediaPlayer(this);
+    backGroundMusicList->addMedia(QUrl("qrc:/sound/res/sound/BGM.wav"));
+    backGroundMusicList->setPlaybackMode(QMediaPlaylist::Loop);
+    backGroundMusic->setPlaylist(backGroundMusicList);
+    backGroundMusic->setVolume(10);
+    backGroundMusic->play();
+//    QSoundEffect *BackGroundMusic = new QSoundEffect(this);
+//    BackGroundMusic->setSource(QUrl("qrc:/sound/res/sound/BGM.wav"));
+//    BackGroundMusic->setVolume(50);
+//    BackGroundMusic->setLoopCount(-1);
+//    BackGroundMusic->play();
 
     PickUp = new QSoundEffect(this);
     PickUp->setSource(QUrl("qrc:/sound/res/sound/pickupprop.wav"));
