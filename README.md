@@ -8,7 +8,7 @@
 * 可选机器人
 
 
-## 在Github上获取
+## 在GitHub上获取
 
 [Release](https://github.com/SheepOrnot/BoomMan/releases/latest)
 
