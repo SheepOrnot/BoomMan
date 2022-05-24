@@ -56,6 +56,7 @@ public:
 
 };
 
+extern QSoundEffect *PickUp;
 extern int GMode;
 extern people *P1,*P2,*P3,*P4;
 #endif // PEOPLE_H

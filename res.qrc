@@ -56,4 +56,9 @@
         <file>res/window/bkWall.png</file>
         <file>res/window/loading.gif</file>
     </qresource>
+    <qresource prefix="/sound">
+        <file>res/sound/begin.mp3</file>
+        <file>res/sound/boom.wav</file>
+        <file>res/sound/pickupprop.wav</file>
+    </qresource>
 </RCC>

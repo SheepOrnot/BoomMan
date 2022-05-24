@@ -166,6 +166,15 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
 
     qDebug() << "GW:checkpoint3";
 
+    QMediaPlayer *BeginSound = new QMediaPlayer(this);
+    BeginSound->setMedia(QUrl("qrc:/sound/res/sound/begin.mp3"));
+    BeginSound->setVolume(50);
+    BeginSound->play();
+
+    PickUp = new QSoundEffect(this);
+    PickUp->setSource(QUrl("qrc:/sound/res/sound/pickupprop.wav"));
+    PickUp->setVolume(50);
+
 }
 
 bool GameWidget::playerCheck(people* p)

@@ -5,6 +5,8 @@
 #include<QVector>
 #include<QMessageBox>
 #include<iostream>
+#include<QMediaPlayer>
+#include<QSoundEffect>
 
 extern int Map[2][16][16];
 extern QLabel *Build[16][16];

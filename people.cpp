@@ -6,6 +6,7 @@ people *P1 = NULL;
 people *P2 = NULL;
 people *P3 = NULL;
 people *P4 = NULL;
+QSoundEffect *PickUp = NULL;
 int GMode = 0;
 //Alex Dan Molly Roki
 people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent = NULL)
@@ -90,6 +91,7 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
 
                 if(Map[1][Y][X]>0)
                 {
+                    PickUp->play();
                     if(Map[1][Y][X]==1) ++blood;
                     if(Map[1][Y][X]==2) ++BoomLv;
                     if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed-5 : 20);
@@ -196,6 +198,7 @@ void people::MovePos(int XX,int YY,int de = 0)
     Time1->stop();
     if(Map[1][Y][X]>0)
     {
+        PickUp->play();
         if(Map[1][Y][X]==1) ++blood;
         if(Map[1][Y][X]==2) ++BoomLv;
         if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed-5 : 20);
