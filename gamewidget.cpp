@@ -170,11 +170,6 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     BeginSound->setMedia(QUrl("qrc:/sound/res/sound/begin.mp3"));
     BeginSound->setVolume(50);
     BeginSound->play();
-
-    PickUp = new QSoundEffect(this);
-    PickUp->setSource(QUrl("qrc:/sound/res/sound/pickupprop.wav"));
-    PickUp->setVolume(50);
-
 }
 
 bool GameWidget::playerCheck(people* p)

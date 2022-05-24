@@ -10,6 +10,7 @@
 #include"setting.h"
 #include"tool.h"
 #include "gameboard.h"
+#include "soundthread.h"
 class people :public QLabel
 {
 public:
@@ -52,11 +53,12 @@ public:
     enum Walk_Type{ Right = 1, Up, Left, Down };
 
     gameboard *GameBoard;
+    soundThread *sound = nullptr;
 
 
 };
 
-extern QSoundEffect *PickUp;
+
 extern int GMode;
 extern people *P1,*P2,*P3,*P4;
 #endif // PEOPLE_H

@@ -50,6 +50,7 @@ SOURCES += \
     people.cpp \
     server.cpp \
     setting.cpp \
+    soundthread.cpp \
     tool.cpp
 
 HEADERS += \
@@ -64,6 +65,7 @@ HEADERS += \
     people.h \
     server.h \
     setting.h \
+    soundthread.h \
     tool.h
 
 FORMS += \
