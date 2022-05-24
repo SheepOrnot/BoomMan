@@ -126,8 +126,6 @@ void Client::updateClientW(dataPack p)
 
 Client::~Client()
 {
-    delete tcpSocket;
-    delete serverIP;
     qDebug() << "client detroy";
     cli = nullptr;
 }
