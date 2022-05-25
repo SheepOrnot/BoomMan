@@ -9,7 +9,7 @@ class soundThread : public QThread
 {
     Q_OBJECT
 public:
-    enum soundType{pickup = 0};
+    enum soundType{pickup = 0,boom = 1};
 
     soundThread(soundType _type = pickup);
     ~soundThread();
@@ -24,9 +24,11 @@ protected:
 
 public slots:
     void playPickupSound();
+    void playBoomSound();
 
 signals:
     void pickupSound();
+    void boomSound();
 };
 
 #endif // SOUNDTHREAD_H

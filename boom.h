@@ -6,6 +6,7 @@
 #include<QObject>
 #include"people.h"
 #include"tool.h"
+#include "soundthread.h"
 class Boom :public QLabel
 {
 public:

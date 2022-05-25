@@ -72,10 +72,13 @@ BoomA::BoomA(int Lv,int XX,int YY,QWidget *parent):Boom(XX,YY,parent)
     this->show();
     Map[0][Y][X] = 2;
 
-    qDebug() << "BoomSet: (" << X << "," << Y << ")";
+    soundThread *sound = new soundThread;
 
     connect(Time2,&QTimer::timeout,[=](){
         //if(X == 10 && Y == 1) return;
+        sound->setType(soundThread::boom);
+        sound->start();
+        sound->wait();
         Time2->stop();
         this->hide();
         Map[0][Y][X] = 0;

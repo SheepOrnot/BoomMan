@@ -93,12 +93,9 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
 
                 if(Map[1][Y][X]>0)
                 {
-                    //PickUp->play();
-
                     sound->setType(soundThread::pickup);
                     sound->start();
-                    //sound->wait();
-
+                    sound->wait();
                     if(Map[1][Y][X]==1) ++blood;
                     if(Map[1][Y][X]==2) ++BoomLv;
                     if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed-5 : 20);
@@ -205,6 +202,10 @@ void people::MovePos(int XX,int YY,int de = 0)
     Time1->stop();
     if(Map[1][Y][X]>0)
     {
+        sound->setType(soundThread::pickup);
+        sound->start();
+        sound->wait();
+
         if(Map[1][Y][X]==1) ++blood;
         if(Map[1][Y][X]==2) ++BoomLv;
         if(Map[1][Y][X]==3) speed = (speed-5>20 ? speed-5 : 20);
