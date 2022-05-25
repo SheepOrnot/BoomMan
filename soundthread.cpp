@@ -1,5 +1,9 @@
 #include "soundthread.h"
 
+QSoundEffect *pickSoundptr = nullptr;
+QSoundEffect *boomSoundptr = nullptr;
+
+
 soundThread::soundThread(soundType _type)
 {
     type = _type;
@@ -25,22 +29,24 @@ void soundThread::run()
 void soundThread::playPickupSound()
 {
     qDebug() << "pick something: slot";
-    sound = new QSoundEffect;
-    sound->setSource(QUrl("qrc:/sound/res/sound/pickupprop.wav"));
-    sound->setVolume(100);
-    sound->play();
+    //sound = new QSoundEffect;
+    //sound->setSource(QUrl("qrc:/sound/res/sound/pickupprop.wav"));
+    //sound->setVolume(100);
+    //sound->play();
+    pickSoundptr->play();
 }
 
 void soundThread::playBoomSound()
 {
     qDebug() << "Boom: slot";
-    sound = new QSoundEffect;
-    sound->setSource(QUrl("qrc:/sound/res/sound/boom.wav"));
-    sound->setVolume(100);
-    sound->play();
+    //sound = new QSoundEffect;
+    //sound->setSource(QUrl("qrc:/sound/res/sound/boom.wav"));
+    //sound->setVolume(100);
+    //sound->play();
+    boomSoundptr->play();
 }
 
 soundThread::~soundThread()
 {
-    delete sound;
+    //delete sound;
 }

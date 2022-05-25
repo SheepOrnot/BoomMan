@@ -31,4 +31,6 @@ signals:
     void boomSound();
 };
 
+extern QSoundEffect* pickSoundptr, *boomSoundptr;
+
 #endif // SOUNDTHREAD_H

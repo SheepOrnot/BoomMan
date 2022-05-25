@@ -173,6 +173,17 @@ GameWidget::GameWidget(QWidget *parent, int _svrType, int pSel1, int pSel2, int 
     backGroundMusic->setPlaylist(backGroundMusicList);
     backGroundMusic->setVolume(10);
     backGroundMusic->play();
+
+    pickSoundptr = new QSoundEffect;
+    pickSoundptr->setSource(QUrl("qrc:/sound/res/sound/pickupprop.wav"));
+    pickSoundptr->setVolume(100);
+
+    boomSoundptr = new QSoundEffect;
+    boomSoundptr->setSource(QUrl("qrc:/sound/res/sound/boom.wav"));
+    boomSoundptr->setVolume(100);
+
+
+
 }
 
 bool GameWidget::playerCheck(people* p)
