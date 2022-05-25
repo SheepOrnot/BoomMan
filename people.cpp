@@ -97,7 +97,7 @@ people::people(int TYPE,int XX,int YY,QString NAME = "Unnamed",QWidget *parent =
 
                     sound->setType(soundThread::pickup);
                     sound->start();
-                    sound->wait();
+                    //sound->wait();
 
                     if(Map[1][Y][X]==1) ++blood;
                     if(Map[1][Y][X]==2) ++BoomLv;
